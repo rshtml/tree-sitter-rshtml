@@ -1,0 +1,38 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "rshtml",
+      "camelcase": "RsHtml",
+      "title": "RsHtml",
+      "scope": "source.rshtml",
+      "file-types": [
+        "rs.html"
+      ],
+      "injection-regex": "^rshtml$",
+      "class-name": "TreeSitterRshtml"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT & Apache-2.0",
+    "description": "RsHtml Template Parser",
+    "authors": [
+      {
+        "name": "mehmetkesik"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/rshtml/rshtml"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
