@@ -24,13 +24,12 @@ const CLOSE_PAREN = ")";
 const OPEN_BRACKET = "[";
 const CLOSE_BRACKET = "]";
 
-const STMT_HEAD_COND = /[^@{}]+/ // /\s*[^@{}\s][^@{}]*/; // /[^@{}]+/;
-const COND_EXPR = /[^{]+/;
+const STMT_HEAD_COND = /\s*[^@{}\s][^@{}]*/; // /\s*[^@{}\s][^@{}]*/; // /[^@{}]+/;
 
 module.exports = grammar({
     name: 'rshtml',
 
-    extras: $ => [/\s+/,],
+    extras: $ => [/\s+/],
 
     conflicts: $ => [
         //"[$.while_stmt, $.for_stmt, $.if_stmt]
@@ -62,12 +61,12 @@ module.exports = grammar({
         text: _ => token(prec(-1, /[^@]+/)), ///(@@|@@}|@@\{|[^@])+/
         inner_text: _ => token(prec(-1, /[^@}]+/)), ///(@@|@@}|@@\{|[^@}])+/
 
-        if_: _ => token(prec(2, seq('if', STMT_HEAD_COND))), ///\s*if\s+[^@{}]+/
+        if_: _ => token(prec(2, seq('if', /\s+/, STMT_HEAD_COND))), ///\s*if\s+[^@{}]+/
         else_: _ => token(prec(3, 'else')), ///\s*else\s*/
 
-        while_: _ => token(prec(2, seq('while', STMT_HEAD_COND))),
-        for_: _ => token(prec(2, seq('for', STMT_HEAD_COND))),
-        match_: _ => token(prec(2, seq('match', STMT_HEAD_COND))),
+        while_: _ => token(prec(2, seq('while', /\s+/, STMT_HEAD_COND))),
+        for_: _ => token(prec(2, seq('for', /\s+/, STMT_HEAD_COND))),
+        match_: _ => token(prec(2, seq('match', /\s+/, STMT_HEAD_COND))),
 
         _expr_simple: _ => token(prec(1, seq(
             repeat('&'),
@@ -76,6 +75,12 @@ module.exports = grammar({
         ))),
 
         extends_: _ => token('extends'),
+
+        // errors
+        if_error: _ => token(prec(2, seq('if', /\s*/, '{'))),
+        for_error: _ => token(prec(2, seq('for', /\s*/, '{'))),
+        while_error: _ => token(prec(2, seq('while', /\s*/, '{'))),
+        // end errors
         // endregion
 
         // region top_definition
@@ -118,8 +123,6 @@ module.exports = grammar({
         // region rust_expr_simple
         rust_expr_simple: $ => seq(
             optional($.hash_symbol),
-            // $.expr_simple,
-            // optional(repeat1($._chain_segment))
             field('expr', alias($.rust_expr_simple_content, $.source_file)),
         ),
 
@@ -127,7 +130,7 @@ module.exports = grammar({
             seq($._expr_simple, optional(repeat1($._chain_segment))),
 
         _chain_segment: $ => prec(1, choice(
-            seq(token('('), repeat(choice($._nested_content, /[^)]/)), ')'),
+            seq('(', repeat(choice($._nested_content, /[^)]/)), ')'),
             seq('[', repeat(choice($._nested_content, /[^\]]/)), ']'),
         )),
 
@@ -162,6 +165,11 @@ module.exports = grammar({
             $.if_stmt,
             $.for_stmt,
             $.while_stmt,
+
+            // errors
+            alias($.if_error, $.ERROR),
+            alias($.for_error, $.ERROR),
+            alias($.while_error, $.ERROR),
         ),
 
         if_stmt: $ => seq(

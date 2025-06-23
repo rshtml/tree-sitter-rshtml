@@ -37,6 +37,10 @@
         "required": false,
         "types": [
           {
+            "type": "ERROR",
+            "named": true
+          },
+          {
             "type": "comment_block",
             "named": true
           },
@@ -147,6 +151,10 @@
         "required": false,
         "types": [
           {
+            "type": "ERROR",
+            "named": true
+          },
+          {
             "type": "comment_block",
             "named": true
           },
@@ -246,6 +254,10 @@
         "multiple": true,
         "required": false,
         "types": [
+          {
+            "type": "ERROR",
+            "named": true
+          },
           {
             "type": "comment_block",
             "named": true
@@ -390,6 +402,10 @@
       "required": false,
       "types": [
         {
+          "type": "ERROR",
+          "named": true
+        },
+        {
           "type": "comment_block",
           "named": true
         },
@@ -441,6 +457,10 @@
         "multiple": true,
         "required": false,
         "types": [
+          {
+            "type": "ERROR",
+            "named": true
+          },
           {
             "type": "comment_block",
             "named": true
@@ -508,6 +528,10 @@
   {
     "type": ")",
     "named": false
+  },
+  {
+    "type": "ERROR",
+    "named": true
   },
   {
     "type": "[",
