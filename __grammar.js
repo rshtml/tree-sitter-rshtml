@@ -43,6 +43,10 @@ const COMPONENT_TAG_IDENTIFIER = /[A-Z][a-zA-Z0-9_]*(\.[A-Z][a-zA-Z0-9_]*)*/;
 module.exports = grammar({
     name: 'rshtml',
 
+    // sonra kullanılacak
+    component_tag_identifier: $ => token(/[A-Z][a-zA-Z0-9]*(\.[A-Z][a-zA-Z0-9]*)*/), // endregion
+
+
     extras: $ => [
         /\s/, // Boşluk, tab, yeni satır karakterleri
         $.comment_block // Yorumlar da her yerde olabilir.

@@ -1,4 +1,11 @@
-@extends
+@for i in self.data {
+    <p>Item @i</p>
+}
+
+@while self.count < 10 {
+    <p> Counter is: @self.count </p>
+    @self.increment()
+}
 
 @if self.is_ok { @@
     <p>We hope you find what you're looking for.</p>
@@ -12,7 +19,7 @@
 } else {
     <p>What is it</p>
 }
-
+@*
 @if !self.is_ok {
     <p>We hope you find what you're looking for.</p>
 } else if self.count > 0 {
@@ -33,4 +40,4 @@
     <p>Something get bigger.</p>
 } else {
     <p>What is it</p>
-}
+}*@

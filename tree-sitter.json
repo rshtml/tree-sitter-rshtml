@@ -10,7 +10,9 @@
         "rs.html"
       ],
       "injection-regex": "^rshtml$",
-      "class-name": "TreeSitterRshtml"
+      "class-name": "TreeSitterRshtml",
+      "highlights": "queries/highlights.scm",
+      "injections": "queries/injections.scm"
     }
   ],
   "metadata": {
