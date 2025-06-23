@@ -115,6 +115,29 @@ module.exports = grammar({
             choice($._rust_stmt, $.rust_expr_paren, $.rust_expr_simple),
         ),
 
+        // region rust_expr_simple
+        rust_expr_simple: $ => seq(
+            optional($.hash_symbol),
+            // $.expr_simple,
+            // optional(repeat1($._chain_segment))
+            field('expr', alias($.rust_expr_simple_content, $.source_file)),
+        ),
+
+        rust_expr_simple_content: $ =>
+            seq($._expr_simple, optional(repeat1($._chain_segment))),
+
+        _chain_segment: $ => prec(1, choice(
+            seq(token('('), repeat(choice($._nested_content, /[^)]/)), ')'),
+            seq('[', repeat(choice($._nested_content, /[^\]]/)), ']'),
+        )),
+
+        _nested_content: $ => choice(
+            seq('(', repeat(choice($._nested_content, /[^)]/)), ')'),
+            seq('[', repeat(choice($._nested_content, /[^\]]/)), ']'),
+            $._string_line
+        ),
+        // endregion
+
         // region rust_expr_paren
         rust_expr_paren: $ => seq(
             optional($.hash_symbol),
@@ -159,29 +182,6 @@ module.exports = grammar({
         while_stmt: $ => seq(
             field('head', alias($.while_, $.source_file)),
             $._inner_template
-        ),
-        // endregion
-
-        // region rust_expr_simple
-        rust_expr_simple: $ => seq(
-            optional($.hash_symbol),
-            // $.expr_simple,
-            // optional(repeat1($._chain_segment))
-            field('expr', alias($.rust_expr_simple_content, $.source_file)),
-        ),
-
-        rust_expr_simple_content: $ =>
-            seq($._expr_simple, optional(repeat1($._chain_segment))),
-
-        _chain_segment: $ => prec(1, choice(
-            seq(token('('), repeat(choice($._nested_content, /[^)]/)), ')'),
-            seq('[', repeat(choice($._nested_content, /[^\]]/)), ']'),
-        )),
-
-        _nested_content: $ => choice(
-            seq('(', repeat(choice($._nested_content, /[^)]/)), ')'),
-            seq('[', repeat(choice($._nested_content, /[^\]]/)), ']'),
-            $._string_line
         ),
         // endregion
 
