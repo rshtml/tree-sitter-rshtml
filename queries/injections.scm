@@ -1,6 +1,11 @@
-(text) @html
+(html_text
+  text: (source_file) @html)
 
-(inner_text) @html
+(html_inner_text
+  text: (source_file) @html)
+
+(rust_expr_simple
+  expr: (source_file) @rust)
 
 (rust_expr_paren
   expr: (source_file) @rust)

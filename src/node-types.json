@@ -41,7 +41,15 @@
             "named": true
           },
           {
-            "type": "inner_text",
+            "type": "for_stmt",
+            "named": true
+          },
+          {
+            "type": "html_inner_text",
+            "named": true
+          },
+          {
+            "type": "if_stmt",
             "named": true
           },
           {
@@ -49,11 +57,15 @@
             "named": true
           },
           {
-            "type": "rust_stmt",
+            "type": "rust_expr_simple",
             "named": true
           },
           {
             "type": "start_symbol",
+            "named": true
+          },
+          {
+            "type": "while_stmt",
             "named": true
           }
         ]
@@ -139,7 +151,15 @@
             "named": true
           },
           {
-            "type": "inner_text",
+            "type": "for_stmt",
+            "named": true
+          },
+          {
+            "type": "html_inner_text",
+            "named": true
+          },
+          {
+            "type": "if_stmt",
             "named": true
           },
           {
@@ -147,11 +167,15 @@
             "named": true
           },
           {
-            "type": "rust_stmt",
+            "type": "rust_expr_simple",
             "named": true
           },
           {
             "type": "start_symbol",
+            "named": true
+          },
+          {
+            "type": "while_stmt",
             "named": true
           }
         ]
@@ -183,6 +207,38 @@
     }
   },
   {
+    "type": "html_inner_text",
+    "named": true,
+    "fields": {
+      "text": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "source_file",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "html_text",
+    "named": true,
+    "fields": {
+      "text": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "source_file",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "if_stmt",
     "named": true,
     "fields": {
@@ -195,7 +251,15 @@
             "named": true
           },
           {
-            "type": "inner_text",
+            "type": "for_stmt",
+            "named": true
+          },
+          {
+            "type": "html_inner_text",
+            "named": true
+          },
+          {
+            "type": "if_stmt",
             "named": true
           },
           {
@@ -203,11 +267,15 @@
             "named": true
           },
           {
-            "type": "rust_stmt",
+            "type": "rust_expr_simple",
             "named": true
           },
           {
             "type": "start_symbol",
+            "named": true
+          },
+          {
+            "type": "while_stmt",
             "named": true
           }
         ]
@@ -287,23 +355,26 @@
     }
   },
   {
-    "type": "rust_stmt",
+    "type": "rust_expr_simple",
     "named": true,
-    "fields": {},
+    "fields": {
+      "expr": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "source_file",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "for_stmt",
-          "named": true
-        },
-        {
-          "type": "if_stmt",
-          "named": true
-        },
-        {
-          "type": "while_stmt",
+          "type": "hash_symbol",
           "named": true
         }
       ]
@@ -327,11 +398,23 @@
           "named": true
         },
         {
+          "type": "for_stmt",
+          "named": true
+        },
+        {
+          "type": "html_text",
+          "named": true
+        },
+        {
+          "type": "if_stmt",
+          "named": true
+        },
+        {
           "type": "rust_expr_paren",
           "named": true
         },
         {
-          "type": "rust_stmt",
+          "type": "rust_expr_simple",
           "named": true
         },
         {
@@ -339,11 +422,16 @@
           "named": true
         },
         {
-          "type": "text",
+          "type": "while_stmt",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": "string_line",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "while_stmt",
@@ -358,7 +446,15 @@
             "named": true
           },
           {
-            "type": "inner_text",
+            "type": "for_stmt",
+            "named": true
+          },
+          {
+            "type": "html_inner_text",
+            "named": true
+          },
+          {
+            "type": "if_stmt",
             "named": true
           },
           {
@@ -366,11 +462,15 @@
             "named": true
           },
           {
-            "type": "rust_stmt",
+            "type": "rust_expr_simple",
             "named": true
           },
           {
             "type": "start_symbol",
+            "named": true
+          },
+          {
+            "type": "while_stmt",
             "named": true
           }
         ]
@@ -430,23 +530,11 @@
     "named": true
   },
   {
-    "type": "inner_text",
-    "named": true
-  },
-  {
     "type": "open_comment",
     "named": true
   },
   {
     "type": "start_symbol",
-    "named": true
-  },
-  {
-    "type": "string_line",
-    "named": true
-  },
-  {
-    "type": "text",
     "named": true
   },
   {

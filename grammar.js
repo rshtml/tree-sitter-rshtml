@@ -43,6 +43,7 @@ module.exports = grammar({
         // region tokens
         rust_identifier: _ => token(RUST_IDENTIFIER),
         string_line: _ => token(choice(DOUBLE_QUOTED_STRING, SINGLE_QUOTED_STRING)),
+        _string_line: _ => token(choice(DOUBLE_QUOTED_STRING, SINGLE_QUOTED_STRING)),
 
         start_symbol: _ => token(START_SYMBOL),
         hash_symbol: _ => token(HASH_SYMBOL),
@@ -56,15 +57,23 @@ module.exports = grammar({
         open_comment: _ => token('@*'),
         close_comment: _ => token('*@'),
 
-        text: _ => token(/(@@|@@}|@@\{|[^@])+/),
-        inner_text: $ => token(/(@@|@@}|@@\{|[^@}])+/),
+        _escaped: _ => token(choice('@@', '@@{', '@@}')),
 
-        if_: _ => token(/\s*if\s+[^@{}]+/),
-        else_: _ => token(prec(1, /\s*else\s*/)),
+        text: _ => token(prec(-1, /[^@]+/)), ///(@@|@@}|@@\{|[^@])+/
+        inner_text: _ => token(prec(-1, /[^@}]+/)), ///(@@|@@}|@@\{|[^@}])+/
 
-        while_: _ => token(seq('while', STMT_HEAD_COND)),
-        for_: _ => token(seq('for', STMT_HEAD_COND)),
-        match_: _ => token(seq('match', STMT_HEAD_COND)),
+        if_: _ => token(prec(2, seq('if', STMT_HEAD_COND))), ///\s*if\s+[^@{}]+/
+        else_: _ => token(prec(3, 'else')), ///\s*else\s*/
+
+        while_: _ => token(prec(2, seq('while', STMT_HEAD_COND))),
+        for_: _ => token(prec(2, seq('for', STMT_HEAD_COND))),
+        match_: _ => token(prec(2, seq('match', STMT_HEAD_COND))),
+
+        _expr_simple: _ => token(prec(1, seq(
+            repeat('&'),
+            RUST_IDENTIFIER,
+            repeat(seq(choice('&', '.', '::'), RUST_IDENTIFIER))
+        ))),
 
         extends_: _ => token('extends'),
         // endregion
@@ -73,7 +82,7 @@ module.exports = grammar({
         _template: $ => choice(
             $.comment_block,
             $._block,
-            $.text
+            $.html_text
         ),
 
         _inner_template: $ => seq(
@@ -81,10 +90,21 @@ module.exports = grammar({
             field('body', optional(repeat(choice(
                 $.comment_block,
                 $._block,
-                $.inner_text
+                $.html_inner_text,
             )))),
             $.close_brace
         ),
+
+        html_text: $ => field('text', alias(choice(
+                $._escaped,
+                $.text
+            ),
+            $.source_file)),
+        html_inner_text: $ => field('text', alias(choice(
+                $._escaped,
+                $.inner_text
+            ),
+            $.source_file)),
 
         extends_directive: $ => seq($.start_symbol, $.extends_, choice(seq($.open_paren, optional(field('path', $.string_line)), $.close_paren), /\s/,)),
 
@@ -92,12 +112,21 @@ module.exports = grammar({
 
         _block: $ => seq(
             $.start_symbol,
-            choice($.rust_stmt, $.rust_expr_paren)
+            choice($._rust_stmt, $.rust_expr_paren, $.rust_expr_simple),
         ),
 
         // region rust_expr_paren
-        rust_expr_paren: $ => seq(optional($.hash_symbol), $.open_paren, optional(field('expr', alias($.rust_expr_paren_body, $.source_file))), $.close_paren),
-        rust_expr_paren_body: $ => repeat1(choice($._nested_expression, /[^)]/)),
+        rust_expr_paren: $ => seq(
+            optional($.hash_symbol),
+            $.open_paren,
+            optional(
+                field('expr', alias($.rust_expr_paren_body, $.source_file))
+            ),
+            $.close_paren),
+        rust_expr_paren_body: $ => repeat1(choice(
+            $._nested_expression,
+            /[^)]/
+        )),
         _nested_expression: $ => choice(
             seq('(', repeat(choice($._nested_expression, /[^)]/)), ')'),
             seq('{', repeat(choice($._nested_expression, /[^}]/)), '}'),
@@ -106,7 +135,7 @@ module.exports = grammar({
         // endregion
 
         // region rust_stmt
-        rust_stmt: $ => choice(
+        _rust_stmt: $ => choice(
             $.if_stmt,
             $.for_stmt,
             $.while_stmt,
@@ -134,7 +163,26 @@ module.exports = grammar({
         // endregion
 
         // region rust_expr_simple
+        rust_expr_simple: $ => seq(
+            optional($.hash_symbol),
+            // $.expr_simple,
+            // optional(repeat1($._chain_segment))
+            field('expr', alias($.rust_expr_simple_content, $.source_file)),
+        ),
 
+        rust_expr_simple_content: $ =>
+            seq($._expr_simple, optional(repeat1($._chain_segment))),
+
+        _chain_segment: $ => prec(1, choice(
+            seq(token('('), repeat(choice($._nested_content, /[^)]/)), ')'),
+            seq('[', repeat(choice($._nested_content, /[^\]]/)), ']'),
+        )),
+
+        _nested_content: $ => choice(
+            seq('(', repeat(choice($._nested_content, /[^)]/)), ')'),
+            seq('[', repeat(choice($._nested_content, /[^\]]/)), ']'),
+            $._string_line
+        ),
         // endregion
 
     }
