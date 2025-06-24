@@ -141,18 +141,40 @@
         "value": "]"
       }
     },
-    "open_comment": {
+    "comma": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "@*"
+        "value": ","
+      }
+    },
+    "fat_arrow": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "=>"
+      }
+    },
+    "open_comment": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 4,
+        "content": {
+          "type": "STRING",
+          "value": "@*"
+        }
       }
     },
     "close_comment": {
       "type": "TOKEN",
       "content": {
-        "type": "STRING",
-        "value": "*@"
+        "type": "PREC",
+        "value": 4,
+        "content": {
+          "type": "STRING",
+          "value": "*@"
+        }
       }
     },
     "_escaped": {
@@ -422,6 +444,30 @@
             {
               "type": "STRING",
               "value": "while"
+            },
+            {
+              "type": "PATTERN",
+              "value": "\\s*"
+            },
+            {
+              "type": "STRING",
+              "value": "{"
+            }
+          ]
+        }
+      }
+    },
+    "match_error": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 2,
+        "content": {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "match"
             },
             {
               "type": "PATTERN",
@@ -996,6 +1042,10 @@
           "name": "while_stmt"
         },
         {
+          "type": "SYMBOL",
+          "name": "match_stmt"
+        },
+        {
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
@@ -1018,6 +1068,15 @@
           "content": {
             "type": "SYMBOL",
             "name": "while_error"
+          },
+          "named": true,
+          "value": "ERROR"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "match_error"
           },
           "named": true,
           "value": "ERROR"
@@ -1048,12 +1107,8 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "PREC",
-              "value": 200,
-              "content": {
-                "type": "SYMBOL",
-                "name": "else_clause"
-              }
+              "type": "SYMBOL",
+              "name": "else_clause"
             },
             {
               "type": "BLANK"
@@ -1136,6 +1191,83 @@
           "name": "_inner_template"
         }
       ]
+    },
+    "match_stmt": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "head",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "match_"
+            },
+            "named": true,
+            "value": "source_file"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "open_brace"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "match_stmt_arm"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "close_brace"
+        }
+      ]
+    },
+    "match_stmt_arm": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "pattern",
+          "content": {
+            "type": "SYMBOL",
+            "name": "match_arm_pattern"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "fat_arrow"
+        },
+        {
+          "type": "FIELD",
+          "name": "expr",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_inner_template"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "comma"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "match_arm_pattern": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "([^=@]+|=([^>]))+"
+      }
     }
   },
   "extras": [

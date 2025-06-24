@@ -19,6 +19,7 @@
 //         seq('[', $._nested_content, ']')
 //     ))
 // )),
+// )),
 //
 //     _nested_content: $ => choice(
 //     seq('(', repeat($._nested_content), ')'),

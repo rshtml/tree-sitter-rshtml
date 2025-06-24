@@ -23,6 +23,8 @@ const OPEN_PAREN = "(";
 const CLOSE_PAREN = ")";
 const OPEN_BRACKET = "[";
 const CLOSE_BRACKET = "]";
+const FAT_ARROW = "=>";
+const COMMA = ",";
 
 const STMT_HEAD_COND = /\s*[^@{}\s][^@{}]*/; // /\s*[^@{}\s][^@{}]*/; // /[^@{}]+/;
 
@@ -52,9 +54,11 @@ module.exports = grammar({
         close_paren: _ => token(CLOSE_PAREN),
         open_bracket: _ => token(OPEN_BRACKET),
         close_bracket: _ => token(CLOSE_BRACKET),
+        comma: _ => token(COMMA),
+        fat_arrow: _ => token(FAT_ARROW),
 
-        open_comment: _ => token('@*'),
-        close_comment: _ => token('*@'),
+        open_comment: _ => token(prec(4, '@*')),
+        close_comment: _ => token(prec(4, '*@')),
 
         _escaped: _ => token(choice('@@', '@@{', '@@}')),
 
@@ -74,12 +78,15 @@ module.exports = grammar({
             repeat(seq(choice('&', '.', '::'), RUST_IDENTIFIER))
         ))),
 
+        match_arm_pattern: _ => token(/([^=@]+|=([^>]))+/),
+
         extends_: _ => token('extends'),
 
         // errors
         if_error: _ => token(prec(2, seq('if', /\s*/, '{'))),
         for_error: _ => token(prec(2, seq('for', /\s*/, '{'))),
         while_error: _ => token(prec(2, seq('while', /\s*/, '{'))),
+        match_error: _ => token(prec(2, seq('match', /\s*/, '{'))),
         // end errors
         // endregion
 
@@ -165,17 +172,19 @@ module.exports = grammar({
             $.if_stmt,
             $.for_stmt,
             $.while_stmt,
+            $.match_stmt,
 
             // errors
             alias($.if_error, $.ERROR),
             alias($.for_error, $.ERROR),
             alias($.while_error, $.ERROR),
+            alias($.match_error, $.ERROR),
         ),
 
         if_stmt: $ => seq(
             field('head', alias($.if_, $.source_file)),
             $._inner_template,
-            optional(prec(200, $.else_clause))
+            optional($.else_clause)
         ),
         else_clause: $ => seq(
             field('head', alias($.else_, $.source_file)),
@@ -190,6 +199,19 @@ module.exports = grammar({
         while_stmt: $ => seq(
             field('head', alias($.while_, $.source_file)),
             $._inner_template
+        ),
+
+        match_stmt: $ => seq(
+            field('head', alias($.match_, $.source_file)),
+            $.open_brace,
+            repeat($.match_stmt_arm),
+            $.close_brace
+        ),
+        match_stmt_arm: $ => seq(
+            field('pattern', $.match_arm_pattern),
+            $.fat_arrow,
+            field('expr', $._inner_template),
+            optional($.comma)
         ),
         // endregion
 

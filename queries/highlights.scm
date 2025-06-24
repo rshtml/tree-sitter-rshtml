@@ -9,6 +9,9 @@
 ;(open_bracket) @punctuation.bracket
 ;(close_bracket) @punctuation.bracket
 
+(comma) @operator
+(fat_arrow) @operator
+
 (string_line) @string
 
 (extends_) @keyword
