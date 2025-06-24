@@ -87,6 +87,7 @@ module.exports = grammar({
 
         extends_: _ => token(prec(2, 'extends')),
         raw_: _ => token(prec(2, 'raw')),
+        _raw_text: $ => token(/[^{}]+/),
 
         // errors
         if_error: _ => token(prec(2, seq('if', /\s*/, '{'))),
@@ -245,9 +246,8 @@ module.exports = grammar({
         )),
         _raw_nested_content: $ => choice(
             seq('{', optional(repeat1($._raw_nested_content)), '}'),
-            $._raw_content_token
+            $._raw_text
         ),
-        _raw_content_token: $ => token(prec(1, /[^{}]+/)),
         // endregion
 
     }
