@@ -14,11 +14,12 @@
 
 (string_line) @string
 
-(extends_) @keyword
-
 (comment_block) @comment
 (open_comment) @operetor
 (close_comment) @operetor
 
 (continue_) @keyword
 (break_) @keyword
+
+(extends_) @keyword
+(raw_) @keyword

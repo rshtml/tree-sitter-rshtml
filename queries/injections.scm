@@ -25,3 +25,9 @@
   head: (source_file) @rust)
 (match_stmt_arm
   pattern: (source_file) @rust)
+
+(match_text
+  text: (source_file) @html)
+
+(raw_content
+  content: (source_file) @html)

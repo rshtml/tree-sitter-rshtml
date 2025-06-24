@@ -61,6 +61,10 @@
             "named": true
           },
           {
+            "type": "raw_block",
+            "named": true
+          },
+          {
             "type": "rust_expr_paren",
             "named": true
           },
@@ -179,6 +183,10 @@
             "named": true
           },
           {
+            "type": "raw_block",
+            "named": true
+          },
+          {
             "type": "rust_expr_paren",
             "named": true
           },
@@ -284,6 +292,10 @@
           },
           {
             "type": "match_stmt",
+            "named": true
+          },
+          {
+            "type": "raw_block",
             "named": true
           },
           {
@@ -401,6 +413,10 @@
             "named": true
           },
           {
+            "type": "raw_block",
+            "named": true
+          },
+          {
             "type": "rust_expr_paren",
             "named": true
           },
@@ -464,6 +480,10 @@
           },
           {
             "type": "open_brace",
+            "named": true
+          },
+          {
+            "type": "raw_block",
             "named": true
           },
           {
@@ -535,6 +555,49 @@
     "type": "open_paren",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "raw_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "close_brace",
+          "named": true
+        },
+        {
+          "type": "open_brace",
+          "named": true
+        },
+        {
+          "type": "raw_",
+          "named": true
+        },
+        {
+          "type": "raw_content",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "raw_content",
+    "named": true,
+    "fields": {
+      "content": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "source_file",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "rust_expr_paren",
@@ -634,6 +697,10 @@
           "named": true
         },
         {
+          "type": "raw_block",
+          "named": true
+        },
+        {
           "type": "rust_expr_paren",
           "named": true
         },
@@ -687,6 +754,10 @@
           },
           {
             "type": "match_stmt",
+            "named": true
+          },
+          {
+            "type": "raw_block",
             "named": true
           },
           {
@@ -783,6 +854,10 @@
   },
   {
     "type": "open_comment",
+    "named": true
+  },
+  {
+    "type": "raw_",
     "named": true
   },
   {

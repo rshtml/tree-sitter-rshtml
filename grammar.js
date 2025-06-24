@@ -85,7 +85,8 @@ module.exports = grammar({
         continue_: _ => token('continue'),
         break_: _ => token('break'),
 
-        extends_: _ => token('extends'),
+        extends_: _ => token(prec(2, 'extends')),
+        raw_: _ => token(prec(2, 'raw')),
 
         // errors
         if_error: _ => token(prec(2, seq('if', /\s*/, '{'))),
@@ -129,7 +130,7 @@ module.exports = grammar({
 
         _block: $ => seq(
             $.start_symbol,
-            choice($._rust_stmt, $.rust_expr_paren, $.rust_expr_simple),
+            choice($.raw_block, $._rust_stmt, $.rust_expr_paren, $.rust_expr_simple),
         ),
 
         // region rust_expr_simple
@@ -229,6 +230,24 @@ module.exports = grammar({
             repeat1(choice($._escaped, $._match_inner_text)),
             $.source_file
         )),
+        // endregion
+
+        // region raw_block
+        raw_block: $ => seq(
+            $.raw_,
+            $.open_brace,
+            optional($.raw_content),
+            $.close_brace
+        ),
+        raw_content: $ => field('content', alias(
+            repeat1($._raw_nested_content),
+            $.source_file
+        )),
+        _raw_nested_content: $ => choice(
+            seq('{', optional(repeat1($._raw_nested_content)), '}'),
+            $._raw_content_token
+        ),
+        _raw_content_token: $ => token(prec(1, /[^{}]+/)),
         // endregion
 
     }
