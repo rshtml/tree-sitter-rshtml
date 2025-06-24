@@ -20,3 +20,8 @@
 
 (while_stmt
   head: (source_file) @rust)
+
+(match_stmt
+  head: (source_file) @rust)
+(match_stmt_arm
+  pattern: (source_file) @rust)

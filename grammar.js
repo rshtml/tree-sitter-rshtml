@@ -57,13 +57,13 @@ module.exports = grammar({
         comma: _ => token(COMMA),
         fat_arrow: _ => token(FAT_ARROW),
 
-        open_comment: _ => token(prec(4, '@*')),
-        close_comment: _ => token(prec(4, '*@')),
+        open_comment: _ => token('@*'),
+        close_comment: _ => token('*@'),
 
         _escaped: _ => token(choice('@@', '@@{', '@@}')),
 
-        text: _ => token(prec(-1, /[^@]+/)), ///(@@|@@}|@@\{|[^@])+/
-        inner_text: _ => token(prec(-1, /[^@}]+/)), ///(@@|@@}|@@\{|[^@}])+/
+        _text: _ => token(prec(-1, /[^@]+/)), ///(@@|@@}|@@\{|[^@])+/
+        _inner_text: _ => token(prec(-1, /[^@}]+/)), ///(@@|@@}|@@\{|[^@}])+/
 
         if_: _ => token(prec(2, seq('if', /\s+/, STMT_HEAD_COND))), ///\s*if\s+[^@{}]+/
         else_: _ => token(prec(3, 'else')), ///\s*else\s*/
@@ -78,7 +78,12 @@ module.exports = grammar({
             repeat(seq(choice('&', '.', '::'), RUST_IDENTIFIER))
         ))),
 
-        match_arm_pattern: _ => token(/([^=@]+|=([^>]))+/),
+        match_arm_pattern: _ => token(/[^=@}]([^=@]+|=([^>]))+/),
+        _match_inner_text: _ => token(prec(-1, /([^\r\n@},]|(,[^\r\n}])+)+/)),
+        match_arm_end: _ => token(/( \t)*,\s*/),
+
+        continue_: _ => token('continue'),
+        break_: _ => token('break'),
 
         extends_: _ => token('extends'),
 
@@ -109,12 +114,12 @@ module.exports = grammar({
 
         html_text: $ => field('text', alias(choice(
                 $._escaped,
-                $.text
+                $._text
             ),
             $.source_file)),
         html_inner_text: $ => field('text', alias(choice(
                 $._escaped,
-                $.inner_text
+                $._inner_text
             ),
             $.source_file)),
 
@@ -204,15 +209,26 @@ module.exports = grammar({
         match_stmt: $ => seq(
             field('head', alias($.match_, $.source_file)),
             $.open_brace,
-            repeat($.match_stmt_arm),
+            repeat1($.match_stmt_arm),
             $.close_brace
         ),
         match_stmt_arm: $ => seq(
-            field('pattern', $.match_arm_pattern),
+            field('pattern', alias($.match_arm_pattern, $.source_file)),
             $.fat_arrow,
-            field('expr', $._inner_template),
-            optional($.comma)
+            field('expr', choice(
+                $._inner_template,
+                $.continue_,
+                $.break_,
+                $.rust_expr_paren,
+                $.rust_expr_simple,
+                $.match_text
+            )),
+            $.match_arm_end
         ),
+        match_text: $ => field('text', alias(
+            repeat1(choice($._escaped, $._match_inner_text)),
+            $.source_file
+        )),
         // endregion
 
     }

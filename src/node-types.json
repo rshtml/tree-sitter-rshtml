@@ -427,11 +427,19 @@
             "named": true
           },
           {
+            "type": "break_",
+            "named": true
+          },
+          {
             "type": "close_brace",
             "named": true
           },
           {
             "type": "comment_block",
+            "named": true
+          },
+          {
+            "type": "continue_",
             "named": true
           },
           {
@@ -448,6 +456,10 @@
           },
           {
             "type": "match_stmt",
+            "named": true
+          },
+          {
+            "type": "match_text",
             "named": true
           },
           {
@@ -477,7 +489,7 @@
         "required": true,
         "types": [
           {
-            "type": "match_arm_pattern",
+            "type": "source_file",
             "named": true
           }
         ]
@@ -488,14 +500,30 @@
       "required": true,
       "types": [
         {
-          "type": "comma",
+          "type": "fat_arrow",
           "named": true
         },
         {
-          "type": "fat_arrow",
+          "type": "match_arm_end",
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "match_text",
+    "named": true,
+    "fields": {
+      "text": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "source_file",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -726,11 +754,15 @@
     "named": false
   },
   {
+    "type": "break_",
+    "named": true
+  },
+  {
     "type": "close_comment",
     "named": true
   },
   {
-    "type": "comma",
+    "type": "continue_",
     "named": true
   },
   {
@@ -746,7 +778,7 @@
     "named": true
   },
   {
-    "type": "match_arm_pattern",
+    "type": "match_arm_end",
     "named": true
   },
   {

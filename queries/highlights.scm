@@ -9,7 +9,7 @@
 ;(open_bracket) @punctuation.bracket
 ;(close_bracket) @punctuation.bracket
 
-(comma) @operator
+;(comma) @operator
 (fat_arrow) @operator
 
 (string_line) @string
@@ -19,3 +19,6 @@
 (comment_block) @comment
 (open_comment) @operetor
 (close_comment) @operetor
+
+(continue_) @keyword
+(break_) @keyword
