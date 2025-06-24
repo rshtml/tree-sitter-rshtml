@@ -155,6 +155,13 @@
         "value": "=>"
       }
     },
+    "at_colon": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "@:"
+      }
+    },
     "open_comment": {
       "type": "TOKEN",
       "content": {
@@ -398,15 +405,23 @@
     "continue_": {
       "type": "TOKEN",
       "content": {
-        "type": "STRING",
-        "value": "continue"
+        "type": "PREC",
+        "value": 2,
+        "content": {
+          "type": "STRING",
+          "value": "continue"
+        }
       }
     },
     "break_": {
       "type": "TOKEN",
       "content": {
-        "type": "STRING",
-        "value": "break"
+        "type": "PREC",
+        "value": 2,
+        "content": {
+          "type": "STRING",
+          "value": "break"
+        }
       }
     },
     "extends_": {
@@ -727,11 +742,23 @@
             },
             {
               "type": "SYMBOL",
+              "name": "rust_block"
+            },
+            {
+              "type": "SYMBOL",
               "name": "_rust_stmt"
             },
             {
               "type": "SYMBOL",
               "name": "rust_expr_paren"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "continue_"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "break_"
             },
             {
               "type": "SYMBOL",
@@ -1447,6 +1474,134 @@
           "name": "_raw_text"
         }
       ]
+    },
+    "rust_block": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "open_brace"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "REPEAT1",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_rust_block_content"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "close_brace"
+        }
+      ]
+    },
+    "_rust_block_content": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "text_line_directive"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "nested_block"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "rust_code"
+        }
+      ]
+    },
+    "text_line_directive": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "at_colon"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_tld_expr_simple"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "tld_text"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "_tld_expr_simple": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "start_symbol"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "rust_expr_simple"
+        }
+      ]
+    },
+    "tld_text": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[^@\\r\\n]+"
+        },
+        {
+          "type": "STRING",
+          "value": "@@"
+        }
+      ]
+    },
+    "text_block_tag": {
+      "type": "SEQ",
+      "members": []
+    },
+    "nested_block": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_rust_block_content"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "rust_code": {
+      "type": "PREC",
+      "value": -1,
+      "content": {
+        "type": "PATTERN",
+        "value": "[^@{}]+"
+      }
     }
   },
   "extras": [

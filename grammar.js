@@ -25,6 +25,7 @@ const OPEN_BRACKET = "[";
 const CLOSE_BRACKET = "]";
 const FAT_ARROW = "=>";
 const COMMA = ",";
+const AT_COLON = "@:";
 
 const STMT_HEAD_COND = /\s*[^@{}\s][^@{}]*/; // /\s*[^@{}\s][^@{}]*/; // /[^@{}]+/;
 
@@ -56,6 +57,7 @@ module.exports = grammar({
         close_bracket: _ => token(CLOSE_BRACKET),
         comma: _ => token(COMMA),
         fat_arrow: _ => token(FAT_ARROW),
+        at_colon: _ => token(AT_COLON),
 
         open_comment: _ => token('@*'),
         close_comment: _ => token('*@'),
@@ -82,8 +84,8 @@ module.exports = grammar({
         _match_inner_text: _ => token(prec(-1, /([^\r\n@},]|(,[^\r\n}])+)+/)),
         match_arm_end: _ => token(/( \t)*,\s*/),
 
-        continue_: _ => token('continue'),
-        break_: _ => token('break'),
+        continue_: _ => token(prec(2, 'continue')),
+        break_: _ => token(prec(2, 'break')),
 
         extends_: _ => token(prec(2, 'extends')),
         raw_: _ => token(prec(2, 'raw')),
@@ -132,7 +134,15 @@ module.exports = grammar({
 
         _block: $ => seq(
             $.start_symbol,
-            choice($.raw_block, $._rust_stmt, $.rust_expr_paren, $.rust_expr_simple),
+            choice(
+                $.raw_block,
+                $.rust_block,
+                $._rust_stmt,
+                $.rust_expr_paren,
+                $.continue_,
+                $.break_,
+                $.rust_expr_simple
+            ),
         ),
 
         // region rust_expr_simple
@@ -249,6 +259,35 @@ module.exports = grammar({
             seq('{', optional(repeat1($._raw_nested_content)), '}'),
             $._raw_text
         ),
+        // endregion
+
+        // region rust_block  ** NOT COMPLETE **
+        // html_text ve inner_text te @@ kaçışı kaçış olarak görünmelidir ayrıca @@{ ve @@}
+        // kaçışları kaldırılmalıdır. tdl_text te de kaçış olarak görünmelidir.
+        rust_block: $ => seq(
+            $.open_brace,
+            optional(repeat1($._rust_block_content)),
+            $.close_brace
+        ),
+
+        _rust_block_content: $ => choice(
+            $.text_line_directive,
+            //$.text_block_tag,
+            $.nested_block,
+            $.rust_code,
+        ),
+
+        text_line_directive: $ =>
+            seq($.at_colon, repeat(choice(
+                $._tld_expr_simple,
+                $.tld_text,
+            ))),
+        _tld_expr_simple: $ => seq($.start_symbol, $.rust_expr_simple),
+        tld_text: _ => choice(/[^@\r\n]+/, "@@"),
+
+        text_block_tag: $ => seq(),
+        nested_block: $ => seq('{', repeat($._rust_block_content), '}'),
+        rust_code: $ => prec(-1, /[^@{}]+/),
         // endregion
 
     }

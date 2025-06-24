@@ -11,6 +11,7 @@
 
 ;(comma) @operator
 (fat_arrow) @operator
+(at_colon) @operator
 
 (string_line) @string
 

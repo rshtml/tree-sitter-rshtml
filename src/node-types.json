@@ -41,7 +41,15 @@
             "named": true
           },
           {
+            "type": "break_",
+            "named": true
+          },
+          {
             "type": "comment_block",
+            "named": true
+          },
+          {
+            "type": "continue_",
             "named": true
           },
           {
@@ -62,6 +70,10 @@
           },
           {
             "type": "raw_block",
+            "named": true
+          },
+          {
+            "type": "rust_block",
             "named": true
           },
           {
@@ -163,7 +175,15 @@
             "named": true
           },
           {
+            "type": "break_",
+            "named": true
+          },
+          {
             "type": "comment_block",
+            "named": true
+          },
+          {
+            "type": "continue_",
             "named": true
           },
           {
@@ -184,6 +204,10 @@
           },
           {
             "type": "raw_block",
+            "named": true
+          },
+          {
+            "type": "rust_block",
             "named": true
           },
           {
@@ -275,7 +299,15 @@
             "named": true
           },
           {
+            "type": "break_",
+            "named": true
+          },
+          {
             "type": "comment_block",
+            "named": true
+          },
+          {
+            "type": "continue_",
             "named": true
           },
           {
@@ -296,6 +328,10 @@
           },
           {
             "type": "raw_block",
+            "named": true
+          },
+          {
+            "type": "rust_block",
             "named": true
           },
           {
@@ -393,7 +429,15 @@
             "named": true
           },
           {
+            "type": "break_",
+            "named": true
+          },
+          {
             "type": "comment_block",
+            "named": true
+          },
+          {
+            "type": "continue_",
             "named": true
           },
           {
@@ -414,6 +458,10 @@
           },
           {
             "type": "raw_block",
+            "named": true
+          },
+          {
+            "type": "rust_block",
             "named": true
           },
           {
@@ -487,6 +535,10 @@
             "named": true
           },
           {
+            "type": "rust_block",
+            "named": true
+          },
+          {
             "type": "rust_expr_paren",
             "named": true
           },
@@ -547,6 +599,29 @@
     }
   },
   {
+    "type": "nested_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "nested_block",
+          "named": true
+        },
+        {
+          "type": "rust_code",
+          "named": true
+        },
+        {
+          "type": "text_line_directive",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "open_brace",
     "named": true,
     "fields": {}
@@ -598,6 +673,42 @@
         ]
       }
     }
+  },
+  {
+    "type": "rust_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "close_brace",
+          "named": true
+        },
+        {
+          "type": "nested_block",
+          "named": true
+        },
+        {
+          "type": "open_brace",
+          "named": true
+        },
+        {
+          "type": "rust_code",
+          "named": true
+        },
+        {
+          "type": "text_line_directive",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "rust_code",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "rust_expr_paren",
@@ -673,7 +784,15 @@
           "named": true
         },
         {
+          "type": "break_",
+          "named": true
+        },
+        {
           "type": "comment_block",
+          "named": true
+        },
+        {
+          "type": "continue_",
           "named": true
         },
         {
@@ -701,6 +820,10 @@
           "named": true
         },
         {
+          "type": "rust_block",
+          "named": true
+        },
+        {
           "type": "rust_expr_paren",
           "named": true
         },
@@ -725,6 +848,38 @@
     "fields": {}
   },
   {
+    "type": "text_line_directive",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "at_colon",
+          "named": true
+        },
+        {
+          "type": "rust_expr_simple",
+          "named": true
+        },
+        {
+          "type": "start_symbol",
+          "named": true
+        },
+        {
+          "type": "tld_text",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "tld_text",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "while_stmt",
     "named": true,
     "fields": {
@@ -737,7 +892,15 @@
             "named": true
           },
           {
+            "type": "break_",
+            "named": true
+          },
+          {
             "type": "comment_block",
+            "named": true
+          },
+          {
+            "type": "continue_",
             "named": true
           },
           {
@@ -758,6 +921,10 @@
           },
           {
             "type": "raw_block",
+            "named": true
+          },
+          {
+            "type": "rust_block",
             "named": true
           },
           {
@@ -813,6 +980,10 @@
     "named": false
   },
   {
+    "type": "@@",
+    "named": false
+  },
+  {
     "type": "ERROR",
     "named": true
   },
@@ -823,6 +994,10 @@
   {
     "type": "]",
     "named": false
+  },
+  {
+    "type": "at_colon",
+    "named": true
   },
   {
     "type": "break_",
