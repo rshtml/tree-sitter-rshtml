@@ -89,12 +89,13 @@ module.exports = grammar({
         raw_: _ => token(prec(2, 'raw')),
         _raw_text: $ => token(/[^{}]+/),
 
-        // errors
+        // region errors
         if_error: _ => token(prec(2, seq('if', /\s*/, '{'))),
         for_error: _ => token(prec(2, seq('for', /\s*/, '{'))),
         while_error: _ => token(prec(2, seq('while', /\s*/, '{'))),
         match_error: _ => token(prec(2, seq('match', /\s*/, '{'))),
-        // end errors
+        // endregion
+
         // endregion
 
         // region top_definition
