@@ -459,6 +459,25 @@
         }
       }
     },
+    "_text_multiline": {
+      "type": "TOKEN",
+      "content": {
+        "type": "REPEAT1",
+        "content": {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[^@<]|<[^\\/]|<\\/[^t]|<\\/t[^e]|<\\/te[^x]|<\\/tex[^t]|<\\/text[^>]"
+            },
+            {
+              "type": "STRING",
+              "value": "@@"
+            }
+          ]
+        }
+      }
+    },
     "if_error": {
       "type": "TOKEN",
       "content": {
@@ -1518,6 +1537,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "text_block_tag"
+        },
+        {
+          "type": "SYMBOL",
           "name": "nested_block"
         },
         {
@@ -1543,8 +1566,17 @@
                 "name": "text_line"
               },
               {
-                "type": "SYMBOL",
-                "name": "_tld_expr_simple"
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "start_symbol"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "rust_expr_simple"
+                  }
+                ]
               }
             ]
           }
@@ -1555,19 +1587,6 @@
             "type": "PATTERN",
             "value": "[\\r\\n]"
           }
-        }
-      ]
-    },
-    "_tld_expr_simple": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "start_symbol"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "rust_expr_simple"
         }
       ]
     },
@@ -1586,7 +1605,76 @@
     },
     "text_block_tag": {
       "type": "SEQ",
-      "members": []
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "text_block_tag_open"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "text_multiline"
+              },
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "start_symbol"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "rust_expr_simple"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "text_block_tag_close"
+        }
+      ]
+    },
+    "text_block_tag_open": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "<text>"
+        }
+      }
+    },
+    "text_block_tag_close": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "</text>"
+        }
+      }
+    },
+    "text_multiline": {
+      "type": "FIELD",
+      "name": "text",
+      "content": {
+        "type": "ALIAS",
+        "content": {
+          "type": "SYMBOL",
+          "name": "_text_multiline"
+        },
+        "named": true,
+        "value": "source_file"
+      }
     },
     "nested_block": {
       "type": "SEQ",

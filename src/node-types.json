@@ -615,6 +615,10 @@
           "named": true
         },
         {
+          "type": "text_block_tag",
+          "named": true
+        },
+        {
           "type": "text_line_directive",
           "named": true
         }
@@ -696,6 +700,10 @@
         },
         {
           "type": "rust_code",
+          "named": true
+        },
+        {
+          "type": "text_block_tag",
           "named": true
         },
         {
@@ -848,6 +856,37 @@
     "fields": {}
   },
   {
+    "type": "text_block_tag",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "rust_expr_simple",
+          "named": true
+        },
+        {
+          "type": "start_symbol",
+          "named": true
+        },
+        {
+          "type": "text_block_tag_close",
+          "named": true
+        },
+        {
+          "type": "text_block_tag_open",
+          "named": true
+        },
+        {
+          "type": "text_multiline",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "text_line",
     "named": true,
     "fields": {
@@ -888,6 +927,22 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "text_multiline",
+    "named": true,
+    "fields": {
+      "text": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "source_file",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -1048,6 +1103,14 @@
   },
   {
     "type": "start_symbol",
+    "named": true
+  },
+  {
+    "type": "text_block_tag_close",
+    "named": true
+  },
+  {
+    "type": "text_block_tag_open",
     "named": true
   },
   {

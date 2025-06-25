@@ -35,7 +35,7 @@ module.exports = grammar({
     extras: $ => [/\s+/],
 
     conflicts: $ => [
-        //"[$.while_stmt, $.for_stmt, $.if_stmt]
+        //[$.text_multiline, $.text_block_tag_close]
     ],
 
     rules: {
@@ -92,6 +92,9 @@ module.exports = grammar({
         _raw_text: $ => token(/[^{}]+/),
 
         _text_line: _ => token(repeat1(choice(/[^@\r\n]/, '@@'))),
+        _text_multiline: _ => token(repeat1(choice(
+            /[^@<]|<[^\/]|<\/[^t]|<\/t[^e]|<\/te[^x]|<\/tex[^t]|<\/text[^>]/, '@@'
+        ))),
         // region errors
         if_error: _ => token(prec(2, seq('if', /\s*/, '{'))),
         for_error: _ => token(prec(2, seq('for', /\s*/, '{'))),
@@ -272,7 +275,7 @@ module.exports = grammar({
 
         _rust_block_content: $ => choice(
             $.text_line_directive,
-            //$.text_block_tag,
+            $.text_block_tag,
             $.nested_block,
             $.rust_code,
         ),
@@ -282,21 +285,35 @@ module.exports = grammar({
             $.at_colon,
             repeat(choice(
                 $.text_line,
-                $._tld_expr_simple,
+                seq($.start_symbol, $.rust_expr_simple),
             )),
             token.immediate(/[\r\n]/)
         ),
-        _tld_expr_simple: $ => seq($.start_symbol, $.rust_expr_simple),
         text_line: $ => field('text',
             alias($._text_line, $.source_file)
         ),
         // endregion
 
-        text_block_tag: $ => seq(),
+        // region text_block_tag
+        text_block_tag: $ => seq(
+            $.text_block_tag_open,
+            repeat(choice(
+                $.text_multiline,
+                seq($.start_symbol, $.rust_expr_simple),
+            )),
+            $.text_block_tag_close,
+        ),
+        text_block_tag_open: $ => token(prec(1, "<text>")),
+        text_block_tag_close: $ => token(prec(1, "</text>")),
+        text_multiline: $ => field('text',
+            alias($._text_multiline, $.source_file)
+        ),
+        // endregion
 
         nested_block: $ => seq('{', repeat($._rust_block_content), '}'),
         rust_code: $ => prec(-1, /[^@{}]+/),
         // endregion
 
     }
-});
+})
+;
