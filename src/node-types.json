@@ -848,6 +848,22 @@
     "fields": {}
   },
   {
+    "type": "text_line",
+    "named": true,
+    "fields": {
+      "text": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "source_file",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "text_line_directive",
     "named": true,
     "fields": {},
@@ -868,16 +884,11 @@
           "named": true
         },
         {
-          "type": "tld_text",
+          "type": "text_line",
           "named": true
         }
       ]
     }
-  },
-  {
-    "type": "tld_text",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "while_stmt",

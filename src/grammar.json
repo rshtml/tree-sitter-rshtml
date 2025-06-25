@@ -179,21 +179,8 @@
     "_escaped": {
       "type": "TOKEN",
       "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "@@"
-          },
-          {
-            "type": "STRING",
-            "value": "@@{"
-          },
-          {
-            "type": "STRING",
-            "value": "@@}"
-          }
-        ]
+        "type": "STRING",
+        "value": "@@"
       }
     },
     "_text": {
@@ -451,6 +438,25 @@
       "content": {
         "type": "PATTERN",
         "value": "[^{}]+"
+      }
+    },
+    "_text_line": {
+      "type": "TOKEN",
+      "content": {
+        "type": "REPEAT1",
+        "content": {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[^@\\r\\n]"
+            },
+            {
+              "type": "STRING",
+              "value": "@@"
+            }
+          ]
+        }
       }
     },
     "if_error": {
@@ -1534,13 +1540,20 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "_tld_expr_simple"
+                "name": "text_line"
               },
               {
                 "type": "SYMBOL",
-                "name": "tld_text"
+                "name": "_tld_expr_simple"
               }
             ]
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "[\\r\\n]"
           }
         }
       ]
@@ -1558,18 +1571,18 @@
         }
       ]
     },
-    "tld_text": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[^@\\r\\n]+"
+    "text_line": {
+      "type": "FIELD",
+      "name": "text",
+      "content": {
+        "type": "ALIAS",
+        "content": {
+          "type": "SYMBOL",
+          "name": "_text_line"
         },
-        {
-          "type": "STRING",
-          "value": "@@"
-        }
-      ]
+        "named": true,
+        "value": "source_file"
+      }
     },
     "text_block_tag": {
       "type": "SEQ",

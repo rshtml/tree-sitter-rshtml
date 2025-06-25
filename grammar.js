@@ -62,7 +62,7 @@ module.exports = grammar({
         open_comment: _ => token('@*'),
         close_comment: _ => token('*@'),
 
-        _escaped: _ => token(choice('@@', '@@{', '@@}')),
+        _escaped: _ => token('@@'),
 
         _text: _ => token(prec(-1, /[^@]+/)), ///(@@|@@}|@@\{|[^@])+/
         _inner_text: _ => token(prec(-1, /[^@}]+/)), ///(@@|@@}|@@\{|[^@}])+/
@@ -91,6 +91,7 @@ module.exports = grammar({
         raw_: _ => token(prec(2, 'raw')),
         _raw_text: $ => token(/[^{}]+/),
 
+        _text_line: _ => token(repeat1(choice(/[^@\r\n]/, '@@'))),
         // region errors
         if_error: _ => token(prec(2, seq('if', /\s*/, '{'))),
         for_error: _ => token(prec(2, seq('for', /\s*/, '{'))),
@@ -277,13 +278,18 @@ module.exports = grammar({
             $.rust_code,
         ),
 
-        text_line_directive: $ =>
-            seq($.at_colon, repeat(choice(
+        text_line_directive: $ => seq(
+            $.at_colon,
+            repeat(choice(
+                $.text_line,
                 $._tld_expr_simple,
-                $.tld_text,
-            ))),
+            )),
+            token.immediate(/[\r\n]/)
+        ),
         _tld_expr_simple: $ => seq($.start_symbol, $.rust_expr_simple),
-        tld_text: _ => choice(/[^@\r\n]+/, "@@"),
+        text_line: $ => field('text',
+            alias($._text_line, $.source_file)
+        ),
 
         text_block_tag: $ => seq(),
         nested_block: $ => seq('{', repeat($._rust_block_content), '}'),
