@@ -31,3 +31,12 @@
 
 (raw_content
   content: (source_file) @html)
+
+(rust_block_content
+  rust_block: (source_file) @rust)
+
+(text_multiline
+  text: (source_file) @html)
+
+(text_line
+  text: (source_file) @html)

@@ -1511,11 +1511,8 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "REPEAT1",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_rust_block_content"
-              }
+              "type": "SYMBOL",
+              "name": "rust_block_content"
             },
             {
               "type": "BLANK"
@@ -1528,26 +1525,38 @@
         }
       ]
     },
-    "_rust_block_content": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "text_line_directive"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "text_block_tag"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "nested_block"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "rust_code"
+    "rust_block_content": {
+      "type": "ALIAS",
+      "content": {
+        "type": "FIELD",
+        "name": "rust_block",
+        "content": {
+          "type": "REPEAT1",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "text_line_directive"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "text_block_tag"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "nested_block"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "rust_code"
+              }
+            ]
+          }
         }
-      ]
+      },
+      "named": true,
+      "value": "source_file"
     },
     "text_line_directive": {
       "type": "SEQ",
@@ -1684,11 +1693,16 @@
           "value": "{"
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_rust_block_content"
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "rust_block_content"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "STRING",
@@ -1697,11 +1711,102 @@
       ]
     },
     "rust_code": {
-      "type": "PREC",
-      "value": -1,
+      "type": "REPEAT1",
       "content": {
-        "type": "PATTERN",
-        "value": "[^@{}]+"
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_line_comment_start"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_line_comment"
+              },
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[\\r\\n]"
+                }
+              }
+            ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_block_comment_start"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_block_comment"
+              },
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "STRING",
+                  "value": "*/"
+                }
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_rust_code"
+          }
+        ]
+      }
+    },
+    "_rust_code": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -2,
+        "content": {
+          "type": "PATTERN",
+          "value": "([^@{}\\/]|\\/[^\\/*])+"
+        }
+      }
+    },
+    "_line_comment_start": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "//"
+      }
+    },
+    "_line_comment": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "PATTERN",
+          "value": "[^\\r\\n]+"
+        }
+      }
+    },
+    "_block_comment_start": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "/*"
+      }
+    },
+    "_block_comment": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "PATTERN",
+          "value": "([^*]|\\*[^\\/])+"
+        }
       }
     }
   },
@@ -1711,7 +1816,11 @@
       "value": "\\s+"
     }
   ],
-  "conflicts": [],
+  "conflicts": [
+    [
+      "rust_code"
+    ]
+  ],
   "precedences": [],
   "externals": [],
   "inline": [],

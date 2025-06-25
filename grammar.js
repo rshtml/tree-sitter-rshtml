@@ -35,7 +35,7 @@ module.exports = grammar({
     extras: $ => [/\s+/],
 
     conflicts: $ => [
-        //[$.text_multiline, $.text_block_tag_close]
+        [$.rust_code]
     ],
 
     rules: {
@@ -266,19 +266,20 @@ module.exports = grammar({
         // endregion
 
         // region rust_block  ** NOT COMPLETE **
-        // **rust_code is not complete**
+        // **rust_code is not complete** // add string support
         rust_block: $ => seq(
             $.open_brace,
-            optional(repeat1($._rust_block_content)),
+            optional($.rust_block_content),
             $.close_brace
         ),
 
-        _rust_block_content: $ => choice(
-            $.text_line_directive,
-            $.text_block_tag,
-            $.nested_block,
-            $.rust_code,
-        ),
+        rust_block_content: $ =>
+            alias(field('rust_block', repeat1(choice(
+                $.text_line_directive,
+                $.text_block_tag,
+                $.nested_block,
+                $.rust_code,
+            ))), $.source_file),
 
         // region text_line_directive
         text_line_directive: $ => seq(
@@ -310,8 +311,17 @@ module.exports = grammar({
         ),
         // endregion
 
-        nested_block: $ => seq('{', repeat($._rust_block_content), '}'),
-        rust_code: $ => prec(-1, /[^@{}]+/),
+        nested_block: $ => seq('{', optional($.rust_block_content), '}'),
+        rust_code: $ => repeat1(choice(
+            seq($._line_comment_start, $._line_comment, token.immediate(/[\r\n]/)),
+            seq($._block_comment_start, $._block_comment, token.immediate('*/')),
+            $._rust_code
+        )),
+        _rust_code: _ => token(prec(-2, /([^@{}\/]|\/[^\/*])+/)),
+        _line_comment_start: _ => token('//'),
+        _line_comment: _ => token(prec(-1, /[^\r\n]+/)),
+        _block_comment_start: _ => token('/*'),
+        _block_comment: _ => token(prec(-1, /([^*]|\*[^\/])+/)),
         // endregion
 
     }

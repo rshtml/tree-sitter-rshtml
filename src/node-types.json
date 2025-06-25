@@ -603,23 +603,11 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": false,
       "types": [
         {
-          "type": "nested_block",
-          "named": true
-        },
-        {
-          "type": "rust_code",
-          "named": true
-        },
-        {
-          "type": "text_block_tag",
-          "named": true
-        },
-        {
-          "type": "text_line_directive",
+          "type": "rust_block_content",
           "named": true
         }
       ]
@@ -691,26 +679,30 @@
           "named": true
         },
         {
-          "type": "nested_block",
-          "named": true
-        },
-        {
           "type": "open_brace",
           "named": true
         },
         {
-          "type": "rust_code",
-          "named": true
-        },
-        {
-          "type": "text_block_tag",
-          "named": true
-        },
-        {
-          "type": "text_line_directive",
+          "type": "rust_block_content",
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "rust_block_content",
+    "named": true,
+    "fields": {
+      "rust_block": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "source_file",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -824,11 +816,19 @@
           "named": true
         },
         {
+          "type": "nested_block",
+          "named": true
+        },
+        {
           "type": "raw_block",
           "named": true
         },
         {
           "type": "rust_block",
+          "named": true
+        },
+        {
+          "type": "rust_code",
           "named": true
         },
         {
@@ -841,6 +841,14 @@
         },
         {
           "type": "start_symbol",
+          "named": true
+        },
+        {
+          "type": "text_block_tag",
+          "named": true
+        },
+        {
+          "type": "text_line_directive",
           "named": true
         },
         {
@@ -1043,6 +1051,18 @@
   },
   {
     "type": ")",
+    "named": false
+  },
+  {
+    "type": "*/",
+    "named": false
+  },
+  {
+    "type": "/*",
+    "named": false
+  },
+  {
+    "type": "//",
     "named": false
   },
   {
