@@ -263,8 +263,7 @@ module.exports = grammar({
         // endregion
 
         // region rust_block  ** NOT COMPLETE **
-        // html_text ve inner_text te @@ kaçışı kaçış olarak görünmelidir ayrıca @@{ ve @@}
-        // kaçışları kaldırılmalıdır. tdl_text te de kaçış olarak görünmelidir.
+        // **rust_code is not complete**
         rust_block: $ => seq(
             $.open_brace,
             optional(repeat1($._rust_block_content)),
@@ -278,6 +277,7 @@ module.exports = grammar({
             $.rust_code,
         ),
 
+        // region text_line_directive
         text_line_directive: $ => seq(
             $.at_colon,
             repeat(choice(
@@ -290,8 +290,10 @@ module.exports = grammar({
         text_line: $ => field('text',
             alias($._text_line, $.source_file)
         ),
+        // endregion
 
         text_block_tag: $ => seq(),
+
         nested_block: $ => seq('{', repeat($._rust_block_content), '}'),
         rust_code: $ => prec(-1, /[^@{}]+/),
         // endregion
