@@ -128,6 +128,10 @@
             "named": true
           },
           {
+            "type": "use_directive",
+            "named": true
+          },
+          {
             "type": "while_stmt",
             "named": true
           }
@@ -278,6 +282,10 @@
             "named": true
           },
           {
+            "type": "use_directive",
+            "named": true
+          },
+          {
             "type": "while_stmt",
             "named": true
           }
@@ -415,6 +423,10 @@
           },
           {
             "type": "start_symbol",
+            "named": true
+          },
+          {
+            "type": "use_directive",
             "named": true
           },
           {
@@ -598,6 +610,10 @@
             "named": true
           },
           {
+            "type": "use_directive",
+            "named": true
+          },
+          {
             "type": "while_stmt",
             "named": true
           }
@@ -685,6 +701,10 @@
           },
           {
             "type": "start_symbol",
+            "named": true
+          },
+          {
+            "type": "use_directive",
             "named": true
           },
           {
@@ -1025,6 +1045,10 @@
           "named": true
         },
         {
+          "type": "use_directive",
+          "named": true
+        },
+        {
           "type": "while_stmt",
           "named": true
         }
@@ -1127,6 +1151,33 @@
     }
   },
   {
+    "type": "use_directive",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "as_",
+          "named": true
+        },
+        {
+          "type": "rust_identifier",
+          "named": true
+        },
+        {
+          "type": "string_line",
+          "named": true
+        },
+        {
+          "type": "use_",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "while_stmt",
     "named": true,
     "fields": {
@@ -1203,6 +1254,10 @@
             "named": true
           },
           {
+            "type": "use_directive",
+            "named": true
+          },
+          {
             "type": "while_stmt",
             "named": true
           }
@@ -1271,6 +1326,10 @@
     "named": false
   },
   {
+    "type": "as_",
+    "named": true
+  },
+  {
     "type": "at_colon",
     "named": true
   },
@@ -1327,6 +1386,10 @@
     "named": true
   },
   {
+    "type": "rust_identifier",
+    "named": true
+  },
+  {
     "type": "start_symbol",
     "named": true
   },
@@ -1336,6 +1399,10 @@
   },
   {
     "type": "text_block_tag_open",
+    "named": true
+  },
+  {
+    "type": "use_",
     "named": true
   },
   {

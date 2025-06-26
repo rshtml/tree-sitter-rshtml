@@ -102,6 +102,8 @@ module.exports = grammar({
         render_: _ => token(prec(4, 'render')),
         render_body_: _ => token(prec(4, 'render_body')),
         child_content_: _ => token(prec(4, 'child_content')),
+        use_: _ => token(prec(4, 'use')),
+        as_: _ => token('as'),
 
         // region errors
         if_error: _ => token(prec(5, seq('if', /\s*/, '{'))),
@@ -165,6 +167,7 @@ module.exports = grammar({
                 $.render_directive,
                 $.child_content_directive,
                 $.include_directive,
+                $.use_directive,
                 $.rust_block,
                 $._rust_stmt,
                 $.rust_expr_paren,
@@ -397,7 +400,20 @@ module.exports = grammar({
         // endregion
 
         // region use_directive
+        use_directive: $ => seq(
+            $.use_,
+            $.string_line,
+            optional(seq(
+                $.as_,
+                token(/[ \t]+/),
+                $.rust_identifier,
+                token(/\s/)
+            )),
+        ),
+        // endregion
 
+        // region component_block
+            
         // endregion
 
     }

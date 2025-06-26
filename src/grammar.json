@@ -522,6 +522,24 @@
         }
       }
     },
+    "use_": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 4,
+        "content": {
+          "type": "STRING",
+          "value": "use"
+        }
+      }
+    },
+    "as_": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "as"
+      }
+    },
     "if_error": {
       "type": "TOKEN",
       "content": {
@@ -824,6 +842,10 @@
             {
               "type": "SYMBOL",
               "name": "include_directive"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "use_directive"
             },
             {
               "type": "SYMBOL",
@@ -2010,6 +2032,54 @@
                 "type": "PATTERN",
                 "value": "\\s"
               }
+            }
+          ]
+        }
+      ]
+    },
+    "use_directive": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "use_"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string_line"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "as_"
+                },
+                {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[ \\t]+"
+                  }
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "rust_identifier"
+                },
+                {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "\\s"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
             }
           ]
         }

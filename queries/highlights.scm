@@ -29,3 +29,6 @@
 (render_) @keyword
 (render_body_) @keyword
 (child_content_) @keyword
+
+(use_) @keyword
+(as_) @keyword
