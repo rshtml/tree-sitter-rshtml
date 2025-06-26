@@ -1508,16 +1508,25 @@
           "name": "open_brace"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "rust_block_content"
+          "type": "FIELD",
+          "name": "content",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_rust_block_content"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             },
-            {
-              "type": "BLANK"
-            }
-          ]
+            "named": true,
+            "value": "source_file"
+          }
         },
         {
           "type": "SYMBOL",
@@ -1525,38 +1534,29 @@
         }
       ]
     },
-    "rust_block_content": {
-      "type": "ALIAS",
+    "_rust_block_content": {
+      "type": "REPEAT1",
       "content": {
-        "type": "FIELD",
-        "name": "rust_block",
-        "content": {
-          "type": "REPEAT1",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "text_line_directive"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "text_block_tag"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "nested_block"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "rust_code"
-              }
-            ]
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "text_line_directive"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "text_block_tag"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_nested_block"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_rust_code"
           }
-        }
-      },
-      "named": true,
-      "value": "source_file"
+        ]
+      }
     },
     "text_line_directive": {
       "type": "SEQ",
@@ -1685,7 +1685,7 @@
         "value": "source_file"
       }
     },
-    "nested_block": {
+    "_nested_block": {
       "type": "SEQ",
       "members": [
         {
@@ -1697,7 +1697,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "rust_block_content"
+              "name": "_rust_block_content"
             },
             {
               "type": "BLANK"
@@ -1710,7 +1710,7 @@
         }
       ]
     },
-    "rust_code": {
+    "_rust_code": {
       "type": "REPEAT1",
       "content": {
         "type": "CHOICE",
@@ -1757,19 +1757,23 @@
           },
           {
             "type": "SYMBOL",
-            "name": "_rust_code"
+            "name": "_rust_code_string"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_inner_rust"
           }
         ]
       }
     },
-    "_rust_code": {
+    "_inner_rust": {
       "type": "TOKEN",
       "content": {
         "type": "PREC",
         "value": -2,
         "content": {
           "type": "PATTERN",
-          "value": "([^@{}\\/]|\\/[^\\/*])+"
+          "value": "([^@{}\"r\\/]|\\/[^\\/*]|r[^#\"]|r#[^\"])+"
         }
       }
     },
@@ -1808,6 +1812,30 @@
           "value": "([^*]|\\*[^\\/])+"
         }
       }
+    },
+    "_rust_code_string": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "\"(\\\\.|[^\"\\\\])*\""
+            },
+            {
+              "type": "PATTERN",
+              "value": "r\"[^\"]*\""
+            },
+            {
+              "type": "PATTERN",
+              "value": "r#\"([^\"]|\"[^#])*\"#"
+            }
+          ]
+        }
+      }
     }
   },
   "extras": [
@@ -1818,7 +1846,7 @@
   ],
   "conflicts": [
     [
-      "rust_code"
+      "rust_block"
     ]
   ],
   "precedences": [],

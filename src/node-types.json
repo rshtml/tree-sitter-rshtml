@@ -599,21 +599,6 @@
     }
   },
   {
-    "type": "nested_block",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "rust_block_content",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "open_brace",
     "named": true,
     "fields": {}
@@ -669,7 +654,18 @@
   {
     "type": "rust_block",
     "named": true,
-    "fields": {},
+    "fields": {
+      "content": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "source_file",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -681,34 +677,9 @@
         {
           "type": "open_brace",
           "named": true
-        },
-        {
-          "type": "rust_block_content",
-          "named": true
         }
       ]
     }
-  },
-  {
-    "type": "rust_block_content",
-    "named": true,
-    "fields": {
-      "rust_block": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "source_file",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "rust_code",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "rust_expr_paren",
@@ -816,19 +787,11 @@
           "named": true
         },
         {
-          "type": "nested_block",
-          "named": true
-        },
-        {
           "type": "raw_block",
           "named": true
         },
         {
           "type": "rust_block",
-          "named": true
-        },
-        {
-          "type": "rust_code",
           "named": true
         },
         {

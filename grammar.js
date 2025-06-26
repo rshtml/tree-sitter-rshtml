@@ -35,7 +35,7 @@ module.exports = grammar({
     extras: $ => [/\s+/],
 
     conflicts: $ => [
-        [$.rust_code]
+        [$.rust_block]
     ],
 
     rules: {
@@ -265,21 +265,20 @@ module.exports = grammar({
         ),
         // endregion
 
-        // region rust_block  ** NOT COMPLETE **
-        // **rust_code is not complete** // add string support
+        // region rust_block
         rust_block: $ => seq(
             $.open_brace,
-            optional($.rust_block_content),
+            field('content', alias(optional($._rust_block_content), $.source_file)),
             $.close_brace
         ),
 
-        rust_block_content: $ =>
-            alias(field('rust_block', repeat1(choice(
+        _rust_block_content: $ =>
+            repeat1(choice(
                 $.text_line_directive,
                 $.text_block_tag,
-                $.nested_block,
-                $.rust_code,
-            ))), $.source_file),
+                $._nested_block,
+                $._rust_code,
+            )),
 
         // region text_line_directive
         text_line_directive: $ => seq(
@@ -311,17 +310,26 @@ module.exports = grammar({
         ),
         // endregion
 
-        nested_block: $ => seq('{', optional($.rust_block_content), '}'),
-        rust_code: $ => repeat1(choice(
+        // region rust_code
+        _nested_block: $ => seq('{', optional($._rust_block_content), '}'),
+        _rust_code: $ => repeat1(choice(
             seq($._line_comment_start, $._line_comment, token.immediate(/[\r\n]/)),
             seq($._block_comment_start, $._block_comment, token.immediate('*/')),
-            $._rust_code
+            $._rust_code_string,
+            $._inner_rust
         )),
-        _rust_code: _ => token(prec(-2, /([^@{}\/]|\/[^\/*])+/)),
+        _inner_rust: _ => token(prec(-2, /([^@{}"r\/]|\/[^\/*]|r[^#"]|r#[^"])+/)),
         _line_comment_start: _ => token('//'),
         _line_comment: _ => token(prec(-1, /[^\r\n]+/)),
         _block_comment_start: _ => token('/*'),
         _block_comment: _ => token(prec(-1, /([^*]|\*[^\/])+/)),
+        _rust_code_string: _ => token(prec(-1, choice(
+            DOUBLE_QUOTED_STRING,
+            /r"[^"]*"/,
+            /r#"([^"]|"[^#])*"#/
+        ))),
+        // endregion
+
         // endregion
 
     }

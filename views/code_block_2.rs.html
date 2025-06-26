@@ -1,32 +1,16 @@
 @{
-fasd
-    // merhaba dünya }
+merhaba
+    let x = "this is strding }line";
 
-   njk /*
-    this is comment } and { }
-*/bhj
+    //let a = r" this is \ strding }line ";
 
-    let x = 5;
-    let y = 7;
-    let z = x / y;
+    let a = r#" this is \ strding " }line "#;
 
-    if true {
+    let y = 'this is strding line';
+
+    @: merhaba @@ dünya @self.is_ok heyy
+
+    fn rrrr () {
         println!("hello");
-    }
-
-    <text>
-        merhaba dünya @self.ooo heyy }
-        <p>heyy</p> @@ abc
-    </text>
-
-    @: merhaba @@fdd @self.heyy merhaba { ve }
-
-    fn inline_function() -> String {
-        "inline function".to_string()
-    }
-
-    for i in 0..10 {
-        println!("Item {}", i);
-        @: @i
     }
 }
