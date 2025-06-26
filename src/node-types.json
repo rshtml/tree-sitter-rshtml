@@ -1,5 +1,28 @@
 [
   {
+    "type": "child_content_directive",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "child_content_",
+          "named": true
+        },
+        {
+          "type": "close_paren",
+          "named": true
+        },
+        {
+          "type": "open_paren",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "close_brace",
     "named": true,
     "fields": {}
@@ -45,6 +68,10 @@
             "named": true
           },
           {
+            "type": "child_content_directive",
+            "named": true
+          },
+          {
             "type": "comment_block",
             "named": true
           },
@@ -74,6 +101,14 @@
           },
           {
             "type": "raw_block",
+            "named": true
+          },
+          {
+            "type": "render_body_directive",
+            "named": true
+          },
+          {
+            "type": "render_directive",
             "named": true
           },
           {
@@ -183,6 +218,10 @@
             "named": true
           },
           {
+            "type": "child_content_directive",
+            "named": true
+          },
+          {
             "type": "comment_block",
             "named": true
           },
@@ -212,6 +251,14 @@
           },
           {
             "type": "raw_block",
+            "named": true
+          },
+          {
+            "type": "render_body_directive",
+            "named": true
+          },
+          {
+            "type": "render_directive",
             "named": true
           },
           {
@@ -311,6 +358,10 @@
             "named": true
           },
           {
+            "type": "child_content_directive",
+            "named": true
+          },
+          {
             "type": "comment_block",
             "named": true
           },
@@ -340,6 +391,14 @@
           },
           {
             "type": "raw_block",
+            "named": true
+          },
+          {
+            "type": "render_body_directive",
+            "named": true
+          },
+          {
+            "type": "render_directive",
             "named": true
           },
           {
@@ -479,6 +538,10 @@
             "named": true
           },
           {
+            "type": "child_content_directive",
+            "named": true
+          },
+          {
             "type": "comment_block",
             "named": true
           },
@@ -508,6 +571,14 @@
           },
           {
             "type": "raw_block",
+            "named": true
+          },
+          {
+            "type": "render_body_directive",
+            "named": true
+          },
+          {
+            "type": "render_directive",
             "named": true
           },
           {
@@ -542,6 +613,10 @@
           },
           {
             "type": "break_",
+            "named": true
+          },
+          {
+            "type": "child_content_directive",
             "named": true
           },
           {
@@ -586,6 +661,14 @@
           },
           {
             "type": "raw_block",
+            "named": true
+          },
+          {
+            "type": "render_body_directive",
+            "named": true
+          },
+          {
+            "type": "render_directive",
             "named": true
           },
           {
@@ -706,6 +789,63 @@
     }
   },
   {
+    "type": "render_body_directive",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "close_paren",
+          "named": true
+        },
+        {
+          "type": "open_paren",
+          "named": true
+        },
+        {
+          "type": "render_body_",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "render_directive",
+    "named": true,
+    "fields": {
+      "path": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string_line",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "close_paren",
+          "named": true
+        },
+        {
+          "type": "open_paren",
+          "named": true
+        },
+        {
+          "type": "render_",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "rust_block",
     "named": true,
     "fields": {
@@ -813,6 +953,10 @@
           "named": true
         },
         {
+          "type": "child_content_directive",
+          "named": true
+        },
+        {
           "type": "comment_block",
           "named": true
         },
@@ -846,6 +990,14 @@
         },
         {
           "type": "raw_block",
+          "named": true
+        },
+        {
+          "type": "render_body_directive",
+          "named": true
+        },
+        {
+          "type": "render_directive",
           "named": true
         },
         {
@@ -991,6 +1143,10 @@
             "named": true
           },
           {
+            "type": "child_content_directive",
+            "named": true
+          },
+          {
             "type": "comment_block",
             "named": true
           },
@@ -1020,6 +1176,14 @@
           },
           {
             "type": "raw_block",
+            "named": true
+          },
+          {
+            "type": "render_body_directive",
+            "named": true
+          },
+          {
+            "type": "render_directive",
             "named": true
           },
           {
@@ -1115,6 +1279,10 @@
     "named": true
   },
   {
+    "type": "child_content_",
+    "named": true
+  },
+  {
     "type": "close_comment",
     "named": true
   },
@@ -1148,6 +1316,14 @@
   },
   {
     "type": "raw_",
+    "named": true
+  },
+  {
+    "type": "render_",
+    "named": true
+  },
+  {
+    "type": "render_body_",
     "named": true
   },
   {

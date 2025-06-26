@@ -24,3 +24,8 @@
 
 (extends_) @keyword
 (raw_) @keyword
+
+(include_) @keyword
+(render_) @keyword
+(render_body_) @keyword
+(child_content_) @keyword

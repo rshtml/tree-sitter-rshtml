@@ -209,7 +209,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 2,
+        "value": 5,
         "content": {
           "type": "SEQ",
           "members": [
@@ -233,7 +233,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 3,
+        "value": 6,
         "content": {
           "type": "STRING",
           "value": "else"
@@ -244,7 +244,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 2,
+        "value": 5,
         "content": {
           "type": "SEQ",
           "members": [
@@ -268,7 +268,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 2,
+        "value": 5,
         "content": {
           "type": "SEQ",
           "members": [
@@ -292,7 +292,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 2,
+        "value": 5,
         "content": {
           "type": "SEQ",
           "members": [
@@ -316,7 +316,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 1,
+        "value": 4,
         "content": {
           "type": "SEQ",
           "members": [
@@ -393,7 +393,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 2,
+        "value": 5,
         "content": {
           "type": "STRING",
           "value": "continue"
@@ -404,7 +404,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 2,
+        "value": 5,
         "content": {
           "type": "STRING",
           "value": "break"
@@ -415,7 +415,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 2,
+        "value": 5,
         "content": {
           "type": "STRING",
           "value": "extends"
@@ -426,7 +426,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 2,
+        "value": 5,
         "content": {
           "type": "STRING",
           "value": "raw"
@@ -482,10 +482,43 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 2,
+        "value": 5,
         "content": {
           "type": "STRING",
           "value": "include"
+        }
+      }
+    },
+    "render_": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 4,
+        "content": {
+          "type": "STRING",
+          "value": "render"
+        }
+      }
+    },
+    "render_body_": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 4,
+        "content": {
+          "type": "STRING",
+          "value": "render_body"
+        }
+      }
+    },
+    "child_content_": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 4,
+        "content": {
+          "type": "STRING",
+          "value": "child_content"
         }
       }
     },
@@ -493,7 +526,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 2,
+        "value": 5,
         "content": {
           "type": "SEQ",
           "members": [
@@ -517,7 +550,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 2,
+        "value": 5,
         "content": {
           "type": "SEQ",
           "members": [
@@ -541,7 +574,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 2,
+        "value": 5,
         "content": {
           "type": "SEQ",
           "members": [
@@ -565,7 +598,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 2,
+        "value": 5,
         "content": {
           "type": "SEQ",
           "members": [
@@ -778,6 +811,18 @@
             },
             {
               "type": "SYMBOL",
+              "name": "render_body_directive"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "render_directive"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "child_content_directive"
+            },
+            {
+              "type": "SYMBOL",
               "name": "include_directive"
             },
             {
@@ -864,7 +909,7 @@
     },
     "_chain_segment": {
       "type": "PREC",
-      "value": 1,
+      "value": 4,
       "content": {
         "type": "CHOICE",
         "members": [
@@ -1669,7 +1714,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 1,
+        "value": 4,
         "content": {
           "type": "STRING",
           "value": "<text>"
@@ -1680,7 +1725,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 1,
+        "value": 4,
         "content": {
           "type": "STRING",
           "value": "</text>"
@@ -1874,6 +1919,99 @@
         {
           "type": "SYMBOL",
           "name": "close_paren"
+        }
+      ]
+    },
+    "render_directive": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "render_"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "open_paren"
+        },
+        {
+          "type": "FIELD",
+          "name": "path",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string_line"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "close_paren"
+        }
+      ]
+    },
+    "render_body_directive": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "render_body_"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "open_paren"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "close_paren"
+                }
+              ]
+            },
+            {
+              "type": "TOKEN",
+              "content": {
+                "type": "PATTERN",
+                "value": "\\s"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "child_content_directive": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "child_content_"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "open_paren"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "close_paren"
+                }
+              ]
+            },
+            {
+              "type": "TOKEN",
+              "content": {
+                "type": "PATTERN",
+                "value": "\\s"
+              }
+            }
+          ]
         }
       ]
     }

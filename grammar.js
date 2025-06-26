@@ -12,6 +12,7 @@
 tree-sitter query queries/injections.scm  views/if_else.rs.html
  */
 
+// region constants
 const RUST_IDENTIFIER = /[a-zA-Z_][a-zA-Z0-9_]*/;
 const DOUBLE_QUOTED_STRING = /"(\\.|[^"\\])*"/;
 const SINGLE_QUOTED_STRING = /'(\\.|[^'\\])*'/;
@@ -28,6 +29,7 @@ const COMMA = ",";
 const AT_COLON = "@:";
 
 const STMT_HEAD_COND = /\s*[^@{}\s][^@{}]*/; // /\s*[^@{}\s][^@{}]*/; // /[^@{}]+/;
+// endregion
 
 module.exports = grammar({
     name: 'rshtml',
@@ -67,14 +69,14 @@ module.exports = grammar({
         _text: _ => token(prec(-1, /[^@]+/)), ///(@@|@@}|@@\{|[^@])+/
         _inner_text: _ => token(prec(-1, /[^@}]+/)), ///(@@|@@}|@@\{|[^@}])+/
 
-        if_: _ => token(prec(2, seq('if', /\s+/, STMT_HEAD_COND))), ///\s*if\s+[^@{}]+/
-        else_: _ => token(prec(3, 'else')), ///\s*else\s*/
+        if_: _ => token(prec(5, seq('if', /\s+/, STMT_HEAD_COND))), ///\s*if\s+[^@{}]+/
+        else_: _ => token(prec(6, 'else')), ///\s*else\s*/
 
-        while_: _ => token(prec(2, seq('while', /\s+/, STMT_HEAD_COND))),
-        for_: _ => token(prec(2, seq('for', /\s+/, STMT_HEAD_COND))),
-        match_: _ => token(prec(2, seq('match', /\s+/, STMT_HEAD_COND))),
+        while_: _ => token(prec(5, seq('while', /\s+/, STMT_HEAD_COND))),
+        for_: _ => token(prec(5, seq('for', /\s+/, STMT_HEAD_COND))),
+        match_: _ => token(prec(5, seq('match', /\s+/, STMT_HEAD_COND))),
 
-        _expr_simple: _ => token(prec(1, seq(
+        _expr_simple: _ => token(prec(4, seq(
             repeat('&'),
             RUST_IDENTIFIER,
             repeat(seq(choice('&', '.', '::'), RUST_IDENTIFIER))
@@ -84,11 +86,11 @@ module.exports = grammar({
         _match_inner_text: _ => token(prec(-1, /([^\r\n@},]|(,[^\r\n}])+)+/)),
         match_arm_end: _ => token(/( \t)*,\s*/),
 
-        continue_: _ => token(prec(2, 'continue')),
-        break_: _ => token(prec(2, 'break')),
+        continue_: _ => token(prec(5, 'continue')),
+        break_: _ => token(prec(5, 'break')),
 
-        extends_: _ => token(prec(2, 'extends')),
-        raw_: _ => token(prec(2, 'raw')),
+        extends_: _ => token(prec(5, 'extends')),
+        raw_: _ => token(prec(5, 'raw')),
         _raw_text: $ => token(/[^{}]+/),
 
         _text_line: _ => token(repeat1(choice(/[^@\r\n]/, '@@'))),
@@ -96,13 +98,16 @@ module.exports = grammar({
             /[^@<]|<[^\/]|<\/[^t]|<\/t[^e]|<\/te[^x]|<\/tex[^t]|<\/text[^>]/, '@@'
         ))),
 
-        include_: _ => token(prec(2, 'include')),
+        include_: _ => token(prec(5, 'include')),
+        render_: _ => token(prec(4, 'render')),
+        render_body_: _ => token(prec(4, 'render_body')),
+        child_content_: _ => token(prec(4, 'child_content')),
 
         // region errors
-        if_error: _ => token(prec(2, seq('if', /\s*/, '{'))),
-        for_error: _ => token(prec(2, seq('for', /\s*/, '{'))),
-        while_error: _ => token(prec(2, seq('while', /\s*/, '{'))),
-        match_error: _ => token(prec(2, seq('match', /\s*/, '{'))),
+        if_error: _ => token(prec(5, seq('if', /\s*/, '{'))),
+        for_error: _ => token(prec(5, seq('for', /\s*/, '{'))),
+        while_error: _ => token(prec(5, seq('while', /\s*/, '{'))),
+        match_error: _ => token(prec(5, seq('match', /\s*/, '{'))),
         // endregion
 
         // endregion
@@ -149,12 +154,16 @@ module.exports = grammar({
             $.open_comment,
             token(/([^*]|\*+[^@])*/),
             $.close_comment
-        ), // endregion
+        ),
+        // endregion
 
         _block: $ => seq(
             $.start_symbol,
             choice(
                 $.raw_block,
+                $.render_body_directive,
+                $.render_directive,
+                $.child_content_directive,
                 $.include_directive,
                 $.rust_block,
                 $._rust_stmt,
@@ -174,7 +183,7 @@ module.exports = grammar({
         rust_expr_simple_content: $ =>
             seq($._expr_simple, optional(repeat1($._chain_segment))),
 
-        _chain_segment: $ => prec(1, choice(
+        _chain_segment: $ => prec(4, choice(
             seq('(', repeat(choice($._nested_content, /[^)]/)), ')'),
             seq('[', repeat(choice($._nested_content, /[^\]]/)), ']'),
         )),
@@ -288,13 +297,12 @@ module.exports = grammar({
             $.close_brace
         ),
 
-        _rust_block_content: $ =>
-            repeat1(choice(
-                $.text_line_directive,
-                $.text_block_tag,
-                $._nested_block,
-                $._rust_code,
-            )),
+        _rust_block_content: $ => repeat1(choice(
+            $.text_line_directive,
+            $.text_block_tag,
+            $._nested_block,
+            $._rust_code,
+        )),
 
         // region text_line_directive
         text_line_directive: $ => seq(
@@ -319,8 +327,8 @@ module.exports = grammar({
             )),
             $.text_block_tag_close,
         ),
-        text_block_tag_open: $ => token(prec(1, "<text>")),
-        text_block_tag_close: $ => token(prec(1, "</text>")),
+        text_block_tag_open: $ => token(prec(4, "<text>")),
+        text_block_tag_close: $ => token(prec(4, "</text>")),
         text_multiline: $ => field('text',
             alias($._text_multiline, $.source_file)
         ),
@@ -358,6 +366,39 @@ module.exports = grammar({
             $.close_paren
         ),
         // endregion
+
+        // region render_directive
+        render_directive: $ => seq(
+            $.render_,
+            $.open_paren,
+            field('path', $.string_line),
+            $.close_paren
+        ),
+        // endregion
+
+        // region render_body_directive
+        render_body_directive: $ => seq(
+            $.render_body_,
+            choice(
+                seq($.open_paren, $.close_paren),
+                token(/\s/)
+            ),
+        ),
+        // endregion
+
+        // region child_content_directive
+        child_content_directive: $ => seq(
+            $.child_content_,
+            choice(
+                seq($.open_paren, $.close_paren),
+                token(/\s/)
+            ),
+        ),
+        // endregion
+
+        // region use_directive
+
+        // endregion
+
     }
-})
-;
+});
