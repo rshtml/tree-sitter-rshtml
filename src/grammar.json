@@ -478,6 +478,17 @@
         }
       }
     },
+    "include_": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 2,
+        "content": {
+          "type": "STRING",
+          "value": "include"
+        }
+      }
+    },
     "if_error": {
       "type": "TOKEN",
       "content": {
@@ -764,6 +775,10 @@
             {
               "type": "SYMBOL",
               "name": "raw_block"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "include_directive"
             },
             {
               "type": "SYMBOL",
@@ -1836,6 +1851,31 @@
           ]
         }
       }
+    },
+    "include_directive": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "include_"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "open_paren"
+        },
+        {
+          "type": "FIELD",
+          "name": "path",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string_line"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "close_paren"
+        }
+      ]
     }
   },
   "extras": [

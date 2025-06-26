@@ -65,6 +65,10 @@
             "named": true
           },
           {
+            "type": "include_directive",
+            "named": true
+          },
+          {
             "type": "match_stmt",
             "named": true
           },
@@ -199,6 +203,10 @@
             "named": true
           },
           {
+            "type": "include_directive",
+            "named": true
+          },
+          {
             "type": "match_stmt",
             "named": true
           },
@@ -323,6 +331,10 @@
             "named": true
           },
           {
+            "type": "include_directive",
+            "named": true
+          },
+          {
             "type": "match_stmt",
             "named": true
           },
@@ -377,6 +389,40 @@
         },
         {
           "type": "open_brace",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "include_directive",
+    "named": true,
+    "fields": {
+      "path": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string_line",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "close_paren",
+          "named": true
+        },
+        {
+          "type": "include_",
+          "named": true
+        },
+        {
+          "type": "open_paren",
           "named": true
         }
       ]
@@ -453,6 +499,10 @@
             "named": true
           },
           {
+            "type": "include_directive",
+            "named": true
+          },
+          {
             "type": "match_stmt",
             "named": true
           },
@@ -516,6 +566,10 @@
           },
           {
             "type": "if_stmt",
+            "named": true
+          },
+          {
+            "type": "include_directive",
             "named": true
           },
           {
@@ -783,6 +837,10 @@
           "named": true
         },
         {
+          "type": "include_directive",
+          "named": true
+        },
+        {
           "type": "match_stmt",
           "named": true
         },
@@ -953,6 +1011,10 @@
             "named": true
           },
           {
+            "type": "include_directive",
+            "named": true
+          },
+          {
             "type": "match_stmt",
             "named": true
           },
@@ -1070,6 +1132,10 @@
   },
   {
     "type": "hash_symbol",
+    "named": true
+  },
+  {
+    "type": "include_",
     "named": true
   },
   {

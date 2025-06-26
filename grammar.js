@@ -95,6 +95,9 @@ module.exports = grammar({
         _text_multiline: _ => token(repeat1(choice(
             /[^@<]|<[^\/]|<\/[^t]|<\/t[^e]|<\/te[^x]|<\/tex[^t]|<\/text[^>]/, '@@'
         ))),
+
+        include_: _ => token(prec(2, 'include')),
+
         // region errors
         if_error: _ => token(prec(2, seq('if', /\s*/, '{'))),
         for_error: _ => token(prec(2, seq('for', /\s*/, '{'))),
@@ -132,14 +135,27 @@ module.exports = grammar({
             ),
             $.source_file)),
 
-        extends_directive: $ => seq($.start_symbol, $.extends_, choice(seq($.open_paren, optional(field('path', $.string_line)), $.close_paren), /\s/,)),
+        extends_directive: $ => seq(
+            $.start_symbol,
+            $.extends_,
+            choice(seq(
+                    $.open_paren,
+                    optional(field('path', $.string_line)),
+                    $.close_paren),
+                /\s/,
+            )),
 
-        comment_block: $ => seq($.open_comment, token(/([^*]|\*+[^@])*/), $.close_comment), // endregion
+        comment_block: $ => seq(
+            $.open_comment,
+            token(/([^*]|\*+[^@])*/),
+            $.close_comment
+        ), // endregion
 
         _block: $ => seq(
             $.start_symbol,
             choice(
                 $.raw_block,
+                $.include_directive,
                 $.rust_block,
                 $._rust_stmt,
                 $.rust_expr_paren,
@@ -332,6 +348,16 @@ module.exports = grammar({
 
         // endregion
 
+        /// / ///
+
+        // region include_directive
+        include_directive: $ => seq(
+            $.include_,
+            $.open_paren,
+            field('path', $.string_line),
+            $.close_paren
+        ),
+        // endregion
     }
 })
 ;
