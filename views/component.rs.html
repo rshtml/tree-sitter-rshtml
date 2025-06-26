@@ -2,10 +2,24 @@
 <html lang="en">
 <head>
 
-    @use "Card.rs.html" as Card
+    @use "Card.rs.html" as Card;
     @use "SideBar.rs.html"
-    @use "Navbar.rs.html"
+    @use "Navbar.rs.html";
 
+    @merhaba_dunya()
+
+    @Card(title: "Card Title", footer: "Card Footer", abc: {
+        <p for_escape = @&self.for_escape>
+            heyy
+        </p>
+    }){}
+
+    @Card(title: 4.53, footer: 543, def: true, x: @self.value, y: @(3 + 5)){
+        <p>hellooo</p>
+        @self.title
+    }
+
+    @*
     <meta charset="UTF-8">
     <title>@self.title</title>
 </head>
@@ -29,14 +43,9 @@
             <p>value: @self.value</p>
              }
             _unused ="unused"
-    />
+    />*@
 
-    @Card(title: "Card Title", footer: "Card Footer"){}
 
-    @Card(title: 4.53, footer: 543){
-        <p>hellooo</p>
-        @self.title
-    }
 
 </body>
 </html>

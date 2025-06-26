@@ -9,8 +9,9 @@
 ;(open_bracket) @punctuation.bracket
 ;(close_bracket) @punctuation.bracket
 
-;(comma) @operator
+;(comma) @punctuation.delimiter
 (fat_arrow) @operator
+(colon) @punctuation.delimiter
 (at_colon) @operator
 
 (string_line) @string
@@ -32,3 +33,12 @@
 
 (use_) @keyword
 (as_) @keyword
+
+(number) @number
+(bool) @boolean
+
+(component
+  name: (rust_identifier) @type)
+
+(component_parameter
+  name: (rust_identifier) @parameter)

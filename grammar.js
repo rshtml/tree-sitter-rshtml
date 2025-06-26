@@ -26,9 +26,11 @@ const OPEN_BRACKET = "[";
 const CLOSE_BRACKET = "]";
 const FAT_ARROW = "=>";
 const COMMA = ",";
+const COLON = ":";
 const AT_COLON = "@:";
 
 const STMT_HEAD_COND = /\s*[^@{}\s][^@{}]*/; // /\s*[^@{}\s][^@{}]*/; // /[^@{}]+/;
+const ASCII_DIGITS = /[0-9]+/;
 // endregion
 
 module.exports = grammar({
@@ -37,7 +39,8 @@ module.exports = grammar({
     extras: $ => [/\s+/],
 
     conflicts: $ => [
-        [$.rust_block]
+        [$.rust_block],
+        [$.rust_identifier, $._rust_identifier]
     ],
 
     rules: {
@@ -46,6 +49,7 @@ module.exports = grammar({
 
         // region tokens
         rust_identifier: _ => token(RUST_IDENTIFIER),
+        _rust_identifier: _ => token(RUST_IDENTIFIER),
         string_line: _ => token(choice(DOUBLE_QUOTED_STRING, SINGLE_QUOTED_STRING)),
         _string_line: _ => token(choice(DOUBLE_QUOTED_STRING, SINGLE_QUOTED_STRING)),
 
@@ -59,6 +63,7 @@ module.exports = grammar({
         close_bracket: _ => token(CLOSE_BRACKET),
         comma: _ => token(COMMA),
         fat_arrow: _ => token(FAT_ARROW),
+        colon: _ => token(COLON),
         at_colon: _ => token(AT_COLON),
 
         open_comment: _ => token('@*'),
@@ -75,12 +80,6 @@ module.exports = grammar({
         while_: _ => token(prec(5, seq('while', /\s+/, STMT_HEAD_COND))),
         for_: _ => token(prec(5, seq('for', /\s+/, STMT_HEAD_COND))),
         match_: _ => token(prec(5, seq('match', /\s+/, STMT_HEAD_COND))),
-
-        _expr_simple: _ => token(prec(4, seq(
-            repeat('&'),
-            RUST_IDENTIFIER,
-            repeat(seq(choice('&', '.', '::'), RUST_IDENTIFIER))
-        ))),
 
         match_arm_pattern: _ => token(/[^=@}]([^=@]+|=([^>]))+/),
         _match_inner_text: _ => token(prec(-1, /([^\r\n@},]|(,[^\r\n}])+)+/)),
@@ -99,10 +98,10 @@ module.exports = grammar({
         ))),
 
         include_: _ => token(prec(5, 'include')),
-        render_: _ => token(prec(4, 'render')),
-        render_body_: _ => token(prec(4, 'render_body')),
-        child_content_: _ => token(prec(4, 'child_content')),
-        use_: _ => token(prec(4, 'use')),
+        render_: _ => token(prec(5, 'render')),
+        render_body_: _ => token(prec(5, 'render_body')),
+        child_content_: _ => token(prec(5, 'child_content')),
+        use_: _ => token(prec(5, 'use')),
         as_: _ => token('as'),
 
         // region errors
@@ -168,6 +167,7 @@ module.exports = grammar({
                 $.child_content_directive,
                 $.include_directive,
                 $.use_directive,
+                $.component,
                 $.rust_block,
                 $._rust_stmt,
                 $.rust_expr_paren,
@@ -183,8 +183,14 @@ module.exports = grammar({
             field('expr', alias($.rust_expr_simple_content, $.source_file)),
         ),
 
-        rust_expr_simple_content: $ =>
-            seq($._expr_simple, optional(repeat1($._chain_segment))),
+        rust_expr_simple_content: $ => seq(
+            seq(
+                optional(repeat1('&')),
+                $._rust_identifier,
+                optional(repeat1(seq(choice('&', '.', '::'), $._rust_identifier))
+                )),
+            optional(repeat1($._chain_segment))
+        ),
 
         _chain_segment: $ => prec(4, choice(
             seq('(', repeat(choice($._nested_content, /[^)]/)), ')'),
@@ -413,7 +419,37 @@ module.exports = grammar({
         // endregion
 
         // region component_block
-            
+        component: $ => seq(
+            field('name', $.rust_identifier),
+            $.open_paren,
+            repeat(seq(
+                $.component_parameter,
+                repeat(seq(',', $.component_parameter))
+            )),
+            $.close_paren,
+            $._inner_template
+        ),
+        component_parameter: $ => seq(
+            field('name', $.rust_identifier),
+            $.colon,
+            choice(
+                $.bool,
+                $.number,
+                $.string_line,
+                seq($.start_symbol, $.rust_expr_paren),
+                seq($.start_symbol, $.rust_expr_simple),
+                $._inner_template
+            )
+        ),
+        bool: _ => token(/true|false/),
+        number: _ => token(seq(
+            optional('-'),
+            seq(
+                ASCII_DIGITS,
+                optional(seq('.', ASCII_DIGITS))
+            )
+        )),
+
         // endregion
 
     }
