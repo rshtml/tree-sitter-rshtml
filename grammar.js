@@ -28,6 +28,7 @@ const FAT_ARROW = "=>";
 const COMMA = ",";
 const COLON = ":";
 const AT_COLON = "@:";
+const SEMICOLON = ";";
 
 const STMT_HEAD_COND = /\s*[^@{}\s][^@{}]*/; // /\s*[^@{}\s][^@{}]*/; // /[^@{}]+/;
 const ASCII_DIGITS = /[0-9]+/;
@@ -64,6 +65,7 @@ module.exports = grammar({
         comma: _ => token(COMMA),
         fat_arrow: _ => token(FAT_ARROW),
         colon: _ => token(COLON),
+        semicolon: _ => token(SEMICOLON),
         at_colon: _ => token(AT_COLON),
 
         open_comment: _ => token('@*'),
@@ -408,13 +410,14 @@ module.exports = grammar({
         // region use_directive
         use_directive: $ => seq(
             $.use_,
-            $.string_line,
-            optional(seq(
-                $.as_,
-                token(/[ \t]+/),
-                $.rust_identifier,
-                token(/\s/)
-            )),
+            field('path', $.string_line),
+            optional($.as_clause),
+            optional($.semicolon)
+        ),
+        as_clause: $ => seq(
+            $.as_,
+            token(/[ \t]+/),
+            field('alias', $.rust_identifier)
         ),
         // endregion
 

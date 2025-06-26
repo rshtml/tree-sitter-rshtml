@@ -12,6 +12,7 @@
 ;(comma) @punctuation.delimiter
 (fat_arrow) @operator
 (colon) @punctuation.delimiter
+(semicolon) @punctuation.delimiter
 (at_colon) @operator
 
 (string_line) @string
@@ -42,3 +43,6 @@
 
 (component_parameter
   name: (rust_identifier) @parameter)
+
+(as_clause
+  alias: (rust_identifier) @type)
