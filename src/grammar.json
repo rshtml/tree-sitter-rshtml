@@ -183,6 +183,13 @@
         "value": "@:"
       }
     },
+    "equals": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "="
+      }
+    },
     "open_comment": {
       "type": "TOKEN",
       "content": {
@@ -211,7 +218,7 @@
         "value": -1,
         "content": {
           "type": "PATTERN",
-          "value": "[^@]+"
+          "value": "([^@<]|<[^A-Z\\/]|<\\/[^A-Z])+"
         }
       }
     },
@@ -222,7 +229,7 @@
         "value": -1,
         "content": {
           "type": "PATTERN",
-          "value": "[^@}]+"
+          "value": "([^@<}]|<[^A-Z\\/]|<\\/[^A-Z])+"
         }
       }
     },
@@ -783,66 +790,75 @@
       ]
     },
     "_block": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
           "type": "SYMBOL",
-          "name": "start_symbol"
+          "name": "component_tag"
         },
         {
-          "type": "CHOICE",
+          "type": "SEQ",
           "members": [
             {
               "type": "SYMBOL",
-              "name": "raw_block"
+              "name": "start_symbol"
             },
             {
-              "type": "SYMBOL",
-              "name": "render_body_directive"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "render_directive"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "child_content_directive"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "include_directive"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "use_directive"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "component"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "rust_block"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_rust_stmt"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "rust_expr_paren"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "continue_"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "break_"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "rust_expr_simple"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "raw_block"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "render_body_directive"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "render_directive"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "child_content_directive"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "include_directive"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "use_directive"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "component"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "rust_block"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_rust_stmt"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "rust_expr_paren"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "continue_"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "break_"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "rust_expr_simple"
+                }
+              ]
             }
           ]
         }
@@ -2304,6 +2320,185 @@
             ]
           }
         ]
+      }
+    },
+    "component_tag": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "tag_open"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "component_tag_identifier"
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "\\s+"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "component_tag_parameter"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "tag_self_close"
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "tag_close"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "body",
+                  "content": {
+                    "type": "REPEAT",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_template"
+                    }
+                  }
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "tag_end_open"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "name_close",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "component_tag_identifier"
+                  }
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "tag_close"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "tag_open": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "STRING",
+          "value": "<"
+        }
+      }
+    },
+    "tag_self_close": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "/>"
+      }
+    },
+    "tag_close": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": ">"
+      }
+    },
+    "tag_end_open": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "</"
+      }
+    },
+    "component_tag_parameter": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "rust_identifier"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "equals"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "bool"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "number"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "string_line"
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "start_symbol"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "rust_expr_paren"
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "start_symbol"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "rust_expr_simple"
+                }
+              ]
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_inner_template"
+            }
+          ]
+        }
+      ]
+    },
+    "component_tag_identifier": {
+      "type": "IMMEDIATE_TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[A-Z][a-zA-Z0-9_]*(\\.[A-Z][a-zA-Z0-9_]*)*"
       }
     }
   },

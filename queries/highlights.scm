@@ -14,6 +14,7 @@
 (colon) @punctuation.delimiter
 (semicolon) @punctuation.delimiter
 (at_colon) @operator
+(equals) @punctuation.delimiter
 
 (string_line) @string
 
@@ -46,3 +47,17 @@
 
 (as_clause
   alias: (rust_identifier) @type)
+
+(tag_open) @punctuation.bracket
+(tag_close) @punctuation.bracket
+(tag_end_open) @punctuation.bracket
+(tag_self_close) @punctuation.bracket
+
+(component_tag
+  name: (component_tag_identifier) @type)
+
+(component_tag
+  name_close: (component_tag_identifier) @type)
+
+(component_tag_parameter
+  name: (rust_identifier) @parameter)

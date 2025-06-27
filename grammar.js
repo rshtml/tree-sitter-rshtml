@@ -29,9 +29,11 @@ const COMMA = ",";
 const COLON = ":";
 const AT_COLON = "@:";
 const SEMICOLON = ";";
+const EQUALS = "=";
 
 const STMT_HEAD_COND = /\s*[^@{}\s][^@{}]*/; // /\s*[^@{}\s][^@{}]*/; // /[^@{}]+/;
 const ASCII_DIGITS = /[0-9]+/;
+const COMPONENT_TAG_IDENTIFIER = /[A-Z][a-zA-Z0-9_]*(\.[A-Z][a-zA-Z0-9_]*)*/;
 // endregion
 
 module.exports = grammar({
@@ -67,17 +69,18 @@ module.exports = grammar({
         colon: _ => token(COLON),
         semicolon: _ => token(SEMICOLON),
         at_colon: _ => token(AT_COLON),
+        equals: _ => token(EQUALS),
 
         open_comment: _ => token('@*'),
         close_comment: _ => token('*@'),
 
         _escaped: _ => token('@@'),
 
-        _text: _ => token(prec(-1, /[^@]+/)), ///(@@|@@}|@@\{|[^@])+/
-        _inner_text: _ => token(prec(-1, /[^@}]+/)), ///(@@|@@}|@@\{|[^@}])+/
+        _text: _ => token(prec(-1, /([^@<]|<[^A-Z\/]|<\/[^A-Z])+/)),
+        _inner_text: _ => token(prec(-1, /([^@<}]|<[^A-Z\/]|<\/[^A-Z])+/)),
 
-        if_: _ => token(prec(5, seq('if', /\s+/, STMT_HEAD_COND))), ///\s*if\s+[^@{}]+/
-        else_: _ => token(prec(6, 'else')), ///\s*else\s*/
+        if_: _ => token(prec(5, seq('if', /\s+/, STMT_HEAD_COND))),
+        else_: _ => token(prec(6, 'else')),
 
         while_: _ => token(prec(5, seq('while', /\s+/, STMT_HEAD_COND))),
         for_: _ => token(prec(5, seq('for', /\s+/, STMT_HEAD_COND))),
@@ -160,23 +163,26 @@ module.exports = grammar({
         ),
         // endregion
 
-        _block: $ => seq(
-            $.start_symbol,
-            choice(
-                $.raw_block,
-                $.render_body_directive,
-                $.render_directive,
-                $.child_content_directive,
-                $.include_directive,
-                $.use_directive,
-                $.component,
-                $.rust_block,
-                $._rust_stmt,
-                $.rust_expr_paren,
-                $.continue_,
-                $.break_,
-                $.rust_expr_simple
-            ),
+        _block: $ => choice(
+            $.component_tag,
+            seq(
+                $.start_symbol,
+                choice(
+                    $.raw_block,
+                    $.render_body_directive,
+                    $.render_directive,
+                    $.child_content_directive,
+                    $.include_directive,
+                    $.use_directive,
+                    $.component,
+                    $.rust_block,
+                    $._rust_stmt,
+                    $.rust_expr_paren,
+                    $.continue_,
+                    $.break_,
+                    $.rust_expr_simple
+                ),
+            )
         ),
 
         // region rust_expr_simple
@@ -453,6 +459,44 @@ module.exports = grammar({
             )
         )),
 
+        // endregion
+
+        // region component_tag
+        component_tag: $ => seq(
+            $.tag_open,
+            field('name', $.component_tag_identifier),
+            token.immediate(/\s+/),
+            repeat($.component_tag_parameter),
+            choice(
+                $.tag_self_close,
+                seq(
+                    $.tag_close,
+                    field('body', repeat($._template)),
+                    $.tag_end_open,
+                    field('name_close', $.component_tag_identifier),
+                    $.tag_close,
+                )
+            )
+        ),
+
+        tag_open: _ => token(prec(-1, '<')),
+        tag_self_close: _ => token('/>'),
+        tag_close: _ => token('>'),
+        tag_end_open: _ => token('</'),
+
+        component_tag_parameter: $ => seq(
+            field('name', $.rust_identifier),
+            $.equals,
+            choice(
+                $.bool,
+                $.number,
+                $.string_line,
+                seq($.start_symbol, $.rust_expr_paren),
+                seq($.start_symbol, $.rust_expr_simple),
+                $._inner_template
+            )
+        ),
+        component_tag_identifier: $ => token.immediate(COMPONENT_TAG_IDENTIFIER),
         // endregion
 
     }

@@ -279,7 +279,8 @@ module.exports = grammar({
             repeat($.attribute),
             choice(
                 '/>',
-                seq('>', field('body', repeat(choice($.block, $.tag_text))), '</', $.component_tag_name, '>')
+                seq('>', field('body', repeat(choice($.block, $.tag_text))),
+                    '</', $.component_tag_name, '>')
             )
         ),
         attribute: $ => seq(
