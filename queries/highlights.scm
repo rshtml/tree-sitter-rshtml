@@ -19,8 +19,8 @@
 (string_line) @string
 
 (comment_block) @comment
-(open_comment) @operetor
-(close_comment) @operetor
+(open_comment) @operator
+(close_comment) @operator
 
 (continue_) @keyword
 (break_) @keyword
@@ -43,7 +43,7 @@
   name: (rust_identifier) @type)
 
 (component_parameter
-  name: (rust_identifier) @parameter)
+  name: (rust_identifier) @variable.parameter)
 
 (as_clause
   alias: (rust_identifier) @type)
@@ -60,4 +60,4 @@
   name_close: (component_tag_identifier) @type)
 
 (component_tag_parameter
-  name: (rust_identifier) @parameter)
+  name: (rust_identifier) @variable.parameter)
