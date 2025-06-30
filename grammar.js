@@ -103,10 +103,10 @@ module.exports = grammar({
         ))),
 
         include_: _ => token(prec(5, 'include')),
-        render_: _ => token(prec(5, 'render')),
-        render_body_: _ => token(prec(5, 'render_body')),
-        child_content_: _ => token(prec(5, 'child_content')),
-        use_: _ => token(prec(5, 'use')),
+        render_: _ => token(prec(0, 'render')),
+        render_body_: _ => token(prec(0, 'render_body')),
+        child_content_: _ => token(prec(0, 'child_content')),
+        use_: _ => token(prec(0, 'use')),
         as_: _ => token('as'),
 
         // region errors
@@ -186,18 +186,21 @@ module.exports = grammar({
         ),
 
         // region rust_expr_simple
-        rust_expr_simple: $ => seq(
+        rust_expr_simple: $ => prec(10, seq(
             optional($.hash_symbol),
             field('expr', alias($.rust_expr_simple_content, $.source_file)),
-        ),
+        )),
 
         rust_expr_simple_content: $ => seq(
             seq(
                 optional(repeat1('&')),
                 $._rust_identifier,
-                optional(repeat1(seq(choice('&', '.', '::'), $._rust_identifier))
-                )),
-            optional(repeat1($._chain_segment))
+                optional(repeat1(choice(
+                    seq(choice('&', '.', '::'), $._rust_identifier),
+                    $._chain_segment
+                )))
+            ),
+            //optional(repeat1($._chain_segment))
         ),
 
         _chain_segment: $ => prec(4, choice(
@@ -394,13 +397,13 @@ module.exports = grammar({
         // endregion
 
         // region render_body_directive
-        render_body_directive: $ => seq(
+        render_body_directive: $ => prec(1, seq(
             $.render_body_,
             choice(
                 seq($.open_paren, $.close_paren),
                 token(/\s/)
             ),
-        ),
+        )),
         // endregion
 
         // region child_content_directive

@@ -1,5 +1,9 @@
-﻿@if true {}
-@abcextends('layout.rs.html')
+﻿@time("2023-11-20T10:30:00Z").pretty()
+@if true {}
+@render_body
+@child_content
+@use "Card.rs.html" as Card
+@render("fad")
 
 <p>merhaba <b>this</b></p>
 
@@ -52,7 +56,7 @@
 @(3+5)
 @("Hello, world! <script>alert('hello')</script>")
 
-<Card title="okayy" footer/>
+<Card title="okayy" footer=true/>
 
 @raw {
   @if (x > 5) { print("hey"); }
@@ -95,6 +99,7 @@
     }
   },
   2 => <p>hel,_..loo</p>,
+  3 => self.card_count,
   _ => <p>aa=>,{..a</p>,
 }
 

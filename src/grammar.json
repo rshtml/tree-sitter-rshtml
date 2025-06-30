@@ -469,7 +469,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 5,
+        "value": 0,
         "content": {
           "type": "STRING",
           "value": "render"
@@ -480,7 +480,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 5,
+        "value": 0,
         "content": {
           "type": "STRING",
           "value": "render_body"
@@ -491,7 +491,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 5,
+        "value": 0,
         "content": {
           "type": "STRING",
           "value": "child_content"
@@ -502,7 +502,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 5,
+        "value": 0,
         "content": {
           "type": "STRING",
           "value": "use"
@@ -865,34 +865,38 @@
       ]
     },
     "rust_expr_simple": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "hash_symbol"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "FIELD",
-          "name": "expr",
-          "content": {
-            "type": "ALIAS",
+      "type": "PREC",
+      "value": 10,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "hash_symbol"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "FIELD",
+            "name": "expr",
             "content": {
-              "type": "SYMBOL",
-              "name": "rust_expr_simple_content"
-            },
-            "named": true,
-            "value": "source_file"
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "rust_expr_simple_content"
+              },
+              "named": true,
+              "value": "source_file"
+            }
           }
-        }
-      ]
+        ]
+      }
     },
     "rust_expr_simple_content": {
       "type": "SEQ",
@@ -925,28 +929,37 @@
                 {
                   "type": "REPEAT1",
                   "content": {
-                    "type": "SEQ",
+                    "type": "CHOICE",
                     "members": [
                       {
-                        "type": "CHOICE",
+                        "type": "SEQ",
                         "members": [
                           {
-                            "type": "STRING",
-                            "value": "&"
+                            "type": "CHOICE",
+                            "members": [
+                              {
+                                "type": "STRING",
+                                "value": "&"
+                              },
+                              {
+                                "type": "STRING",
+                                "value": "."
+                              },
+                              {
+                                "type": "STRING",
+                                "value": "::"
+                              }
+                            ]
                           },
                           {
-                            "type": "STRING",
-                            "value": "."
-                          },
-                          {
-                            "type": "STRING",
-                            "value": "::"
+                            "type": "SYMBOL",
+                            "name": "_rust_identifier"
                           }
                         ]
                       },
                       {
                         "type": "SYMBOL",
-                        "name": "_rust_identifier"
+                        "name": "_chain_segment"
                       }
                     ]
                   }
@@ -955,21 +968,6 @@
                   "type": "BLANK"
                 }
               ]
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "REPEAT1",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_chain_segment"
-              }
-            },
-            {
-              "type": "BLANK"
             }
           ]
         }
@@ -2016,38 +2014,42 @@
       ]
     },
     "render_body_directive": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "render_body_"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "open_paren"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "close_paren"
+      "type": "PREC",
+      "value": 1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "render_body_"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "open_paren"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "close_paren"
+                  }
+                ]
+              },
+              {
+                "type": "TOKEN",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "\\s"
                 }
-              ]
-            },
-            {
-              "type": "TOKEN",
-              "content": {
-                "type": "PATTERN",
-                "value": "\\s"
               }
-            }
-          ]
-        }
-      ]
+            ]
+          }
+        ]
+      }
     },
     "child_content_directive": {
       "type": "SEQ",
