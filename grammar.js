@@ -108,6 +108,7 @@ module.exports = grammar({
         child_content_: _ => token(prec(0, 'child_content')),
         use_: _ => token(prec(0, 'use')),
         as_: _ => token('as'),
+        section_: _ => token('section'),
 
         // region errors
         if_error: _ => token(prec(5, seq('if', /\s*/, '{'))),
@@ -173,6 +174,8 @@ module.exports = grammar({
                     $.render_directive,
                     $.child_content_directive,
                     $.include_directive,
+                    $.section_directive,
+                    $.section_block,
                     $.use_directive,
                     $.component,
                     $.rust_block,
@@ -500,6 +503,25 @@ module.exports = grammar({
             )
         ),
         component_tag_identifier: $ => token.immediate(COMPONENT_TAG_IDENTIFIER),
+        // endregion
+
+        // region section_directive
+        section_directive: $ => seq(
+            $.section_,
+            $.open_paren,
+            field('path', $.string_line),
+            $.comma,
+            field('value', choice($.string_line, $.rust_expr_simple)),
+            $.close_paren
+        ),
+        // endregion
+
+        // region section_block
+        section_block: $ => seq(
+            $.section_,
+            field('name', $.rust_identifier),
+            $._inner_template,
+        ),
         // endregion
 
     }

@@ -32,6 +32,10 @@
 (render_) @keyword
 (render_body_) @keyword
 (child_content_) @keyword
+(section_) @keyword
+
+(section_block
+  name: (rust_identifier) @namespace)
 
 (use_) @keyword
 (as_) @keyword

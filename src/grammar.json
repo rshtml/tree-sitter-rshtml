@@ -516,6 +516,13 @@
         "value": "as"
       }
     },
+    "section_": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "section"
+      }
+    },
     "if_error": {
       "type": "TOKEN",
       "content": {
@@ -825,6 +832,14 @@
                 {
                   "type": "SYMBOL",
                   "name": "include_directive"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "section_directive"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "section_block"
                 },
                 {
                   "type": "SYMBOL",
@@ -2502,6 +2517,73 @@
         "type": "PATTERN",
         "value": "[A-Z][a-zA-Z0-9_]*(\\.[A-Z][a-zA-Z0-9_]*)*"
       }
+    },
+    "section_directive": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "section_"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "open_paren"
+        },
+        {
+          "type": "FIELD",
+          "name": "path",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string_line"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "comma"
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "string_line"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "rust_expr_simple"
+              }
+            ]
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "close_paren"
+        }
+      ]
+    },
+    "section_block": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "section_"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "rust_identifier"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_inner_template"
+        }
+      ]
     }
   },
   "extras": [

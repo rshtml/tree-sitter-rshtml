@@ -59,6 +59,11 @@
     "fields": {}
   },
   {
+    "type": "comma",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "comment_block",
     "named": true,
     "fields": {},
@@ -155,6 +160,14 @@
           },
           {
             "type": "rust_expr_simple",
+            "named": true
+          },
+          {
+            "type": "section_block",
+            "named": true
+          },
+          {
+            "type": "section_directive",
             "named": true
           },
           {
@@ -287,6 +300,14 @@
           },
           {
             "type": "rust_expr_simple",
+            "named": true
+          },
+          {
+            "type": "section_block",
+            "named": true
+          },
+          {
+            "type": "section_directive",
             "named": true
           },
           {
@@ -438,6 +459,14 @@
             "named": true
           },
           {
+            "type": "section_block",
+            "named": true
+          },
+          {
+            "type": "section_directive",
+            "named": true
+          },
+          {
             "type": "start_symbol",
             "named": true
           },
@@ -577,6 +606,14 @@
           },
           {
             "type": "rust_expr_simple",
+            "named": true
+          },
+          {
+            "type": "section_block",
+            "named": true
+          },
+          {
+            "type": "section_directive",
             "named": true
           },
           {
@@ -725,6 +762,14 @@
           },
           {
             "type": "rust_expr_simple",
+            "named": true
+          },
+          {
+            "type": "section_block",
+            "named": true
+          },
+          {
+            "type": "section_directive",
             "named": true
           },
           {
@@ -890,6 +935,14 @@
             "named": true
           },
           {
+            "type": "section_block",
+            "named": true
+          },
+          {
+            "type": "section_directive",
+            "named": true
+          },
+          {
             "type": "start_symbol",
             "named": true
           },
@@ -1039,6 +1092,14 @@
           },
           {
             "type": "rust_expr_simple",
+            "named": true
+          },
+          {
+            "type": "section_block",
+            "named": true
+          },
+          {
+            "type": "section_directive",
             "named": true
           },
           {
@@ -1234,6 +1295,14 @@
             "named": true
           },
           {
+            "type": "section_block",
+            "named": true
+          },
+          {
+            "type": "section_directive",
+            "named": true
+          },
+          {
             "type": "start_symbol",
             "named": true
           },
@@ -1333,6 +1402,14 @@
           },
           {
             "type": "rust_expr_simple",
+            "named": true
+          },
+          {
+            "type": "section_block",
+            "named": true
+          },
+          {
+            "type": "section_directive",
             "named": true
           },
           {
@@ -1597,6 +1674,190 @@
     "fields": {}
   },
   {
+    "type": "section_block",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "ERROR",
+            "named": true
+          },
+          {
+            "type": "break_",
+            "named": true
+          },
+          {
+            "type": "child_content_directive",
+            "named": true
+          },
+          {
+            "type": "comment_block",
+            "named": true
+          },
+          {
+            "type": "component",
+            "named": true
+          },
+          {
+            "type": "component_tag",
+            "named": true
+          },
+          {
+            "type": "continue_",
+            "named": true
+          },
+          {
+            "type": "for_stmt",
+            "named": true
+          },
+          {
+            "type": "html_inner_text",
+            "named": true
+          },
+          {
+            "type": "if_stmt",
+            "named": true
+          },
+          {
+            "type": "include_directive",
+            "named": true
+          },
+          {
+            "type": "match_stmt",
+            "named": true
+          },
+          {
+            "type": "raw_block",
+            "named": true
+          },
+          {
+            "type": "render_body_directive",
+            "named": true
+          },
+          {
+            "type": "render_directive",
+            "named": true
+          },
+          {
+            "type": "rust_block",
+            "named": true
+          },
+          {
+            "type": "rust_expr_paren",
+            "named": true
+          },
+          {
+            "type": "rust_expr_simple",
+            "named": true
+          },
+          {
+            "type": "section_block",
+            "named": true
+          },
+          {
+            "type": "section_directive",
+            "named": true
+          },
+          {
+            "type": "start_symbol",
+            "named": true
+          },
+          {
+            "type": "use_directive",
+            "named": true
+          },
+          {
+            "type": "while_stmt",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "rust_identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "close_brace",
+          "named": true
+        },
+        {
+          "type": "open_brace",
+          "named": true
+        },
+        {
+          "type": "section_",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "section_directive",
+    "named": true,
+    "fields": {
+      "path": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string_line",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "rust_expr_simple",
+            "named": true
+          },
+          {
+            "type": "string_line",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "close_paren",
+          "named": true
+        },
+        {
+          "type": "comma",
+          "named": true
+        },
+        {
+          "type": "open_paren",
+          "named": true
+        },
+        {
+          "type": "section_",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "source_file",
     "named": true,
     "root": true,
@@ -1679,6 +1940,14 @@
         },
         {
           "type": "rust_expr_simple",
+          "named": true
+        },
+        {
+          "type": "section_block",
+          "named": true
+        },
+        {
+          "type": "section_directive",
           "named": true
         },
         {
@@ -1914,6 +2183,14 @@
             "named": true
           },
           {
+            "type": "section_block",
+            "named": true
+          },
+          {
+            "type": "section_directive",
+            "named": true
+          },
+          {
             "type": "start_symbol",
             "named": true
           },
@@ -2083,6 +2360,10 @@
   },
   {
     "type": "render_body_",
+    "named": true
+  },
+  {
+    "type": "section_",
     "named": true
   },
   {
