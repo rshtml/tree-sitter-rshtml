@@ -65,3 +65,7 @@
 
 (component_tag_parameter
   name: (rust_identifier) @variable.parameter)
+
+;this is for now extra
+(else_clause
+  head: (source_file) @keyword)

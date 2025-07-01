@@ -1,12 +1,20 @@
-(html_text
-  text: (source_file) @injection.content
-  (#set! injection.language "html")
-  (#set! injection.include-children))
+;((source_file) @injection.content
+;  (#not-match? @injection.content "comment_block")
+;  (#set! injection.language "html")
+;  (#set! injection.include-children)
+;  (#set! injection.combine))
 
-(html_inner_text
-  text: (source_file) @injection.content
-  (#set! injection.language "html")
-  (#set! injection.include-children))
+;(html_text
+;  text: (source_file) @injection.content
+;  (#set! injection.language "html")
+;  (#set! injection.include-children)
+;  (#set! injection.combine))
+
+;(html_inner_text
+;  text: (source_file) @injection.content
+;  (#set! injection.language "html")
+;  (#set! injection.include-children)
+;  (#set! injection.combine))
 
 (rust_expr_simple
   expr: (source_file) @injection.content

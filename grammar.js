@@ -488,7 +488,7 @@ module.exports = grammar({
         tag_open: _ => token(prec(-1, '<')),
         tag_self_close: _ => token('/>'),
         tag_close: _ => token('>'),
-        tag_end_open: _ => token('</'),
+        tag_end_open: _ => token(prec(-1, ('</'))),
 
         component_tag_parameter: $ => seq(
             field('name', $.rust_identifier),
