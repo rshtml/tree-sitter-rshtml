@@ -2108,6 +2108,13 @@
           "name": "use_"
         },
         {
+          "type": "TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "[ \\t]*"
+          }
+        },
+        {
           "type": "FIELD",
           "name": "path",
           "content": {

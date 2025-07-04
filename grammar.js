@@ -39,7 +39,7 @@ const COMPONENT_TAG_IDENTIFIER = /[A-Z][a-zA-Z0-9_]*(\.[A-Z][a-zA-Z0-9_]*)*/;
 module.exports = grammar({
     name: 'rshtml',
 
-    extras: $ => [/\s+/],
+    extras: _ => [/\s+/],
 
     conflicts: $ => [
         [$.rust_block],
@@ -422,6 +422,7 @@ module.exports = grammar({
         // region use_directive
         use_directive: $ => seq(
             $.use_,
+            token(/[ \t]*/),
             field('path', $.string_line),
             optional($.as_clause),
             optional($.semicolon)
