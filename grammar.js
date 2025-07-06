@@ -510,7 +510,7 @@ module.exports = grammar({
         section_directive: $ => seq(
             $.section_,
             $.open_paren,
-            field('path', $.string_line),
+            field('name', $.string_line),
             $.comma,
             field('value', choice($.string_line, $.rust_expr_simple)),
             $.close_paren
