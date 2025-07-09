@@ -1809,7 +1809,7 @@
     "type": "section_directive",
     "named": true,
     "fields": {
-      "path": {
+      "name": {
         "multiple": false,
         "required": true,
         "types": [
