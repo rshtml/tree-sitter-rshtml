@@ -1,6 +1,8 @@
 @{
     @: this is rust code blocks text line @self.data and data
 
+    let x = '}';
+    let y = "}";
     let s = "'<script/>'";
 
     @: this is escaped: @s
@@ -13,7 +15,7 @@
         this is not escaped: @#s
     </text>
 
-    fn inline_function() -> String {
+    fn inline_function<'a>() -> String {
         "inline function".to_string()
     }
 

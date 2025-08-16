@@ -16,6 +16,7 @@ tree-sitter query queries/injections.scm  views/if_else.rs.html
 const RUST_IDENTIFIER = /[a-zA-Z_][a-zA-Z0-9_]*/;
 const DOUBLE_QUOTED_STRING = /"(\\.|[^"\\])*"/;
 const SINGLE_QUOTED_STRING = /'(\\.|[^'\\])*'/;
+const SINGLE_QUOTED_CHAR = /'(\\.|[^'\\])'/;
 const START_SYMBOL = "@";
 const HASH_SYMBOL = "#";
 const OPEN_BRACE = "{";
@@ -386,7 +387,8 @@ module.exports = grammar({
           $._inner_rust,
         ),
       ),
-    _inner_rust: (_) => token(prec(-2, /([^@{}"r\/]|\/[^\/*]|r[^#"]|r#[^"])+/)),
+    _inner_rust: (_) =>
+      token(prec(-2, /([^@{}'"r\/]|\/[^\/*]|r[^#"]|r#[^"]|'.[^'])+/)),
     _line_comment_start: (_) => token("//"),
     _line_comment: (_) => token(prec(-1, /[^\r\n]+/)),
     _block_comment_start: (_) => token("/*"),
@@ -395,7 +397,12 @@ module.exports = grammar({
       token(
         prec(
           -1,
-          choice(DOUBLE_QUOTED_STRING, /r"[^"]*"/, /r#"([^"]|"[^#])*"#/),
+          choice(
+            SINGLE_QUOTED_CHAR,
+            DOUBLE_QUOTED_STRING,
+            /r"[^"]*"/,
+            /r#"([^"]|"[^#])*"#/,
+          ),
         ),
       ),
     // endregion
