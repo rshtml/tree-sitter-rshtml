@@ -1,0 +1,2 @@
+1. add single quote char support for rust block.
+2. match arm can have optional ',' on last.
