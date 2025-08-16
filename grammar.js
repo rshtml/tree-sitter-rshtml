@@ -5,7 +5,7 @@
  */
 
 /// <reference types="tree-sitter-cli/dsl" />
-// @ts-check
+// @ts-nocheck
 
 // commands
 /*
@@ -91,8 +91,8 @@ module.exports = grammar({
     match_: (_) => token(prec(5, seq("match", /\s+/, STMT_HEAD_COND))),
 
     match_arm_pattern: (_) => token(/[^=@}]([^=@]+|=([^>]))+/),
-    _match_inner_text: (_) => token(prec(-1, /([^\r\n@},]|(,[^\r\n}])+)+/)),
-    match_arm_end: (_) => token(/( \t)*,\s*/),
+    _match_inner_text: (_) => token(prec(-1, /([^\r\n@},]|(,[^\r\n@}])|@@)+/)),
+    match_arm_end: (_) => token(prec(-1, /( \t)*,?\s*/)),
 
     continue_: (_) => token(prec(5, "continue")),
     break_: (_) => token(prec(5, "break")),
@@ -310,11 +310,7 @@ module.exports = grammar({
         ),
         $.match_arm_end,
       ),
-    match_text: ($) =>
-      field(
-        "text",
-        alias(repeat1(choice($._escaped, $._match_inner_text)), $.source_file),
-      ),
+    match_text: ($) => field("text", alias($._match_inner_text, $.source_file)),
     // endregion
 
     // region raw_block

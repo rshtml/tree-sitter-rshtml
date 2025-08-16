@@ -354,15 +354,19 @@
         "value": -1,
         "content": {
           "type": "PATTERN",
-          "value": "([^\\r\\n@},]|(,[^\\r\\n}])+)+"
+          "value": "([^\\r\\n@},]|(,[^\\r\\n@}])|@@)+"
         }
       }
     },
     "match_arm_end": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "( \\t)*,\\s*"
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "PATTERN",
+          "value": "( \\t)*,?\\s*"
+        }
       }
     },
     "continue_": {
@@ -1540,20 +1544,8 @@
       "content": {
         "type": "ALIAS",
         "content": {
-          "type": "REPEAT1",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_escaped"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_match_inner_text"
-              }
-            ]
-          }
+          "type": "SYMBOL",
+          "name": "_match_inner_text"
         },
         "named": true,
         "value": "source_file"
