@@ -195,7 +195,7 @@ module.exports = grammar({
     // region rust_expr_simple
     rust_expr_simple: ($) =>
       prec(
-        10,
+        -1,
         seq(
           optional($.hash_symbol),
           field("expr", alias($.rust_expr_simple_content, $.source_file)),
