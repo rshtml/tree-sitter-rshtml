@@ -1,20 +1,20 @@
-; ((source_file) @injection.content
-;   (#not-match? @injection.content "comment_block")
+((source_file) @injection.content
+  ; (#not-match? @injection.content "comment_block")
+  (#set! injection.language "html")
+  (#set! injection.include-children))
+  ; (#set! injection.combined))
+
+; (html_text
+;   text: (source_file) @injection.content
 ;   (#set! injection.language "html")
 ;   (#set! injection.include-children)
 ;   (#set! injection.combined))
-
-(html_text
-  text: (source_file) @injection.content
-  (#set! injection.language "html")
-  (#set! injection.include-children)
-  (#set! injection.combined))
   
-(html_inner_text
-  text: (source_file) @injection.content
-  (#set! injection.language "html")
-  (#set! injection.include-children)
-  (#set! injection.combined))
+; (html_inner_text
+;   text: (source_file) @injection.content
+;   (#set! injection.language "html")
+;   (#set! injection.include-children)
+;   (#set! injection.combined))
 
 (rust_expr_simple
   expr: (source_file) @injection.content
@@ -69,10 +69,10 @@
   (#set! injection.language "rust")
   (#set! injection.include-children))
 
-(text_multiline
-  text: (source_file) @injection.content
-  (#set! injection.language "html")
-  (#set! injection.include-children))
+; (text_multiline
+;   text: (source_file) @injection.content
+;   (#set! injection.language "html")
+;   (#set! injection.include-children))
 
 (text_line
   text: (source_file) @injection.content

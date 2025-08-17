@@ -11,7 +11,7 @@
 
 ;(comma) @punctuation.delimiter
 (fat_arrow) @operator
-(colon) @punctuation.delimiter
+; (colon) @punctuation.delimiter
 (semicolon) @punctuation.delimiter
 (at_colon) @operator
 (equals) @punctuation.delimiter
@@ -43,11 +43,11 @@
 (number) @number
 (bool) @boolean
 
-(component
-  name: (rust_identifier) @type)
+; (component
+;   name: (rust_identifier) @type)
 
-(component_parameter
-  name: (rust_identifier) @variable.parameter)
+; (component_parameter
+;   name: (rust_identifier) @variable.parameter)
 
 (as_clause
   alias: (rust_identifier) @type)

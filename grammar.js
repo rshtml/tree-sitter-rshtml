@@ -42,7 +42,7 @@ module.exports = grammar({
 
   extras: (_) => [/\s+/],
 
-  conflicts: ($) => [[$.rust_block], [$.rust_identifier, $._rust_identifier]],
+  conflicts: ($) => [[$.rust_block]],
 
   rules: {
     source_file: ($) =>
@@ -102,15 +102,15 @@ module.exports = grammar({
     _raw_text: ($) => token(/[^{}]+/),
 
     _text_line: (_) => token(repeat1(choice(/[^@\r\n]/, "@@"))),
-    _text_multiline: (_) =>
-      token(
-        repeat1(
-          choice(
-            /[^@<]|<[^\/]|<\/[^t]|<\/t[^e]|<\/te[^x]|<\/tex[^t]|<\/text[^>]/,
-            "@@",
-          ),
-        ),
-      ),
+    // _text_multiline: (_) =>
+    //   token(
+    //     repeat1(
+    //       choice(
+    //         /[^@<]|<[^\/]|<\/[^t]|<\/t[^e]|<\/te[^x]|<\/tex[^t]|<\/text[^>]/,
+    //         "@@",
+    //       ),
+    //     ),
+    //   ),
 
     include_: (_) => token(prec(5, "include")),
     render_: (_) => token(prec(0, "render")),
@@ -181,7 +181,7 @@ module.exports = grammar({
             $.section_directive,
             $.section_block,
             $.use_directive,
-            $.component,
+            // $.component,
             $.rust_block,
             $._rust_stmt,
             $.rust_expr_paren,
@@ -195,7 +195,7 @@ module.exports = grammar({
     // region rust_expr_simple
     rust_expr_simple: ($) =>
       prec(
-        -1,
+        0,
         seq(
           optional($.hash_symbol),
           field("expr", alias($.rust_expr_simple_content, $.source_file)),
@@ -337,7 +337,7 @@ module.exports = grammar({
       repeat1(
         choice(
           $.text_line_directive,
-          $.text_block_tag,
+          // $.text_block_tag,
           $._nested_block,
           $._rust_code,
         ),
@@ -353,20 +353,20 @@ module.exports = grammar({
     text_line: ($) => field("text", alias($._text_line, $.source_file)),
     // endregion
 
-    // region text_block_tag
-    text_block_tag: ($) =>
-      seq(
-        $.text_block_tag_open,
-        repeat(
-          choice($.text_multiline, seq($.start_symbol, $.rust_expr_simple)),
-        ),
-        $.text_block_tag_close,
-      ),
-    text_block_tag_open: ($) => token(prec(4, "<text>")),
-    text_block_tag_close: ($) => token(prec(4, "</text>")),
-    text_multiline: ($) =>
-      field("text", alias($._text_multiline, $.source_file)),
-    // endregion
+    // // region text_block_tag
+    // text_block_tag: ($) =>
+    //   seq(
+    //     $.text_block_tag_open,
+    //     repeat(
+    //       choice($.text_multiline, seq($.start_symbol, $.rust_expr_simple)),
+    //     ),
+    //     $.text_block_tag_close,
+    //   ),
+    // text_block_tag_open: ($) => token(prec(4, "<text>")),
+    // text_block_tag_close: ($) => token(prec(4, "</text>")),
+    // text_multiline: ($) =>
+    //   field("text", alias($._text_multiline, $.source_file)),
+    // // endregion
 
     // region rust_code
     _nested_block: ($) => seq("{", optional($._rust_block_content), "}"),
@@ -454,37 +454,37 @@ module.exports = grammar({
       seq($.as_, token(/[ \t]+/), field("alias", $.rust_identifier)),
     // endregion
 
-    // region component_block
-    component: ($) =>
-      seq(
-        field("name", $.rust_identifier),
-        $.open_paren,
-        repeat(
-          seq($.component_parameter, repeat(seq(",", $.component_parameter))),
-        ),
-        $.close_paren,
-        $._inner_template,
-      ),
-    component_parameter: ($) =>
-      seq(
-        field("name", $.rust_identifier),
-        $.colon,
-        choice(
-          $.bool,
-          $.number,
-          $.string_line,
-          seq($.start_symbol, $.rust_expr_paren),
-          seq($.start_symbol, $.rust_expr_simple),
-          $._inner_template,
-        ),
-      ),
+    // // region component_block
+    // component: ($) =>
+    //   seq(
+    //     field("name", $.rust_identifier),
+    //     $.open_paren,
+    //     repeat(
+    //       seq($.component_parameter, repeat(seq(",", $.component_parameter))),
+    //     ),
+    //     $.close_paren,
+    //     $._inner_template,
+    //   ),
+    // component_parameter: ($) =>
+    //   seq(
+    //     field("name", $.rust_identifier),
+    //     $.colon,
+    //     choice(
+    //       $.bool,
+    //       $.number,
+    //       $.string_line,
+    //       seq($.start_symbol, $.rust_expr_paren),
+    //       seq($.start_symbol, $.rust_expr_simple),
+    //       $._inner_template,
+    //     ),
+    //   ),
     bool: (_) => token(/true|false/),
     number: (_) =>
       token(
         seq(optional("-"), seq(ASCII_DIGITS, optional(seq(".", ASCII_DIGITS)))),
       ),
 
-    // endregion
+    // // endregion
 
     // region component_tag
     component_tag: ($) =>

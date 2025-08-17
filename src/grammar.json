@@ -439,25 +439,6 @@
         }
       }
     },
-    "_text_multiline": {
-      "type": "TOKEN",
-      "content": {
-        "type": "REPEAT1",
-        "content": {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "[^@<]|<[^\\/]|<\\/[^t]|<\\/t[^e]|<\\/te[^x]|<\\/tex[^t]|<\\/text[^>]"
-            },
-            {
-              "type": "STRING",
-              "value": "@@"
-            }
-          ]
-        }
-      }
-    },
     "include_": {
       "type": "TOKEN",
       "content": {
@@ -851,10 +832,6 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "component"
-                },
-                {
-                  "type": "SYMBOL",
                   "name": "rust_block"
                 },
                 {
@@ -885,7 +862,7 @@
     },
     "rust_expr_simple": {
       "type": "PREC",
-      "value": 10,
+      "value": 0,
       "content": {
         "type": "SEQ",
         "members": [
@@ -1678,10 +1655,6 @@
           },
           {
             "type": "SYMBOL",
-            "name": "text_block_tag"
-          },
-          {
-            "type": "SYMBOL",
             "name": "_nested_block"
           },
           {
@@ -1740,79 +1713,6 @@
         "content": {
           "type": "SYMBOL",
           "name": "_text_line"
-        },
-        "named": true,
-        "value": "source_file"
-      }
-    },
-    "text_block_tag": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "text_block_tag_open"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "text_multiline"
-              },
-              {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "start_symbol"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "rust_expr_simple"
-                  }
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "text_block_tag_close"
-        }
-      ]
-    },
-    "text_block_tag_open": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PREC",
-        "value": 4,
-        "content": {
-          "type": "STRING",
-          "value": "<text>"
-        }
-      }
-    },
-    "text_block_tag_close": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PREC",
-        "value": 4,
-        "content": {
-          "type": "STRING",
-          "value": "</text>"
-        }
-      }
-    },
-    "text_multiline": {
-      "type": "FIELD",
-      "name": "text",
-      "content": {
-        "type": "ALIAS",
-        "content": {
-          "type": "SYMBOL",
-          "name": "_text_multiline"
         },
         "named": true,
         "value": "source_file"
@@ -2168,123 +2068,6 @@
         }
       ]
     },
-    "component": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "rust_identifier"
-          }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "open_paren"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "component_parameter"
-              },
-              {
-                "type": "REPEAT",
-                "content": {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": ","
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "component_parameter"
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "close_paren"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_inner_template"
-        }
-      ]
-    },
-    "component_parameter": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "rust_identifier"
-          }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "colon"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "bool"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "string_line"
-            },
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "start_symbol"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "rust_expr_paren"
-                }
-              ]
-            },
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "start_symbol"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "rust_expr_simple"
-                }
-              ]
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_inner_template"
-            }
-          ]
-        }
-      ]
-    },
     "bool": {
       "type": "TOKEN",
       "content": {
@@ -2615,10 +2398,6 @@
   "conflicts": [
     [
       "rust_block"
-    ],
-    [
-      "rust_identifier",
-      "_rust_identifier"
     ]
   ],
   "precedences": [],
