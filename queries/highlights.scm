@@ -43,12 +43,6 @@
 (number) @number
 (bool) @boolean
 
-; (component
-;   name: (rust_identifier) @type)
-
-; (component_parameter
-;   name: (rust_identifier) @variable.parameter)
-
 (as_clause
   alias: (rust_identifier) @type)
 

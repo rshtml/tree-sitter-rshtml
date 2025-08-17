@@ -102,16 +102,7 @@ module.exports = grammar({
     _raw_text: ($) => token(/[^{}]+/),
 
     _text_line: (_) => token(repeat1(choice(/[^@\r\n]/, "@@"))),
-    // _text_multiline: (_) =>
-    //   token(
-    //     repeat1(
-    //       choice(
-    //         /[^@<]|<[^\/]|<\/[^t]|<\/t[^e]|<\/te[^x]|<\/tex[^t]|<\/text[^>]/,
-    //         "@@",
-    //       ),
-    //     ),
-    //   ),
-
+   
     include_: (_) => token(prec(5, "include")),
     render_: (_) => token(prec(0, "render")),
     render_body_: (_) => token(prec(0, "render_body")),
@@ -181,7 +172,6 @@ module.exports = grammar({
             $.section_directive,
             $.section_block,
             $.use_directive,
-            // $.component,
             $.rust_block,
             $._rust_stmt,
             $.rust_expr_paren,
@@ -353,21 +343,6 @@ module.exports = grammar({
     text_line: ($) => field("text", alias($._text_line, $.source_file)),
     // endregion
 
-    // // region text_block_tag
-    // text_block_tag: ($) =>
-    //   seq(
-    //     $.text_block_tag_open,
-    //     repeat(
-    //       choice($.text_multiline, seq($.start_symbol, $.rust_expr_simple)),
-    //     ),
-    //     $.text_block_tag_close,
-    //   ),
-    // text_block_tag_open: ($) => token(prec(4, "<text>")),
-    // text_block_tag_close: ($) => token(prec(4, "</text>")),
-    // text_multiline: ($) =>
-    //   field("text", alias($._text_multiline, $.source_file)),
-    // // endregion
-
     // region rust_code
     _nested_block: ($) => seq("{", optional($._rust_block_content), "}"),
     _rust_code: ($) =>
@@ -454,38 +429,6 @@ module.exports = grammar({
       seq($.as_, token(/[ \t]+/), field("alias", $.rust_identifier)),
     // endregion
 
-    // // region component_block
-    // component: ($) =>
-    //   seq(
-    //     field("name", $.rust_identifier),
-    //     $.open_paren,
-    //     repeat(
-    //       seq($.component_parameter, repeat(seq(",", $.component_parameter))),
-    //     ),
-    //     $.close_paren,
-    //     $._inner_template,
-    //   ),
-    // component_parameter: ($) =>
-    //   seq(
-    //     field("name", $.rust_identifier),
-    //     $.colon,
-    //     choice(
-    //       $.bool,
-    //       $.number,
-    //       $.string_line,
-    //       seq($.start_symbol, $.rust_expr_paren),
-    //       seq($.start_symbol, $.rust_expr_simple),
-    //       $._inner_template,
-    //     ),
-    //   ),
-    bool: (_) => token(/true|false/),
-    number: (_) =>
-      token(
-        seq(optional("-"), seq(ASCII_DIGITS, optional(seq(".", ASCII_DIGITS)))),
-      ),
-
-    // // endregion
-
     // region component_tag
     component_tag: ($) =>
       seq(
@@ -525,6 +468,13 @@ module.exports = grammar({
         ),
       ),
     component_tag_identifier: ($) => token.immediate(COMPONENT_TAG_IDENTIFIER),
+
+    bool: (_) => token(/true|false/),
+    number: (_) =>
+      token(
+        seq(optional("-"), seq(ASCII_DIGITS, optional(seq(".", ASCII_DIGITS)))),
+      ),
+  
     // endregion
 
     // region section_directive
