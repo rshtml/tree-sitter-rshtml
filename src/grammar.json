@@ -2205,53 +2205,66 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "equals"
-        },
-        {
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "bool"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "string_line"
-            },
-            {
               "type": "SEQ",
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "start_symbol"
+                  "name": "equals"
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "rust_expr_paren"
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "bool"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "number"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "string_line"
+                    },
+                    {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "start_symbol"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "rust_expr_paren"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "start_symbol"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "rust_expr_simple"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "_inner_template"
+                    }
+                  ]
                 }
               ]
             },
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "start_symbol"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "rust_expr_simple"
-                }
-              ]
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_inner_template"
+              "type": "BLANK"
             }
           ]
         }

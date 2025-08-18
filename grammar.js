@@ -457,17 +457,18 @@ module.exports = grammar({
     component_tag_parameter: ($) =>
       seq(
         field("name", $.rust_identifier),
-        $.equals,
-        choice(
-          $.bool,
-          $.number,
-          $.string_line,
-          seq($.start_symbol, $.rust_expr_paren),
-          seq($.start_symbol, $.rust_expr_simple),
-          $._inner_template,
-        ),
+        optional(seq(
+          $.equals,
+          choice(
+            $.bool,
+            $.number,
+            $.string_line,
+            seq($.start_symbol, $.rust_expr_paren),
+            seq($.start_symbol, $.rust_expr_simple),
+            $._inner_template,
+        ))),
       ),
-    component_tag_identifier: ($) => token.immediate(COMPONENT_TAG_IDENTIFIER),
+    component_tag_identifier: (_) => token.immediate(COMPONENT_TAG_IDENTIFIER),
 
     bool: (_) => token(/true|false/),
     number: (_) =>
