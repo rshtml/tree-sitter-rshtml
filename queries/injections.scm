@@ -68,8 +68,3 @@
   content: (source_file) @injection.content
   (#set! injection.language "rust")
   (#set! injection.include-children))
-
-(text_line
-  text: (source_file) @injection.content
-  (#set! injection.language "html")
-  (#set! injection.include-children))

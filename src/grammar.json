@@ -176,13 +176,6 @@
         "value": ";"
       }
     },
-    "at_colon": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "@:"
-      }
-    },
     "equals": {
       "type": "TOKEN",
       "content": {
@@ -418,25 +411,6 @@
       "content": {
         "type": "PATTERN",
         "value": "[^{}]+"
-      }
-    },
-    "_text_line": {
-      "type": "TOKEN",
-      "content": {
-        "type": "REPEAT1",
-        "content": {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "[^@\\r\\n]"
-            },
-            {
-              "type": "STRING",
-              "value": "@@"
-            }
-          ]
-        }
       }
     },
     "include_": {
@@ -1651,10 +1625,6 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "text_line_directive"
-          },
-          {
-            "type": "SYMBOL",
             "name": "_nested_block"
           },
           {
@@ -1662,60 +1632,6 @@
             "name": "_rust_code"
           }
         ]
-      }
-    },
-    "text_line_directive": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "at_colon"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "text_line"
-              },
-              {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "start_symbol"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "rust_expr_simple"
-                  }
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "[\\r\\n]"
-          }
-        }
-      ]
-    },
-    "text_line": {
-      "type": "FIELD",
-      "name": "text",
-      "content": {
-        "type": "ALIAS",
-        "content": {
-          "type": "SYMBOL",
-          "name": "_text_line"
-        },
-        "named": true,
-        "value": "source_file"
       }
     },
     "_nested_block": {

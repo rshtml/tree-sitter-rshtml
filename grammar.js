@@ -28,7 +28,6 @@ const CLOSE_BRACKET = "]";
 const FAT_ARROW = "=>";
 const COMMA = ",";
 const COLON = ":";
-const AT_COLON = "@:";
 const SEMICOLON = ";";
 const EQUALS = "=";
 
@@ -72,7 +71,6 @@ module.exports = grammar({
     fat_arrow: (_) => token(FAT_ARROW),
     colon: (_) => token(COLON),
     semicolon: (_) => token(SEMICOLON),
-    at_colon: (_) => token(AT_COLON),
     equals: (_) => token(EQUALS),
 
     open_comment: (_) => token("@*"),
@@ -101,8 +99,6 @@ module.exports = grammar({
     raw_: (_) => token(prec(5, "raw")),
     _raw_text: ($) => token(/[^{}]+/),
 
-    _text_line: (_) => token(repeat1(choice(/[^@\r\n]/, "@@"))),
-   
     include_: (_) => token(prec(5, "include")),
     render_: (_) => token(prec(0, "render")),
     render_body_: (_) => token(prec(0, "render_body")),
@@ -326,21 +322,10 @@ module.exports = grammar({
     _rust_block_content: ($) =>
       repeat1(
         choice(
-          $.text_line_directive,
-          // $.text_block_tag,
           $._nested_block,
           $._rust_code,
         ),
       ),
-
-    // region text_line_directive
-    text_line_directive: ($) =>
-      seq(
-        $.at_colon,
-        repeat(choice($.text_line, seq($.start_symbol, $.rust_expr_simple))),
-        token.immediate(/[\r\n]/),
-      ),
-    text_line: ($) => field("text", alias($._text_line, $.source_file)),
     // endregion
 
     // region rust_code

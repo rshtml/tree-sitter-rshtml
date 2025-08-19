@@ -1,1 +1,0 @@
-1. in components, allow parameter without value. <Card footer/> it must be work.

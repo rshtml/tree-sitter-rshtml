@@ -1618,10 +1618,6 @@
           "named": true
         },
         {
-          "type": "text_line_directive",
-          "named": true
-        },
-        {
           "type": "use_directive",
           "named": true
         },
@@ -1636,49 +1632,6 @@
     "type": "string_line",
     "named": true,
     "fields": {}
-  },
-  {
-    "type": "text_line",
-    "named": true,
-    "fields": {
-      "text": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "source_file",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "text_line_directive",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "at_colon",
-          "named": true
-        },
-        {
-          "type": "rust_expr_simple",
-          "named": true
-        },
-        {
-          "type": "start_symbol",
-          "named": true
-        },
-        {
-          "type": "text_line",
-          "named": true
-        }
-      ]
-    }
   },
   {
     "type": "use_directive",
@@ -1888,10 +1841,6 @@
   },
   {
     "type": "as_",
-    "named": true
-  },
-  {
-    "type": "at_colon",
     "named": true
   },
   {
