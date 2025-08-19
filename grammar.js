@@ -97,7 +97,7 @@ module.exports = grammar({
 
     extends_: (_) => token(prec(5, "extends")),
     raw_: (_) => token(prec(5, "raw")),
-    _raw_text: ($) => token(/[^{}]+/),
+    _raw_text: (_) => token(/[^{}]+/),
 
     include_: (_) => token(prec(5, "include")),
     render_: (_) => token(prec(0, "render")),
