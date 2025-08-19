@@ -1,4 +1,4 @@
-﻿@time("2023-11-20T10:30:00Z").pretty()
+@time("2023-11-20T10:30:00Z").pretty()
 @if true {}
 @render_body
 @child_content
@@ -30,9 +30,6 @@
   let x = 5;
   let y = 10;
   println!("{}", x + y);
-  @: this is just a text @x   ttt
-
-  <text>this is @y    textttt </text>
 
   fn inline_function() -> String {
     "inline function".to_string()
@@ -60,10 +57,10 @@
 
 @raw {
   @if (x > 5) { print("hey"); }
-
-  <h2>{{ message }}</h2>
-  <p>Count value: {{ count }}</p>
-
+  <div>
+    <h2>{{ message }}</h2>
+    <p>Count value: {{ count }}</p>
+  </div>
   {{-- Buttons and event listeners --}}
   <button v-on:click="increment">Inc (+)</button>
   <button @click="decrement">Dec (-)</button>
