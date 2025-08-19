@@ -78,8 +78,8 @@ module.exports = grammar({
 
     _escaped: (_) => token("@@"),
 
-    _text: (_) => token(prec(-1, /([^@<]|<[^A-Z\/]|<\/[^A-Z])+/)),
-    _inner_text: (_) => token(prec(-1, /([^@<}]|<[^A-Z\/]|<\/[^A-Z])+/)),
+    _text: (_) => token(prec(-1, /([^@<]|<[^A-Z/]|<\/[^A-Z])+/)),
+    _inner_text: (_) => token(prec(-1, /([^@<}]|<[^A-Z/]|<\/[^A-Z])+/)),
 
     if_: (_) => token(prec(5, seq("if", /\s+/, STMT_HEAD_COND))),
     else_: (_) => token(prec(6, "else")),
@@ -344,7 +344,7 @@ module.exports = grammar({
         ),
       ),
     _inner_rust: (_) =>
-      token(prec(-2, /([^@{}'"r\/]|\/[^\/*]|r[^#"]|r#[^"]|'.[^'])+/)),
+      token(prec(-2, /([^@{}'"r/]|\/[^/*]|r[^#"]|r#[^"]|'.[^'])+/)),
     _line_comment_start: (_) => token("//"),
     _line_comment: (_) => token(prec(-1, /[^\r\n]+/)),
     _block_comment_start: (_) => token("/*"),
