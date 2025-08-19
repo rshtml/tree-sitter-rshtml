@@ -478,7 +478,7 @@
         "required": true,
         "types": [
           {
-            "type": "source_file",
+            "type": "source_text",
             "named": true
           }
         ]
@@ -644,7 +644,7 @@
         "required": true,
         "types": [
           {
-            "type": "source_file",
+            "type": "source_text",
             "named": true
           }
         ]
@@ -674,7 +674,7 @@
         "required": true,
         "types": [
           {
-            "type": "source_file",
+            "type": "source_text",
             "named": true
           }
         ]
@@ -690,7 +690,7 @@
         "required": true,
         "types": [
           {
-            "type": "source_file",
+            "type": "source_text",
             "named": true
           }
         ]
@@ -800,7 +800,7 @@
         "required": true,
         "types": [
           {
-            "type": "source_file",
+            "type": "source_text",
             "named": true
           }
         ]
@@ -868,7 +868,7 @@
         "required": true,
         "types": [
           {
-            "type": "source_file",
+            "type": "source_text",
             "named": true
           }
         ]
@@ -1102,7 +1102,7 @@
         "required": true,
         "types": [
           {
-            "type": "source_file",
+            "type": "source_text",
             "named": true
           }
         ]
@@ -1132,7 +1132,7 @@
         "required": true,
         "types": [
           {
-            "type": "source_file",
+            "type": "source_text",
             "named": true
           }
         ]
@@ -1185,7 +1185,7 @@
         "required": true,
         "types": [
           {
-            "type": "source_file",
+            "type": "source_text",
             "named": true
           }
         ]
@@ -1258,7 +1258,7 @@
         "required": false,
         "types": [
           {
-            "type": "source_file",
+            "type": "source_text",
             "named": true
           }
         ]
@@ -1288,7 +1288,7 @@
         "required": false,
         "types": [
           {
-            "type": "source_file",
+            "type": "source_text",
             "named": true
           }
         ]
@@ -1322,7 +1322,7 @@
         "required": true,
         "types": [
           {
-            "type": "source_file",
+            "type": "source_text",
             "named": true
           }
         ]
@@ -1629,6 +1629,11 @@
     }
   },
   {
+    "type": "source_text",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "string_line",
     "named": true,
     "fields": {}
@@ -1770,7 +1775,7 @@
         "required": true,
         "types": [
           {
-            "type": "source_file",
+            "type": "source_text",
             "named": true
           }
         ]

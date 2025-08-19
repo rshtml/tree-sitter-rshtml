@@ -659,7 +659,7 @@
           ]
         },
         "named": true,
-        "value": "source_file"
+        "value": "source_text"
       }
     },
     "html_inner_text": {
@@ -681,7 +681,7 @@
           ]
         },
         "named": true,
-        "value": "source_file"
+        "value": "source_text"
       }
     },
     "extends_directive": {
@@ -862,7 +862,7 @@
                 "name": "rust_expr_simple_content"
               },
               "named": true,
-              "value": "source_file"
+              "value": "source_text"
             }
           }
         ]
@@ -1109,7 +1109,7 @@
                   "name": "rust_expr_paren_body"
                 },
                 "named": true,
-                "value": "source_file"
+                "value": "source_text"
               }
             },
             {
@@ -1301,7 +1301,7 @@
               "name": "if_"
             },
             "named": true,
-            "value": "source_file"
+            "value": "source_text"
           }
         },
         {
@@ -1335,7 +1335,7 @@
               "name": "else_"
             },
             "named": true,
-            "value": "source_file"
+            "value": "source_text"
           }
         },
         {
@@ -1366,7 +1366,7 @@
               "name": "for_"
             },
             "named": true,
-            "value": "source_file"
+            "value": "source_text"
           }
         },
         {
@@ -1388,7 +1388,7 @@
               "name": "while_"
             },
             "named": true,
-            "value": "source_file"
+            "value": "source_text"
           }
         },
         {
@@ -1410,7 +1410,7 @@
               "name": "match_"
             },
             "named": true,
-            "value": "source_file"
+            "value": "source_text"
           }
         },
         {
@@ -1443,7 +1443,7 @@
               "name": "match_arm_pattern"
             },
             "named": true,
-            "value": "source_file"
+            "value": "source_text"
           }
         },
         {
@@ -1499,7 +1499,7 @@
           "name": "_match_inner_text"
         },
         "named": true,
-        "value": "source_file"
+        "value": "source_text"
       }
     },
     "raw_block": {
@@ -1544,7 +1544,7 @@
           }
         },
         "named": true,
-        "value": "source_file"
+        "value": "source_text"
       }
     },
     "_raw_nested_content": {
@@ -1609,7 +1609,7 @@
               ]
             },
             "named": true,
-            "value": "source_file"
+            "value": "source_text"
           }
         },
         {

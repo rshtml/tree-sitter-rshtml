@@ -57,4 +57,4 @@
 
 ;this is for now extra
 (else_clause
-  head: (source_file) @keyword)
+  head: (source_text) @keyword)
