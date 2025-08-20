@@ -609,24 +609,8 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "REPEAT",
-                "content": {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "comment_block"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_block"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "html_inner_text"
-                    }
-                  ]
-                }
+                "type": "SYMBOL",
+                "name": "inner_template_body"
               },
               {
                 "type": "BLANK"
@@ -639,6 +623,26 @@
           "name": "close_brace"
         }
       ]
+    },
+    "inner_template_body": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "comment_block"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_block"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "html_inner_text"
+          }
+        ]
+      }
     },
     "html_text": {
       "type": "FIELD",
@@ -743,17 +747,21 @@
           "name": "open_comment"
         },
         {
-          "type": "TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "([^*]|\\*+[^@])*"
-          }
+          "type": "SYMBOL",
+          "name": "comment_content"
         },
         {
           "type": "SYMBOL",
           "name": "close_comment"
         }
       ]
+    },
+    "comment_content": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "([^*]|\\*+[^@])*"
+      }
     },
     "_block": {
       "type": "CHOICE",
@@ -2044,11 +2052,16 @@
                   "type": "FIELD",
                   "name": "body",
                   "content": {
-                    "type": "REPEAT",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "_template"
-                    }
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "component_tag_body"
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
                   }
                 },
                 {
@@ -2072,6 +2085,13 @@
           ]
         }
       ]
+    },
+    "component_tag_body": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_template"
+      }
     },
     "tag_open": {
       "type": "TOKEN",

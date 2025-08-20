@@ -124,13 +124,14 @@ module.exports = grammar({
         $.open_brace,
         field(
           "body",
-          optional(
-            repeat(choice($.comment_block, $._block, $.html_inner_text)),
-          ),
+          optional($.inner_template_body),
         ),
         $.close_brace,
       ),
 
+    inner_template_body: ($) => 
+      repeat1(choice($.comment_block, $._block, $.html_inner_text)),
+    
     html_text: ($) =>
       field("text", alias(choice($._escaped, $._text), $.source_text)),
     html_inner_text: ($) =>
@@ -151,8 +152,9 @@ module.exports = grammar({
       ),
 
     comment_block: ($) =>
-      seq($.open_comment, token(/([^*]|\*+[^@])*/), $.close_comment),
-    // endregion
+      seq($.open_comment, $.comment_content, $.close_comment),
+
+    comment_content: (_) => token(/([^*]|\*+[^@])*/),    // endregion
 
     _block: ($) =>
       choice(
@@ -426,7 +428,7 @@ module.exports = grammar({
           $.tag_self_close,
           seq(
             $.tag_close,
-            field("body", repeat($._template)),
+            field("body", optional($.component_tag_body)),
             $.tag_end_open,
             field("name_close", $.component_tag_identifier),
             $.tag_close,
@@ -434,6 +436,7 @@ module.exports = grammar({
         ),
       ),
 
+    component_tag_body: ($) => repeat1($._template),
     tag_open: (_) => token(prec(-1, "<")),
     tag_self_close: (_) => token("/>"),
     tag_close: (_) => token(">"),

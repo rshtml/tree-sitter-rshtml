@@ -71,6 +71,10 @@
           "named": true
         },
         {
+          "type": "comment_content",
+          "named": true
+        },
+        {
           "type": "open_comment",
           "named": true
         }
@@ -82,95 +86,11 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "ERROR",
-            "named": true
-          },
-          {
-            "type": "break_",
-            "named": true
-          },
-          {
-            "type": "child_content_directive",
-            "named": true
-          },
-          {
-            "type": "comment_block",
-            "named": true
-          },
-          {
-            "type": "component_tag",
-            "named": true
-          },
-          {
-            "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "for_stmt",
-            "named": true
-          },
-          {
-            "type": "html_text",
-            "named": true
-          },
-          {
-            "type": "if_stmt",
-            "named": true
-          },
-          {
-            "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "raw_block",
-            "named": true
-          },
-          {
-            "type": "render_body_directive",
-            "named": true
-          },
-          {
-            "type": "render_directive",
-            "named": true
-          },
-          {
-            "type": "rust_block",
-            "named": true
-          },
-          {
-            "type": "rust_expr_paren",
-            "named": true
-          },
-          {
-            "type": "rust_expr_simple",
-            "named": true
-          },
-          {
-            "type": "section_block",
-            "named": true
-          },
-          {
-            "type": "section_directive",
-            "named": true
-          },
-          {
-            "type": "start_symbol",
-            "named": true
-          },
-          {
-            "type": "use_directive",
-            "named": true
-          },
-          {
-            "type": "while_stmt",
+            "type": "component_tag_body",
             "named": true
           }
         ]
@@ -224,99 +144,114 @@
     }
   },
   {
+    "type": "component_tag_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "ERROR",
+          "named": true
+        },
+        {
+          "type": "break_",
+          "named": true
+        },
+        {
+          "type": "child_content_directive",
+          "named": true
+        },
+        {
+          "type": "comment_block",
+          "named": true
+        },
+        {
+          "type": "component_tag",
+          "named": true
+        },
+        {
+          "type": "continue_",
+          "named": true
+        },
+        {
+          "type": "for_stmt",
+          "named": true
+        },
+        {
+          "type": "html_text",
+          "named": true
+        },
+        {
+          "type": "if_stmt",
+          "named": true
+        },
+        {
+          "type": "include_directive",
+          "named": true
+        },
+        {
+          "type": "match_stmt",
+          "named": true
+        },
+        {
+          "type": "raw_block",
+          "named": true
+        },
+        {
+          "type": "render_body_directive",
+          "named": true
+        },
+        {
+          "type": "render_directive",
+          "named": true
+        },
+        {
+          "type": "rust_block",
+          "named": true
+        },
+        {
+          "type": "rust_expr_paren",
+          "named": true
+        },
+        {
+          "type": "rust_expr_simple",
+          "named": true
+        },
+        {
+          "type": "section_block",
+          "named": true
+        },
+        {
+          "type": "section_directive",
+          "named": true
+        },
+        {
+          "type": "start_symbol",
+          "named": true
+        },
+        {
+          "type": "use_directive",
+          "named": true
+        },
+        {
+          "type": "while_stmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "component_tag_parameter",
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "ERROR",
-            "named": true
-          },
-          {
-            "type": "break_",
-            "named": true
-          },
-          {
-            "type": "child_content_directive",
-            "named": true
-          },
-          {
-            "type": "comment_block",
-            "named": true
-          },
-          {
-            "type": "component_tag",
-            "named": true
-          },
-          {
-            "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "for_stmt",
-            "named": true
-          },
-          {
-            "type": "html_inner_text",
-            "named": true
-          },
-          {
-            "type": "if_stmt",
-            "named": true
-          },
-          {
-            "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "raw_block",
-            "named": true
-          },
-          {
-            "type": "render_body_directive",
-            "named": true
-          },
-          {
-            "type": "render_directive",
-            "named": true
-          },
-          {
-            "type": "rust_block",
-            "named": true
-          },
-          {
-            "type": "rust_expr_paren",
-            "named": true
-          },
-          {
-            "type": "rust_expr_simple",
-            "named": true
-          },
-          {
-            "type": "section_block",
-            "named": true
-          },
-          {
-            "type": "section_directive",
-            "named": true
-          },
-          {
-            "type": "start_symbol",
-            "named": true
-          },
-          {
-            "type": "use_directive",
-            "named": true
-          },
-          {
-            "type": "while_stmt",
+            "type": "inner_template_body",
             "named": true
           }
         ]
@@ -380,95 +315,11 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "ERROR",
-            "named": true
-          },
-          {
-            "type": "break_",
-            "named": true
-          },
-          {
-            "type": "child_content_directive",
-            "named": true
-          },
-          {
-            "type": "comment_block",
-            "named": true
-          },
-          {
-            "type": "component_tag",
-            "named": true
-          },
-          {
-            "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "for_stmt",
-            "named": true
-          },
-          {
-            "type": "html_inner_text",
-            "named": true
-          },
-          {
-            "type": "if_stmt",
-            "named": true
-          },
-          {
-            "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "raw_block",
-            "named": true
-          },
-          {
-            "type": "render_body_directive",
-            "named": true
-          },
-          {
-            "type": "render_directive",
-            "named": true
-          },
-          {
-            "type": "rust_block",
-            "named": true
-          },
-          {
-            "type": "rust_expr_paren",
-            "named": true
-          },
-          {
-            "type": "rust_expr_simple",
-            "named": true
-          },
-          {
-            "type": "section_block",
-            "named": true
-          },
-          {
-            "type": "section_directive",
-            "named": true
-          },
-          {
-            "type": "start_symbol",
-            "named": true
-          },
-          {
-            "type": "use_directive",
-            "named": true
-          },
-          {
-            "type": "while_stmt",
+            "type": "inner_template_body",
             "named": true
           }
         ]
@@ -546,95 +397,11 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "ERROR",
-            "named": true
-          },
-          {
-            "type": "break_",
-            "named": true
-          },
-          {
-            "type": "child_content_directive",
-            "named": true
-          },
-          {
-            "type": "comment_block",
-            "named": true
-          },
-          {
-            "type": "component_tag",
-            "named": true
-          },
-          {
-            "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "for_stmt",
-            "named": true
-          },
-          {
-            "type": "html_inner_text",
-            "named": true
-          },
-          {
-            "type": "if_stmt",
-            "named": true
-          },
-          {
-            "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "raw_block",
-            "named": true
-          },
-          {
-            "type": "render_body_directive",
-            "named": true
-          },
-          {
-            "type": "render_directive",
-            "named": true
-          },
-          {
-            "type": "rust_block",
-            "named": true
-          },
-          {
-            "type": "rust_expr_paren",
-            "named": true
-          },
-          {
-            "type": "rust_expr_simple",
-            "named": true
-          },
-          {
-            "type": "section_block",
-            "named": true
-          },
-          {
-            "type": "section_directive",
-            "named": true
-          },
-          {
-            "type": "start_symbol",
-            "named": true
-          },
-          {
-            "type": "use_directive",
-            "named": true
-          },
-          {
-            "type": "while_stmt",
+            "type": "inner_template_body",
             "named": true
           }
         ]
@@ -702,95 +469,11 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "ERROR",
-            "named": true
-          },
-          {
-            "type": "break_",
-            "named": true
-          },
-          {
-            "type": "child_content_directive",
-            "named": true
-          },
-          {
-            "type": "comment_block",
-            "named": true
-          },
-          {
-            "type": "component_tag",
-            "named": true
-          },
-          {
-            "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "for_stmt",
-            "named": true
-          },
-          {
-            "type": "html_inner_text",
-            "named": true
-          },
-          {
-            "type": "if_stmt",
-            "named": true
-          },
-          {
-            "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "raw_block",
-            "named": true
-          },
-          {
-            "type": "render_body_directive",
-            "named": true
-          },
-          {
-            "type": "render_directive",
-            "named": true
-          },
-          {
-            "type": "rust_block",
-            "named": true
-          },
-          {
-            "type": "rust_expr_paren",
-            "named": true
-          },
-          {
-            "type": "rust_expr_simple",
-            "named": true
-          },
-          {
-            "type": "section_block",
-            "named": true
-          },
-          {
-            "type": "section_directive",
-            "named": true
-          },
-          {
-            "type": "start_symbol",
-            "named": true
-          },
-          {
-            "type": "use_directive",
-            "named": true
-          },
-          {
-            "type": "while_stmt",
+            "type": "inner_template_body",
             "named": true
           }
         ]
@@ -860,6 +543,105 @@
     }
   },
   {
+    "type": "inner_template_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "ERROR",
+          "named": true
+        },
+        {
+          "type": "break_",
+          "named": true
+        },
+        {
+          "type": "child_content_directive",
+          "named": true
+        },
+        {
+          "type": "comment_block",
+          "named": true
+        },
+        {
+          "type": "component_tag",
+          "named": true
+        },
+        {
+          "type": "continue_",
+          "named": true
+        },
+        {
+          "type": "for_stmt",
+          "named": true
+        },
+        {
+          "type": "html_inner_text",
+          "named": true
+        },
+        {
+          "type": "if_stmt",
+          "named": true
+        },
+        {
+          "type": "include_directive",
+          "named": true
+        },
+        {
+          "type": "match_stmt",
+          "named": true
+        },
+        {
+          "type": "raw_block",
+          "named": true
+        },
+        {
+          "type": "render_body_directive",
+          "named": true
+        },
+        {
+          "type": "render_directive",
+          "named": true
+        },
+        {
+          "type": "rust_block",
+          "named": true
+        },
+        {
+          "type": "rust_expr_paren",
+          "named": true
+        },
+        {
+          "type": "rust_expr_simple",
+          "named": true
+        },
+        {
+          "type": "section_block",
+          "named": true
+        },
+        {
+          "type": "section_directive",
+          "named": true
+        },
+        {
+          "type": "start_symbol",
+          "named": true
+        },
+        {
+          "type": "use_directive",
+          "named": true
+        },
+        {
+          "type": "while_stmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "match_stmt",
     "named": true,
     "fields": {
@@ -898,95 +680,11 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "ERROR",
-            "named": true
-          },
-          {
-            "type": "break_",
-            "named": true
-          },
-          {
-            "type": "child_content_directive",
-            "named": true
-          },
-          {
-            "type": "comment_block",
-            "named": true
-          },
-          {
-            "type": "component_tag",
-            "named": true
-          },
-          {
-            "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "for_stmt",
-            "named": true
-          },
-          {
-            "type": "html_inner_text",
-            "named": true
-          },
-          {
-            "type": "if_stmt",
-            "named": true
-          },
-          {
-            "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "raw_block",
-            "named": true
-          },
-          {
-            "type": "render_body_directive",
-            "named": true
-          },
-          {
-            "type": "render_directive",
-            "named": true
-          },
-          {
-            "type": "rust_block",
-            "named": true
-          },
-          {
-            "type": "rust_expr_paren",
-            "named": true
-          },
-          {
-            "type": "rust_expr_simple",
-            "named": true
-          },
-          {
-            "type": "section_block",
-            "named": true
-          },
-          {
-            "type": "section_directive",
-            "named": true
-          },
-          {
-            "type": "start_symbol",
-            "named": true
-          },
-          {
-            "type": "use_directive",
-            "named": true
-          },
-          {
-            "type": "while_stmt",
+            "type": "inner_template_body",
             "named": true
           }
         ]
@@ -996,15 +694,7 @@
         "required": true,
         "types": [
           {
-            "type": "ERROR",
-            "named": true
-          },
-          {
             "type": "break_",
-            "named": true
-          },
-          {
-            "type": "child_content_directive",
             "named": true
           },
           {
@@ -1012,35 +702,11 @@
             "named": true
           },
           {
-            "type": "comment_block",
-            "named": true
-          },
-          {
-            "type": "component_tag",
-            "named": true
-          },
-          {
             "type": "continue_",
             "named": true
           },
           {
-            "type": "for_stmt",
-            "named": true
-          },
-          {
-            "type": "html_inner_text",
-            "named": true
-          },
-          {
-            "type": "if_stmt",
-            "named": true
-          },
-          {
-            "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "match_stmt",
+            "type": "inner_template_body",
             "named": true
           },
           {
@@ -1052,47 +718,11 @@
             "named": true
           },
           {
-            "type": "raw_block",
-            "named": true
-          },
-          {
-            "type": "render_body_directive",
-            "named": true
-          },
-          {
-            "type": "render_directive",
-            "named": true
-          },
-          {
-            "type": "rust_block",
-            "named": true
-          },
-          {
             "type": "rust_expr_paren",
             "named": true
           },
           {
             "type": "rust_expr_simple",
-            "named": true
-          },
-          {
-            "type": "section_block",
-            "named": true
-          },
-          {
-            "type": "section_directive",
-            "named": true
-          },
-          {
-            "type": "start_symbol",
-            "named": true
-          },
-          {
-            "type": "use_directive",
-            "named": true
-          },
-          {
-            "type": "while_stmt",
             "named": true
           }
         ]
@@ -1349,95 +979,11 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "ERROR",
-            "named": true
-          },
-          {
-            "type": "break_",
-            "named": true
-          },
-          {
-            "type": "child_content_directive",
-            "named": true
-          },
-          {
-            "type": "comment_block",
-            "named": true
-          },
-          {
-            "type": "component_tag",
-            "named": true
-          },
-          {
-            "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "for_stmt",
-            "named": true
-          },
-          {
-            "type": "html_inner_text",
-            "named": true
-          },
-          {
-            "type": "if_stmt",
-            "named": true
-          },
-          {
-            "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "raw_block",
-            "named": true
-          },
-          {
-            "type": "render_body_directive",
-            "named": true
-          },
-          {
-            "type": "render_directive",
-            "named": true
-          },
-          {
-            "type": "rust_block",
-            "named": true
-          },
-          {
-            "type": "rust_expr_paren",
-            "named": true
-          },
-          {
-            "type": "rust_expr_simple",
-            "named": true
-          },
-          {
-            "type": "section_block",
-            "named": true
-          },
-          {
-            "type": "section_directive",
-            "named": true
-          },
-          {
-            "type": "start_symbol",
-            "named": true
-          },
-          {
-            "type": "use_directive",
-            "named": true
-          },
-          {
-            "type": "while_stmt",
+            "type": "inner_template_body",
             "named": true
           }
         ]
@@ -1677,95 +1223,11 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "ERROR",
-            "named": true
-          },
-          {
-            "type": "break_",
-            "named": true
-          },
-          {
-            "type": "child_content_directive",
-            "named": true
-          },
-          {
-            "type": "comment_block",
-            "named": true
-          },
-          {
-            "type": "component_tag",
-            "named": true
-          },
-          {
-            "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "for_stmt",
-            "named": true
-          },
-          {
-            "type": "html_inner_text",
-            "named": true
-          },
-          {
-            "type": "if_stmt",
-            "named": true
-          },
-          {
-            "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "raw_block",
-            "named": true
-          },
-          {
-            "type": "render_body_directive",
-            "named": true
-          },
-          {
-            "type": "render_directive",
-            "named": true
-          },
-          {
-            "type": "rust_block",
-            "named": true
-          },
-          {
-            "type": "rust_expr_paren",
-            "named": true
-          },
-          {
-            "type": "rust_expr_simple",
-            "named": true
-          },
-          {
-            "type": "section_block",
-            "named": true
-          },
-          {
-            "type": "section_directive",
-            "named": true
-          },
-          {
-            "type": "start_symbol",
-            "named": true
-          },
-          {
-            "type": "use_directive",
-            "named": true
-          },
-          {
-            "type": "while_stmt",
+            "type": "inner_template_body",
             "named": true
           }
         ]
@@ -1866,6 +1328,10 @@
   },
   {
     "type": "comma",
+    "named": true
+  },
+  {
+    "type": "comment_content",
     "named": true
   },
   {
