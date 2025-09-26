@@ -390,7 +390,7 @@ module.exports = grammar({
         1,
         seq(
           $.render_body_,
-          choice(seq($.open_paren, $.close_paren), token(/\s/)),
+          optional(seq($.open_paren, $.close_paren)),
         ),
       ),
     // endregion
@@ -399,7 +399,7 @@ module.exports = grammar({
     child_content_directive: ($) =>
       seq(
         $.child_content_,
-        choice(seq($.open_paren, $.close_paren), token(/\s/)),
+        optional(seq($.open_paren, $.close_paren)),
       ),
     // endregion
 

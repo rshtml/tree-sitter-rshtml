@@ -1875,11 +1875,7 @@
                 ]
               },
               {
-                "type": "TOKEN",
-                "content": {
-                  "type": "PATTERN",
-                  "value": "\\s"
-                }
+                "type": "BLANK"
               }
             ]
           }
@@ -1910,11 +1906,7 @@
               ]
             },
             {
-              "type": "TOKEN",
-              "content": {
-                "type": "PATTERN",
-                "value": "\\s"
-              }
+              "type": "BLANK"
             }
           ]
         }
