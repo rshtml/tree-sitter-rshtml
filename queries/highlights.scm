@@ -17,8 +17,8 @@
 (open_comment) @operator
 (close_comment) @operator
 
-(continue_) @keyword
-(break_) @keyword
+(continue_) @keyword.conditional
+(break_) @keyword.conditional
 
 ; (extends_) @keyword.import
 (
@@ -69,7 +69,7 @@
   name_close: (component_tag_identifier) @tag)
 
 (component_tag_parameter
-  name: (rust_identifier) @tag.attribute)
+  name: (rust_identifier) @variable.parameter)
 
 (
   (start_symbol) @function.call
@@ -89,6 +89,27 @@
   (rust_block)
 )
 
+(
+  (start_symbol) @keyword.conditional
+  .
+  (if_stmt)
+)
+(
+  (start_symbol) @keyword
+  .
+  (for_stmt)
+)
+(
+  (start_symbol) @keyword.repeat
+  .
+  (while_stmt)
+)
+(
+  (start_symbol) @keyword.conditional
+  .
+  (match_stmt)
+)
+
 ;this is for now extra
 (else_clause
-  head: (source_text) @keyword)
+  head: (source_text) @keyword.conditional)
