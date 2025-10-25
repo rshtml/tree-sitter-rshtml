@@ -1,5 +1,5 @@
-(start_symbol) @operator
-(hash_symbol) @operator
+(start_symbol) @keyword
+; (hash_symbol) @operator
 (hash_symbol) @punctuation.special
 
 (open_paren) @punctuation.bracket
@@ -20,10 +20,22 @@
 (continue_) @keyword
 (break_) @keyword
 
-(extends_) @keyword
+; (extends_) @keyword.import
+(
+  (start_symbol) @keyword.import
+  .
+  (extends_) @keyword.import
+)
+
 (raw_) @keyword
 
-(include_) @keyword
+; (include_) @keyword.import
+(
+  (start_symbol) @keyword.import
+  .
+  (include_directive (include_) @keyword.import)
+)
+
 (render_) @keyword
 (render_body_) @keyword
 (child_content_) @keyword
@@ -32,28 +44,50 @@
 (section_block
   name: (rust_identifier) @namespace)
 
-(use_) @keyword
-(as_) @keyword
+; (use_) @keyword.import
+(as_) @leyword.operator
+(as_clause
+  alias: (rust_identifier) @type)
+(
+  (start_symbol) @keyword.import
+  .
+  (use_directive (use_) @keyword.import)
+)
 
 (number) @number
 (bool) @boolean
 
-(as_clause
-  alias: (rust_identifier) @type)
-
-(tag_open) @punctuation.bracket
-(tag_close) @punctuation.bracket
-(tag_end_open) @punctuation.bracket
-(tag_self_close) @punctuation.bracket
+(tag_open) @tag.delimiter
+(tag_close) @tag.delimiter
+(tag_end_open) @tag.delimiter
+(tag_self_close) @tag.delimiter
 
 (component_tag
-  name: (component_tag_identifier) @type)
+  name: (component_tag_identifier) @tag)
 
 (component_tag
-  name_close: (component_tag_identifier) @type)
+  name_close: (component_tag_identifier) @tag)
 
 (component_tag_parameter
-  name: (rust_identifier) @variable.parameter)
+  name: (rust_identifier) @tag.attribute)
+
+(
+  (start_symbol) @function.call
+  .
+  (rust_expr_simple)
+)
+
+(
+  (start_symbol) @function.call
+  .
+  (rust_expr_paren)
+)
+
+(
+  (start_symbol) @keyword.directive
+  .
+  (rust_block)
+)
 
 ;this is for now extra
 (else_clause
