@@ -45,7 +45,7 @@
   name: (rust_identifier) @namespace)
 
 ; (use_) @keyword.import
-(as_) @leyword.operator
+(as_) @keyword.operator
 (as_clause
   alias: (rust_identifier) @type)
 (
@@ -57,10 +57,10 @@
 (number) @number
 (bool) @boolean
 
-(tag_open) @tag.delimiter
-(tag_close) @tag.delimiter
-(tag_end_open) @tag.delimiter
-(tag_self_close) @tag.delimiter
+(tag_open) @punctuation.bracket
+(tag_close) @punctuation.bracket
+(tag_end_open) @punctuation.bracket
+(tag_self_close) @punctuation.bracket
 
 (component_tag
   name: (component_tag_identifier) @tag)
