@@ -7,10 +7,6 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-nocheck
 
-// commands
-/*
-tree-sitter query queries/injections.scm  views/if_else.rs.html
- */
 
 // region constants
 const RUST_IDENTIFIER = /[a-zA-Z_][a-zA-Z0-9_]*/;
