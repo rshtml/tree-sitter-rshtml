@@ -1,8 +1,8 @@
-; ((source_file) @injection.content
-;   ; (#not-match? @injection.content "comment_block")
-;   (#set! injection.language "html"))
-;   ; (#set! injection.include-children)
-;   ; (#set! injection.combined))
+((source_file) @injection.content
+  ; (#not-match? @injection.content "comment_block")
+  (#set! injection.language "html")
+  (#set! injection.include-children)
+  (#set! injection.combined))
 
 (html_text
   text: (source_text) @injection.content
