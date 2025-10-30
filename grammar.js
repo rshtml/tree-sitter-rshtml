@@ -229,10 +229,9 @@ module.exports = grammar({
       seq(
         optional($.hash_symbol),
         $.open_paren,
-        optional(field("expr", alias($.rust_expr_paren_body, $.source_text))),
+        field("expr", alias(repeat(choice($._nested_expression, /[^)]/)), $.source_text)),
         $.close_paren,
       ),
-    rust_expr_paren_body: ($) => repeat1(choice($._nested_expression, /[^)]/)),
     _nested_expression: ($) =>
       choice(
         seq("(", repeat(choice($._nested_expression, /[^)]/)), ")"),

@@ -1118,47 +1118,35 @@
           "name": "open_paren"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "expr",
+          "type": "FIELD",
+          "name": "expr",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "REPEAT",
               "content": {
-                "type": "ALIAS",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "rust_expr_paren_body"
-                },
-                "named": true,
-                "value": "source_text"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_nested_expression"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "[^)]"
+                  }
+                ]
               }
             },
-            {
-              "type": "BLANK"
-            }
-          ]
+            "named": true,
+            "value": "source_text"
+          }
         },
         {
           "type": "SYMBOL",
           "name": "close_paren"
         }
       ]
-    },
-    "rust_expr_paren_body": {
-      "type": "REPEAT1",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "_nested_expression"
-          },
-          {
-            "type": "PATTERN",
-            "value": "[^)]"
-          }
-        ]
-      }
     },
     "_nested_expression": {
       "type": "CHOICE",
