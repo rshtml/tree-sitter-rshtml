@@ -100,6 +100,13 @@ module.exports = grammar({
     as_: (_) => token("as"),
     section_: (_) => token("section"),
 
+    tag_open: (_) => token(prec(-1, "<")),
+    tag_self_close: (_) => token("/>"),
+    tag_close: (_) => token(">"),
+    tag_end_open: (_) => token(prec(-1, "</")),
+
+    component_tag_identifier: (_) => token(COMPONENT_TAG_IDENTIFIER),
+    
     // region errors
     if_error: (_) => token(prec(5, seq("if", /\s*/, "{"))),
     for_error: (_) => token(prec(5, seq("for", /\s*/, "{"))),
@@ -424,11 +431,6 @@ module.exports = grammar({
         ),
       ),
 
-    tag_open: (_) => token(prec(-1, "<")),
-    tag_self_close: (_) => token("/>"),
-    tag_close: (_) => token(">"),
-    tag_end_open: (_) => token(prec(-1, "</")),
-
     component_tag_parameter: ($) =>
       seq(
         field("name", $.rust_identifier),
@@ -443,7 +445,6 @@ module.exports = grammar({
             $._inner_template,
         ))),
       ),
-    component_tag_identifier: (_) => token.immediate(COMPONENT_TAG_IDENTIFIER),
 
     bool: (_) => token(/true|false/),
     number: (_) =>

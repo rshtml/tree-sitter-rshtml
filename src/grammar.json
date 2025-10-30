@@ -476,6 +476,49 @@
         "value": "section"
       }
     },
+    "tag_open": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "STRING",
+          "value": "<"
+        }
+      }
+    },
+    "tag_self_close": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "/>"
+      }
+    },
+    "tag_close": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": ">"
+      }
+    },
+    "tag_end_open": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "STRING",
+          "value": "</"
+        }
+      }
+    },
+    "component_tag_identifier": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[A-Z][a-zA-Z0-9_]*(\\.[A-Z][a-zA-Z0-9_]*)*"
+      }
+    },
     "if_error": {
       "type": "TOKEN",
       "content": {
@@ -2032,42 +2075,6 @@
         }
       ]
     },
-    "tag_open": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PREC",
-        "value": -1,
-        "content": {
-          "type": "STRING",
-          "value": "<"
-        }
-      }
-    },
-    "tag_self_close": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "/>"
-      }
-    },
-    "tag_close": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": ">"
-      }
-    },
-    "tag_end_open": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PREC",
-        "value": -1,
-        "content": {
-          "type": "STRING",
-          "value": "</"
-        }
-      }
-    },
     "component_tag_parameter": {
       "type": "SEQ",
       "members": [
@@ -2144,13 +2151,6 @@
           ]
         }
       ]
-    },
-    "component_tag_identifier": {
-      "type": "IMMEDIATE_TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "[A-Z][a-zA-Z0-9_]*(\\.[A-Z][a-zA-Z0-9_]*)*"
-      }
     },
     "bool": {
       "type": "TOKEN",
