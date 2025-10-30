@@ -182,30 +182,22 @@ module.exports = grammar({
 
     // region rust_expr_simple
     rust_expr_simple: ($) =>
-      prec(
-        0,
         seq(
           optional($.hash_symbol),
           field("expr", alias($.rust_expr_simple_content, $.source_text)),
         ),
-      ),
 
     rust_expr_simple_content: ($) =>
       seq(
-        seq(
-          optional(repeat1("&")),
-          $._rust_identifier,
-          optional(
-            repeat1(
-              choice(
-                seq(choice("&", ".", "::"), $._rust_identifier),
-                $._chain_segment,
-              ),
+        repeat("&"),
+        $._rust_identifier,
+          repeat(
+            choice(
+              seq(choice("&", ".", "::"), $._rust_identifier),
+              $._chain_segment,
             ),
           ),
         ),
-        //optional(repeat1($._chain_segment))
-      ),
 
     _chain_segment: ($) =>
       prec(
