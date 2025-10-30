@@ -639,50 +639,6 @@
         }
       ]
     },
-    "html_text": {
-      "type": "FIELD",
-      "name": "text",
-      "content": {
-        "type": "ALIAS",
-        "content": {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_escaped"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_text"
-            }
-          ]
-        },
-        "named": true,
-        "value": "source_text"
-      }
-    },
-    "html_inner_text": {
-      "type": "FIELD",
-      "name": "text",
-      "content": {
-        "type": "ALIAS",
-        "content": {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_escaped"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_inner_text"
-            }
-          ]
-        },
-        "named": true,
-        "value": "source_text"
-      }
-    },
     "extends_directive": {
       "type": "SEQ",
       "members": [
