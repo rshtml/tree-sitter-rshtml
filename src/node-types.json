@@ -177,15 +177,15 @@
           "named": true
         },
         {
+          "type": "html_inner_text",
+          "named": true
+        },
+        {
           "type": "if_stmt",
           "named": true
         },
         {
           "type": "include_directive",
-          "named": true
-        },
-        {
-          "type": "inner_text",
           "named": true
         },
         {
@@ -272,15 +272,15 @@
             "named": true
           },
           {
+            "type": "html_inner_text",
+            "named": true
+          },
+          {
             "type": "if_stmt",
             "named": true
           },
           {
             "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "inner_text",
             "named": true
           },
           {
@@ -420,15 +420,15 @@
             "named": true
           },
           {
+            "type": "html_inner_text",
+            "named": true
+          },
+          {
             "type": "if_stmt",
             "named": true
           },
           {
             "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "inner_text",
             "named": true
           },
           {
@@ -582,15 +582,15 @@
             "named": true
           },
           {
+            "type": "html_inner_text",
+            "named": true
+          },
+          {
             "type": "if_stmt",
             "named": true
           },
           {
             "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "inner_text",
             "named": true
           },
           {
@@ -670,6 +670,11 @@
     }
   },
   {
+    "type": "html_inner_text",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "if_stmt",
     "named": true,
     "fields": {
@@ -702,15 +707,15 @@
             "named": true
           },
           {
+            "type": "html_inner_text",
+            "named": true
+          },
+          {
             "type": "if_stmt",
             "named": true
           },
           {
             "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "inner_text",
             "named": true
           },
           {
@@ -828,11 +833,6 @@
     }
   },
   {
-    "type": "inner_text",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "match_stmt",
     "named": true,
     "fields": {
@@ -899,15 +899,15 @@
             "named": true
           },
           {
+            "type": "html_inner_text",
+            "named": true
+          },
+          {
             "type": "if_stmt",
             "named": true
           },
           {
             "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "inner_text",
             "named": true
           },
           {
@@ -993,15 +993,15 @@
             "named": true
           },
           {
+            "type": "html_inner_text",
+            "named": true
+          },
+          {
             "type": "if_stmt",
             "named": true
           },
           {
             "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "inner_text",
             "named": true
           },
           {
@@ -1342,15 +1342,15 @@
             "named": true
           },
           {
+            "type": "html_inner_text",
+            "named": true
+          },
+          {
             "type": "if_stmt",
             "named": true
           },
           {
             "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "inner_text",
             "named": true
           },
           {
@@ -1523,15 +1523,19 @@
           "named": true
         },
         {
+          "type": "html_inner_text",
+          "named": true
+        },
+        {
+          "type": "html_text",
+          "named": true
+        },
+        {
           "type": "if_stmt",
           "named": true
         },
         {
           "type": "include_directive",
-          "named": true
-        },
-        {
-          "type": "inner_text",
           "named": true
         },
         {
@@ -1572,10 +1576,6 @@
         },
         {
           "type": "start_symbol",
-          "named": true
-        },
-        {
-          "type": "text",
           "named": true
         },
         {
@@ -1666,15 +1666,15 @@
             "named": true
           },
           {
+            "type": "html_inner_text",
+            "named": true
+          },
+          {
             "type": "if_stmt",
             "named": true
           },
           {
             "type": "include_directive",
-            "named": true
-          },
-          {
-            "type": "inner_text",
             "named": true
           },
           {
@@ -1854,6 +1854,10 @@
     "named": true
   },
   {
+    "type": "html_text",
+    "named": true
+  },
+  {
     "type": "include_",
     "named": true
   },
@@ -1907,10 +1911,6 @@
   },
   {
     "type": "tag_self_close",
-    "named": true
-  },
-  {
-    "type": "text",
     "named": true
   },
   {

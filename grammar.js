@@ -41,7 +41,7 @@ module.exports = grammar({
     source_file: ($) =>
       seq(
         optional($.extends_directive),
-        repeat(choice($._block, alias($._text, $.text))),
+        repeat(choice($._block, alias($._text, $.html_text))),
       ),
 
     // region tokens
@@ -158,7 +158,7 @@ module.exports = grammar({
     _block: ($) =>
       choice(
         $.component_tag,
-        alias(choice($._escaped, $._inner_text), $.inner_text),
+        alias(choice($._escaped, $._inner_text), $.html_inner_text),
         seq(
           $.start_symbol,
           choice(
@@ -417,9 +417,7 @@ module.exports = grammar({
       seq(
         $.tag_open,
         field("name", $.component_tag_identifier),
-        optional(
-          seq(token.immediate(/\s+/), repeat($.component_tag_parameter)),
-        ),
+        repeat($.component_tag_parameter),
         choice(
           $.tag_self_close,
           seq(

@@ -4,14 +4,12 @@
   (#set! injection.include-children)
   (#set! injection.combined))
 
-(html_text
-  text: (source_text) @injection.content
+((html_text) @injection.content
   (#set! injection.language "html")
   (#set! injection.include-children)
   (#set! injection.combined))
   
-(html_inner_text
-  text: (source_text) @injection.content
+((html_inner_text) @injection.content
   (#set! injection.language "html")
   (#set! injection.include-children)
   (#set! injection.combined))
