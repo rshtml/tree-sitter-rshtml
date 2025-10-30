@@ -1117,7 +1117,18 @@
   {
     "type": "raw_block",
     "named": true,
-    "fields": {},
+    "fields": {
+      "content": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "source_text",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -1133,28 +1144,8 @@
         {
           "type": "raw_",
           "named": true
-        },
-        {
-          "type": "raw_content",
-          "named": true
         }
       ]
-    }
-  },
-  {
-    "type": "raw_content",
-    "named": true,
-    "fields": {
-      "content": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "source_text",
-            "named": true
-          }
-        ]
-      }
     }
   },
   {

@@ -303,12 +303,10 @@ module.exports = grammar({
 
     // region raw_block
     raw_block: ($) =>
-      seq($.raw_, $.open_brace, optional($.raw_content), $.close_brace),
-    raw_content: ($) =>
-      field("content", alias(repeat1($._raw_nested_content), $.source_text)),
+      seq($.raw_, $.open_brace, field("content", alias(repeat($._raw_nested_content), $.source_text)), $.close_brace),
     _raw_nested_content: ($) =>
       choice(
-        seq("{", optional(repeat1($._raw_nested_content)), "}"),
+        seq("{", repeat($._raw_nested_content), "}"),
         $._raw_text,
       ),
     // endregion

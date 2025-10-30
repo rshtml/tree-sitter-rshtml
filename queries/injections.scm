@@ -57,7 +57,7 @@
   (#set! injection.language "html")
   (#set! injection.include-children))
 
-(raw_content
+(raw_block
   content: (source_text) @injection.content
   (#set! injection.language "html")
   (#set! injection.include-children))
