@@ -71,8 +71,9 @@ module.exports = grammar({
 
     _escaped: (_) => token("@@"),
 
-    _text: (_) => token(prec(-1, /([^@<]|<[^A-Z/]|<\/[^A-Z])+/)),
-    _inner_text: (_) => token(prec(-1, /([^@<}]|<[^A-Z/]|<\/[^A-Z])+/)),
+    // _text: (_) => token(prec(-1, /[^@<\s]([^@<]*[^@<\s])?/)),
+    _text: (_) => token(prec(-1, /([^@<\s]|<[^A-Z/]|<\/[^A-Z])(([^@<]|<[^A-Z/]|<\/[^A-Z])*[^@<\s])?/)),
+    _inner_text: (_) => token(prec(-1, /([^@<}\s]|<[^A-Z/]|<\/[^A-Z])(([^@<}]|<[^A-Z/]|<\/[^A-Z])*[^@}<\s])?/)),
 
     if_: (_) => token(prec(5, seq("if", /\s+/, STMT_HEAD_COND))),
     else_: (_) => token(prec(6, "else")),
