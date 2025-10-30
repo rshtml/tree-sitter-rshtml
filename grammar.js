@@ -35,16 +35,13 @@ const COMPONENT_TAG_IDENTIFIER = /[A-Z][a-zA-Z0-9_]*(\.[A-Z][a-zA-Z0-9_]*)*/;
 module.exports = grammar({
   name: "rshtml",
 
-  extras: (_) => [/\s+/],
-
-  conflicts: ($) => [[$.rust_block]],
+  extras: ($) => [/\s+/, $.comment_block],
 
   rules: {
     source_file: ($) =>
       seq(
-        optional("\u{FEFF}"), // BOM
         optional($.extends_directive),
-        optional(repeat($._template)),
+        repeat(choice($._block, alias($._text, $.text))),
       ),
 
     // region tokens
@@ -113,20 +110,16 @@ module.exports = grammar({
     // endregion
 
     // region top_definition
-    _template: ($) => choice($.comment_block, $._block, $.html_text),
 
     _inner_template: ($) =>
       seq(
         $.open_brace,
         field(
           "body",
-          optional($.inner_template_body),
+          repeat($._block),
         ),
         $.close_brace,
       ),
-
-    inner_template_body: ($) => 
-      repeat1(choice($.comment_block, $._block, $.html_inner_text)),
     
     html_text: ($) =>
       field("text", alias(choice($._escaped, $._text), $.source_text)),
@@ -150,11 +143,14 @@ module.exports = grammar({
     comment_block: ($) =>
       seq($.open_comment, $.comment_content, $.close_comment),
 
-    comment_content: (_) => token(/([^*]|\*+[^@])*/),    // endregion
+    comment_content: (_) => token(/([^*]|\*+[^@])*/),
+
+    // endregion
 
     _block: ($) =>
       choice(
         $.component_tag,
+        alias(choice($._escaped, $._inner_text), $.inner_text),
         seq(
           $.start_symbol,
           choice(
@@ -313,23 +309,20 @@ module.exports = grammar({
     rust_block: ($) =>
       seq(
         $.open_brace,
-        field("content", alias(optional($._rust_block_content), $.source_text)),
+        field("content", alias(repeat($._rust_block_content), $.source_text)),
         $.close_brace,
       ),
 
     _rust_block_content: ($) =>
-      repeat1(
         choice(
           $._nested_block,
           $._rust_code,
         ),
-      ),
     // endregion
 
     // region rust_code
-    _nested_block: ($) => seq("{", optional($._rust_block_content), "}"),
+    _nested_block: ($) => seq("{", repeat($._rust_block_content), "}"),
     _rust_code: ($) =>
-      repeat1(
         choice(
           seq(
             $._line_comment_start,
@@ -339,7 +332,6 @@ module.exports = grammar({
           seq($._block_comment_start, $._block_comment, token.immediate("*/")),
           $._rust_code_string,
           $._inner_rust,
-        ),
       ),
     _inner_rust: (_) =>
       token(prec(-2, /([^@{}'"r/]|\/[^/*]|r[^#"]|r#[^"]|'.[^'])+/)),
@@ -424,7 +416,7 @@ module.exports = grammar({
           $.tag_self_close,
           seq(
             $.tag_close,
-            field("body", optional($.component_tag_body)),
+            field("body", repeat(alias($._block, $.component_tag_body))),
             $.tag_end_open,
             field("name_close", $.component_tag_identifier),
             $.tag_close,
@@ -432,7 +424,6 @@ module.exports = grammar({
         ),
       ),
 
-    component_tag_body: ($) => repeat1($._template),
     tag_open: (_) => token(prec(-1, "<")),
     tag_self_close: (_) => token("/>"),
     tag_close: (_) => token(">"),
