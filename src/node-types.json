@@ -26,6 +26,29 @@
     }
   },
   {
+    "type": "attribute",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "attribute_name",
+          "named": true
+        },
+        {
+          "type": "attribute_value",
+          "named": true
+        },
+        {
+          "type": "quoted_attribute_value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "child_content_directive",
     "named": true,
     "fields": {},
@@ -173,6 +196,22 @@
           "named": true
         },
         {
+          "type": "doctype",
+          "named": true
+        },
+        {
+          "type": "element",
+          "named": true
+        },
+        {
+          "type": "entity",
+          "named": true
+        },
+        {
+          "type": "erroneous_end_tag",
+          "named": true
+        },
+        {
           "type": "for_stmt",
           "named": true
         },
@@ -217,6 +256,10 @@
           "named": true
         },
         {
+          "type": "script_element",
+          "named": true
+        },
+        {
           "type": "section_block",
           "named": true
         },
@@ -226,6 +269,10 @@
         },
         {
           "type": "start_symbol",
+          "named": true
+        },
+        {
+          "type": "style_element",
           "named": true
         },
         {
@@ -265,6 +312,22 @@
           },
           {
             "type": "continue_",
+            "named": true
+          },
+          {
+            "type": "doctype",
+            "named": true
+          },
+          {
+            "type": "element",
+            "named": true
+          },
+          {
+            "type": "entity",
+            "named": true
+          },
+          {
+            "type": "erroneous_end_tag",
             "named": true
           },
           {
@@ -312,6 +375,10 @@
             "named": true
           },
           {
+            "type": "script_element",
+            "named": true
+          },
+          {
             "type": "section_block",
             "named": true
           },
@@ -321,6 +388,10 @@
           },
           {
             "type": "start_symbol",
+            "named": true
+          },
+          {
+            "type": "style_element",
             "named": true
           },
           {
@@ -388,6 +459,270 @@
     }
   },
   {
+    "type": "doctype",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "document",
+    "named": true,
+    "root": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "ERROR",
+          "named": true
+        },
+        {
+          "type": "break_",
+          "named": true
+        },
+        {
+          "type": "child_content_directive",
+          "named": true
+        },
+        {
+          "type": "component_tag",
+          "named": true
+        },
+        {
+          "type": "continue_",
+          "named": true
+        },
+        {
+          "type": "doctype",
+          "named": true
+        },
+        {
+          "type": "element",
+          "named": true
+        },
+        {
+          "type": "entity",
+          "named": true
+        },
+        {
+          "type": "erroneous_end_tag",
+          "named": true
+        },
+        {
+          "type": "extends_directive",
+          "named": true
+        },
+        {
+          "type": "for_stmt",
+          "named": true
+        },
+        {
+          "type": "html_inner_text",
+          "named": true
+        },
+        {
+          "type": "html_text",
+          "named": true
+        },
+        {
+          "type": "if_stmt",
+          "named": true
+        },
+        {
+          "type": "include_directive",
+          "named": true
+        },
+        {
+          "type": "match_stmt",
+          "named": true
+        },
+        {
+          "type": "raw_block",
+          "named": true
+        },
+        {
+          "type": "render_body_directive",
+          "named": true
+        },
+        {
+          "type": "render_directive",
+          "named": true
+        },
+        {
+          "type": "rust_block",
+          "named": true
+        },
+        {
+          "type": "rust_expr_paren",
+          "named": true
+        },
+        {
+          "type": "rust_expr_simple",
+          "named": true
+        },
+        {
+          "type": "script_element",
+          "named": true
+        },
+        {
+          "type": "section_block",
+          "named": true
+        },
+        {
+          "type": "section_directive",
+          "named": true
+        },
+        {
+          "type": "start_symbol",
+          "named": true
+        },
+        {
+          "type": "style_element",
+          "named": true
+        },
+        {
+          "type": "use_directive",
+          "named": true
+        },
+        {
+          "type": "while_stmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "element",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "ERROR",
+          "named": true
+        },
+        {
+          "type": "break_",
+          "named": true
+        },
+        {
+          "type": "child_content_directive",
+          "named": true
+        },
+        {
+          "type": "component_tag",
+          "named": true
+        },
+        {
+          "type": "continue_",
+          "named": true
+        },
+        {
+          "type": "doctype",
+          "named": true
+        },
+        {
+          "type": "element",
+          "named": true
+        },
+        {
+          "type": "end_tag",
+          "named": true
+        },
+        {
+          "type": "entity",
+          "named": true
+        },
+        {
+          "type": "erroneous_end_tag",
+          "named": true
+        },
+        {
+          "type": "for_stmt",
+          "named": true
+        },
+        {
+          "type": "html_inner_text",
+          "named": true
+        },
+        {
+          "type": "if_stmt",
+          "named": true
+        },
+        {
+          "type": "include_directive",
+          "named": true
+        },
+        {
+          "type": "match_stmt",
+          "named": true
+        },
+        {
+          "type": "raw_block",
+          "named": true
+        },
+        {
+          "type": "render_body_directive",
+          "named": true
+        },
+        {
+          "type": "render_directive",
+          "named": true
+        },
+        {
+          "type": "rust_block",
+          "named": true
+        },
+        {
+          "type": "rust_expr_paren",
+          "named": true
+        },
+        {
+          "type": "rust_expr_simple",
+          "named": true
+        },
+        {
+          "type": "script_element",
+          "named": true
+        },
+        {
+          "type": "section_block",
+          "named": true
+        },
+        {
+          "type": "section_directive",
+          "named": true
+        },
+        {
+          "type": "self_closing_tag",
+          "named": true
+        },
+        {
+          "type": "start_symbol",
+          "named": true
+        },
+        {
+          "type": "start_tag",
+          "named": true
+        },
+        {
+          "type": "style_element",
+          "named": true
+        },
+        {
+          "type": "use_directive",
+          "named": true
+        },
+        {
+          "type": "while_stmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "else_clause",
     "named": true,
     "fields": {
@@ -413,6 +748,22 @@
           },
           {
             "type": "continue_",
+            "named": true
+          },
+          {
+            "type": "doctype",
+            "named": true
+          },
+          {
+            "type": "element",
+            "named": true
+          },
+          {
+            "type": "entity",
+            "named": true
+          },
+          {
+            "type": "erroneous_end_tag",
             "named": true
           },
           {
@@ -460,6 +811,10 @@
             "named": true
           },
           {
+            "type": "script_element",
+            "named": true
+          },
+          {
             "type": "section_block",
             "named": true
           },
@@ -469,6 +824,10 @@
           },
           {
             "type": "start_symbol",
+            "named": true
+          },
+          {
+            "type": "style_element",
             "named": true
           },
           {
@@ -506,6 +865,41 @@
         },
         {
           "type": "open_brace",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "end_tag",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "tag_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "equals",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "erroneous_end_tag",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "erroneous_end_tag_name",
           "named": true
         }
       ]
@@ -578,6 +972,22 @@
             "named": true
           },
           {
+            "type": "doctype",
+            "named": true
+          },
+          {
+            "type": "element",
+            "named": true
+          },
+          {
+            "type": "entity",
+            "named": true
+          },
+          {
+            "type": "erroneous_end_tag",
+            "named": true
+          },
+          {
             "type": "for_stmt",
             "named": true
           },
@@ -622,6 +1032,10 @@
             "named": true
           },
           {
+            "type": "script_element",
+            "named": true
+          },
+          {
             "type": "section_block",
             "named": true
           },
@@ -631,6 +1045,10 @@
           },
           {
             "type": "start_symbol",
+            "named": true
+          },
+          {
+            "type": "style_element",
             "named": true
           },
           {
@@ -703,6 +1121,22 @@
             "named": true
           },
           {
+            "type": "doctype",
+            "named": true
+          },
+          {
+            "type": "element",
+            "named": true
+          },
+          {
+            "type": "entity",
+            "named": true
+          },
+          {
+            "type": "erroneous_end_tag",
+            "named": true
+          },
+          {
             "type": "for_stmt",
             "named": true
           },
@@ -747,6 +1181,10 @@
             "named": true
           },
           {
+            "type": "script_element",
+            "named": true
+          },
+          {
             "type": "section_block",
             "named": true
           },
@@ -756,6 +1194,10 @@
           },
           {
             "type": "start_symbol",
+            "named": true
+          },
+          {
+            "type": "style_element",
             "named": true
           },
           {
@@ -895,6 +1337,22 @@
             "named": true
           },
           {
+            "type": "doctype",
+            "named": true
+          },
+          {
+            "type": "element",
+            "named": true
+          },
+          {
+            "type": "entity",
+            "named": true
+          },
+          {
+            "type": "erroneous_end_tag",
+            "named": true
+          },
+          {
             "type": "for_stmt",
             "named": true
           },
@@ -939,6 +1397,10 @@
             "named": true
           },
           {
+            "type": "script_element",
+            "named": true
+          },
+          {
             "type": "section_block",
             "named": true
           },
@@ -948,6 +1410,10 @@
           },
           {
             "type": "start_symbol",
+            "named": true
+          },
+          {
+            "type": "style_element",
             "named": true
           },
           {
@@ -986,6 +1452,22 @@
           },
           {
             "type": "continue_",
+            "named": true
+          },
+          {
+            "type": "doctype",
+            "named": true
+          },
+          {
+            "type": "element",
+            "named": true
+          },
+          {
+            "type": "entity",
+            "named": true
+          },
+          {
+            "type": "erroneous_end_tag",
             "named": true
           },
           {
@@ -1041,6 +1523,10 @@
             "named": true
           },
           {
+            "type": "script_element",
+            "named": true
+          },
+          {
             "type": "section_block",
             "named": true
           },
@@ -1050,6 +1536,10 @@
           },
           {
             "type": "start_symbol",
+            "named": true
+          },
+          {
+            "type": "style_element",
             "named": true
           },
           {
@@ -1113,6 +1603,21 @@
     "type": "open_paren",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "quoted_attribute_value",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "attribute_value",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "raw_block",
@@ -1301,6 +1806,29 @@
     "fields": {}
   },
   {
+    "type": "script_element",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "end_tag",
+          "named": true
+        },
+        {
+          "type": "raw_text",
+          "named": true
+        },
+        {
+          "type": "start_tag",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "section_block",
     "named": true,
     "fields": {
@@ -1326,6 +1854,22 @@
           },
           {
             "type": "continue_",
+            "named": true
+          },
+          {
+            "type": "doctype",
+            "named": true
+          },
+          {
+            "type": "element",
+            "named": true
+          },
+          {
+            "type": "entity",
+            "named": true
+          },
+          {
+            "type": "erroneous_end_tag",
             "named": true
           },
           {
@@ -1373,6 +1917,10 @@
             "named": true
           },
           {
+            "type": "script_element",
+            "named": true
+          },
+          {
             "type": "section_block",
             "named": true
           },
@@ -1382,6 +1930,10 @@
           },
           {
             "type": "start_symbol",
+            "named": true
+          },
+          {
+            "type": "style_element",
             "named": true
           },
           {
@@ -1477,104 +2029,19 @@
     }
   },
   {
-    "type": "source_file",
+    "type": "self_closing_tag",
     "named": true,
-    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "ERROR",
+          "type": "attribute",
           "named": true
         },
         {
-          "type": "break_",
-          "named": true
-        },
-        {
-          "type": "child_content_directive",
-          "named": true
-        },
-        {
-          "type": "component_tag",
-          "named": true
-        },
-        {
-          "type": "continue_",
-          "named": true
-        },
-        {
-          "type": "extends_directive",
-          "named": true
-        },
-        {
-          "type": "for_stmt",
-          "named": true
-        },
-        {
-          "type": "html_inner_text",
-          "named": true
-        },
-        {
-          "type": "html_text",
-          "named": true
-        },
-        {
-          "type": "if_stmt",
-          "named": true
-        },
-        {
-          "type": "include_directive",
-          "named": true
-        },
-        {
-          "type": "match_stmt",
-          "named": true
-        },
-        {
-          "type": "raw_block",
-          "named": true
-        },
-        {
-          "type": "render_body_directive",
-          "named": true
-        },
-        {
-          "type": "render_directive",
-          "named": true
-        },
-        {
-          "type": "rust_block",
-          "named": true
-        },
-        {
-          "type": "rust_expr_paren",
-          "named": true
-        },
-        {
-          "type": "rust_expr_simple",
-          "named": true
-        },
-        {
-          "type": "section_block",
-          "named": true
-        },
-        {
-          "type": "section_directive",
-          "named": true
-        },
-        {
-          "type": "start_symbol",
-          "named": true
-        },
-        {
-          "type": "use_directive",
-          "named": true
-        },
-        {
-          "type": "while_stmt",
+          "type": "tag_name",
           "named": true
         }
       ]
@@ -1586,7 +2053,64 @@
     "fields": {}
   },
   {
+    "type": "start_tag",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "attribute",
+          "named": true
+        },
+        {
+          "type": "tag_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "string_line",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "style_element",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "end_tag",
+          "named": true
+        },
+        {
+          "type": "raw_text",
+          "named": true
+        },
+        {
+          "type": "start_tag",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "tag_close",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "tag_end_open",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "tag_open",
     "named": true,
     "fields": {}
   },
@@ -1653,6 +2177,22 @@
             "named": true
           },
           {
+            "type": "doctype",
+            "named": true
+          },
+          {
+            "type": "element",
+            "named": true
+          },
+          {
+            "type": "entity",
+            "named": true
+          },
+          {
+            "type": "erroneous_end_tag",
+            "named": true
+          },
+          {
             "type": "for_stmt",
             "named": true
           },
@@ -1697,6 +2237,10 @@
             "named": true
           },
           {
+            "type": "script_element",
+            "named": true
+          },
+          {
             "type": "section_block",
             "named": true
           },
@@ -1706,6 +2250,10 @@
           },
           {
             "type": "start_symbol",
+            "named": true
+          },
+          {
+            "type": "style_element",
             "named": true
           },
           {
@@ -1745,7 +2293,15 @@
     }
   },
   {
+    "type": "\"",
+    "named": false
+  },
+  {
     "type": "&",
+    "named": false
+  },
+  {
+    "type": "'",
     "named": false
   },
   {
@@ -1773,7 +2329,31 @@
     "named": false
   },
   {
+    "type": "/>",
+    "named": false
+  },
+  {
     "type": "::",
+    "named": false
+  },
+  {
+    "type": "<",
+    "named": false
+  },
+  {
+    "type": "<!",
+    "named": false
+  },
+  {
+    "type": "</",
+    "named": false
+  },
+  {
+    "type": "=",
+    "named": false
+  },
+  {
+    "type": ">",
     "named": false
   },
   {
@@ -1797,6 +2377,14 @@
     "named": true
   },
   {
+    "type": "attribute_name",
+    "named": true
+  },
+  {
+    "type": "attribute_value",
+    "named": true
+  },
+  {
     "type": "bool",
     "named": true
   },
@@ -1817,6 +2405,11 @@
     "named": true
   },
   {
+    "type": "comment",
+    "named": true,
+    "extra": true
+  },
+  {
     "type": "comment_content",
     "named": true
   },
@@ -1829,7 +2422,15 @@
     "named": true
   },
   {
-    "type": "equals",
+    "type": "doctype",
+    "named": false
+  },
+  {
+    "type": "entity",
+    "named": true
+  },
+  {
+    "type": "erroneous_end_tag_name",
     "named": true
   },
   {
@@ -1869,6 +2470,10 @@
     "named": true
   },
   {
+    "type": "raw_text",
+    "named": true
+  },
+  {
     "type": "render_",
     "named": true
   },
@@ -1889,15 +2494,7 @@
     "named": true
   },
   {
-    "type": "tag_close",
-    "named": true
-  },
-  {
-    "type": "tag_end_open",
-    "named": true
-  },
-  {
-    "type": "tag_open",
+    "type": "tag_name",
     "named": true
   },
   {
