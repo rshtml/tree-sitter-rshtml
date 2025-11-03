@@ -31,17 +31,56 @@ const ASCII_DIGITS = /[0-9]+/;
 const COMPONENT_TAG_IDENTIFIER = /[A-Z][a-zA-Z0-9_]*(\.[A-Z][a-zA-Z0-9_]*)*/;
 // endregion
 
-module.exports = grammar({
+const HTML = require("tree-sitter-html/grammar");
+
+module.exports = grammar(HTML, {
   name: "rshtml",
 
-  extras: ($) => [/\s+/, $.comment_block],
+  extras: ($) => [/\s+/, $.comment_block, $.comment],
 
   rules: {
-    source_file: ($) =>
-      seq(
-        optional($.extends_directive),
-        repeat(choice($._block, alias($._text, $.html_text))),
+    document: ($) => seq(optional($.extends_directive), repeat($._template)),
+
+    // HTML
+
+    _node: ($) => $._template,
+
+    _html_node: ($) =>
+      choice(
+        $.doctype,
+        $.entity,
+        // $.text,
+        $.element,
+        $.script_element,
+        $.style_element,
+        $.erroneous_end_tag,
       ),
+
+    script_element: ($) =>
+      seq(
+        alias($.script_start_tag, $.start_tag),
+        repeat(choice(alias($.script_text, $.raw_text), $._rshtml_block)),
+        $.end_tag,
+      ),
+
+    script_text: ($) =>
+      token(
+        /([^@<]|<[^A-Z/]|<\/[^A-Zs]|<\/s[^c]|<\/sc[^r]|<\/scr[^i]|<\/scri[^p]|<\/scrip[^t])+/,
+      ),
+
+    style_element: ($) =>
+      seq(
+        alias($.style_start_tag, $.start_tag),
+        repeat(choice(alias($.style_text, $.raw_text), $._rshtml_block)),
+        $.end_tag,
+      ),
+
+    style_text: ($) =>
+      token(
+        /([^@<]|<[^A-Z/]|<\/[^A-Zs]|<\/s[^t]|<\/st[^y]|<\/sty[^l]|<\/styl[^e])+/,
+      ),
+
+    // END
 
     // region tokens
     rust_identifier: (_) => token(RUST_IDENTIFIER),
@@ -71,20 +110,22 @@ module.exports = grammar({
     _escaped: (_) => token("@@"),
 
     // _text: (_) => token(prec(-1, /[^@<\s]([^@<]*[^@<\s])?/)),
-    _text: (_) =>
-      token(
-        prec(
-          -1,
-          /([^@<\s]|<[^A-Z/]|<\/[^A-Z])(([^@<]|<[^A-Z/]|<\/[^A-Z])*[^@<\s])?/,
-        ),
-      ),
-    _inner_text: (_) =>
-      token(
-        prec(
-          -1,
-          /([^@<}\s]|<[^A-Z/]|<\/[^A-Z])(([^@<}]|<[^A-Z/]|<\/[^A-Z])*[^@}<\s])?/,
-        ),
-      ),
+    // _text: (_) =>
+    //   token(
+    //     prec(
+    //       -1,
+    //       /([^@<\s]|<[^A-Z/]|<\/[^A-Z])(([^@<]|<[^A-Z/]|<\/[^A-Z])*[^@<\s])?/,
+    //     ),
+    //   ),
+    // _inner_text: (_) =>
+    //   token(
+    //     prec(
+    //       -1,
+    //       /([^@<}\s]|<[^A-Z/]|<\/[^A-Z])(([^@<}]|<[^A-Z/]|<\/[^A-Z])*[^@}<\s])?/,
+    //     ),
+    //   ),
+    _text: (_) => token(prec(-1, /[^<>@&\s]([^<>@&]*[^<>@&\s])?/)),
+    _inner_text: (_) => token(prec(-1, /[^<>@}&\s]([^<>@}&]*[^<>@}&\s])?/)),
 
     if_: (_) => token(prec(5, seq("if", /\s+/, STMT_HEAD_COND))),
     else_: (_) => token(prec(6, "else")),
@@ -112,10 +153,14 @@ module.exports = grammar({
     as_: (_) => token("as"),
     section_: (_) => token("section"),
 
-    tag_open: (_) => token(prec(-1, "<")),
-    tag_self_close: (_) => token("/>"),
+    // tag_open: (_) => token(prec(-1, "<")),
+    // tag_self_close: (_) => token("/>"),
+    // tag_close: (_) => token(">"),
+    // tag_end_open: (_) => token(prec(-1, "</")),
+    tag_open: (_) => token("<"),
+    tag_self_close: (_) => token(prec(1, "/>")),
     tag_close: (_) => token(">"),
-    tag_end_open: (_) => token(prec(-1, "</")),
+    tag_end_open: (_) => token("</"),
 
     component_tag_identifier: (_) => token(COMPONENT_TAG_IDENTIFIER),
 
@@ -130,8 +175,22 @@ module.exports = grammar({
 
     // region top_definition
 
+    _template: ($) =>
+      choice($._block, alias(choice($._escaped, $._text), $.html_text)),
     _inner_template: ($) =>
-      seq($.open_brace, field("body", repeat($._block)), $.close_brace),
+      seq(
+        $.open_brace,
+        field(
+          "body",
+          repeat(
+            choice(
+              $._block,
+              alias(choice($._escaped, $._inner_text), $.html_inner_text),
+            ),
+          ),
+        ),
+        $.close_brace,
+      ),
 
     extends_directive: ($) =>
       seq(
@@ -153,10 +212,11 @@ module.exports = grammar({
 
     // endregion
 
-    _block: ($) =>
+    _block: ($) => choice($._html_node, $._rshtml_block),
+
+    _rshtml_block: ($) =>
       choice(
         $.component_tag,
-        alias(choice($._escaped, $._inner_text), $.html_inner_text),
         seq(
           $.start_symbol,
           choice(
@@ -201,15 +261,31 @@ module.exports = grammar({
       prec(
         4,
         choice(
-          seq("(", repeat(choice($._nested_content, /[^)]/)), ")"),
-          seq("[", repeat(choice($._nested_content, /[^\]]/)), "]"),
+          seq(
+            token(prec(4, "(")),
+            repeat(choice($._nested_content, /[^)]/)),
+            token(prec(4, ")")),
+          ),
+          seq(
+            token(prec(4, "[")),
+            repeat(choice($._nested_content, /[^\]]/)),
+            token(prec(4, "]")),
+          ),
         ),
       ),
 
     _nested_content: ($) =>
       choice(
-        seq("(", repeat(choice($._nested_content, /[^)]/)), ")"),
-        seq("[", repeat(choice($._nested_content, /[^\]]/)), "]"),
+        seq(
+          token(prec(4, "(")),
+          repeat(choice($._nested_content, /[^)]/)),
+          token(prec(4, ")")),
+        ),
+        seq(
+          token(prec(4, "[")),
+          repeat(choice($._nested_content, /[^\]]/)),
+          token(prec(4, "]")),
+        ),
         $._string_line,
       ),
     // endregion
@@ -397,7 +473,7 @@ module.exports = grammar({
           $.tag_self_close,
           seq(
             $.tag_close,
-            field("body", repeat(alias($._block, $.component_tag_body))),
+            field("body", repeat(alias($._template, $.component_tag_body))),
             $.tag_end_open,
             field("name_close", $.component_tag_identifier),
             $.tag_close,
