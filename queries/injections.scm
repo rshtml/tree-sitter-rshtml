@@ -1,29 +1,18 @@
-; ((source_file) @injection.content
-;   ; (#not-match? @injection.content "comment_block")
-;   (#set! injection.language "html")
-;   (#set! injection.include-children)
-;   (#set! injection.combined))
+((source_file) @injection.content
+  ; (#not-match? @injection.content "comment_block")
+  (#set! injection.language "html")
+  (#set! injection.include-children)
+  (#set! injection.combined))
 
-; ((html_text) @injection.content
-;   (#set! injection.language "html")
-;   (#set! injection.include-children)
-;   (#set! injection.combined))
+((html_text) @injection.content
+  (#set! injection.language "html")
+  (#set! injection.include-children)
+  (#set! injection.combined))
   
-; ((html_inner_text) @injection.content
-;   (#set! injection.language "html")
-;   (#set! injection.include-children)
-;   (#set! injection.combined))
-
-; html
-((script_element
-  (raw_text) @injection.content)
- (#set! injection.language "javascript"))
-
-((style_element
-  (raw_text) @injection.content)
- (#set! injection.language "css"))
-; end html
-
+((html_inner_text) @injection.content
+  (#set! injection.language "html")
+  (#set! injection.include-children)
+  (#set! injection.combined))
 
 (rust_expr_simple
   expr: (source_text) @injection.content
