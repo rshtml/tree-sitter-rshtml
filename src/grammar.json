@@ -663,7 +663,7 @@
                     ]
                   },
                   "named": true,
-                  "value": "html_inner_text"
+                  "value": "html_text"
                 }
               ]
             }
@@ -854,7 +854,7 @@
               "name": "rust_expr_simple_content"
             },
             "named": true,
-            "value": "source_text"
+            "value": "rust_text"
           }
         }
       ]
@@ -1088,7 +1088,7 @@
               }
             },
             "named": true,
-            "value": "source_text"
+            "value": "rust_text"
           }
         },
         {
@@ -1259,7 +1259,7 @@
               "name": "if_"
             },
             "named": true,
-            "value": "source_text"
+            "value": "rust_text"
           }
         },
         {
@@ -1293,7 +1293,7 @@
               "name": "else_"
             },
             "named": true,
-            "value": "source_text"
+            "value": "rust_text"
           }
         },
         {
@@ -1324,7 +1324,7 @@
               "name": "for_"
             },
             "named": true,
-            "value": "source_text"
+            "value": "rust_text"
           }
         },
         {
@@ -1346,7 +1346,7 @@
               "name": "while_"
             },
             "named": true,
-            "value": "source_text"
+            "value": "rust_text"
           }
         },
         {
@@ -1368,7 +1368,7 @@
               "name": "match_"
             },
             "named": true,
-            "value": "source_text"
+            "value": "rust_text"
           }
         },
         {
@@ -1401,7 +1401,7 @@
               "name": "match_arm_pattern"
             },
             "named": true,
-            "value": "source_text"
+            "value": "rust_text"
           }
         },
         {
@@ -1457,7 +1457,7 @@
           "name": "_match_inner_text"
         },
         "named": true,
-        "value": "source_text"
+        "value": "html_text"
       }
     },
     "raw_block": {
@@ -1484,7 +1484,7 @@
               }
             },
             "named": true,
-            "value": "source_text"
+            "value": "html_text"
           }
         },
         {
@@ -1542,7 +1542,7 @@
               }
             },
             "named": true,
-            "value": "source_text"
+            "value": "rust_text"
           }
         },
         {

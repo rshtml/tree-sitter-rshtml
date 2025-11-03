@@ -132,7 +132,7 @@ module.exports = grammar({
 
     _template: ($) => choice($._block, alias(choice($._escaped, $._text), $.html_text)),
     _inner_template: ($) =>
-      seq($.open_brace, field("body", repeat(choice($._block, alias(choice($._escaped, $._inner_text), $.html_inner_text)))), $.close_brace),
+      seq($.open_brace, field("body", repeat(choice($._block, alias(choice($._escaped, $._inner_text), $.html_text)))), $.close_brace),
 
     extends_directive: ($) =>
       seq(
@@ -182,7 +182,7 @@ module.exports = grammar({
     rust_expr_simple: ($) =>
       seq(
         optional($.hash_symbol),
-        field("expr", alias($.rust_expr_simple_content, $.source_text)),
+        field("expr", alias($.rust_expr_simple_content, $.rust_text)),
       ),
 
     rust_expr_simple_content: ($) =>
@@ -221,7 +221,7 @@ module.exports = grammar({
         $.open_paren,
         field(
           "expr",
-          alias(repeat(choice($._nested_expression, /[^)]/)), $.source_text),
+          alias(repeat(choice($._nested_expression, /[^)]/)), $.rust_text),
         ),
         $.close_paren,
       ),
@@ -250,32 +250,32 @@ module.exports = grammar({
 
     if_stmt: ($) =>
       seq(
-        field("head", alias($.if_, $.source_text)),
+        field("head", alias($.if_, $.rust_text)),
         $._inner_template,
         optional($.else_clause),
       ),
     else_clause: ($) =>
       seq(
-        field("head", alias($.else_, $.source_text)),
+        field("head", alias($.else_, $.rust_text)),
         choice($._inner_template, $.if_stmt),
       ),
 
     for_stmt: ($) =>
-      seq(field("head", alias($.for_, $.source_text)), $._inner_template),
+      seq(field("head", alias($.for_, $.rust_text)), $._inner_template),
 
     while_stmt: ($) =>
-      seq(field("head", alias($.while_, $.source_text)), $._inner_template),
+      seq(field("head", alias($.while_, $.rust_text)), $._inner_template),
 
     match_stmt: ($) =>
       seq(
-        field("head", alias($.match_, $.source_text)),
+        field("head", alias($.match_, $.rust_text)),
         $.open_brace,
         repeat1($.match_stmt_arm),
         $.close_brace,
       ),
     match_stmt_arm: ($) =>
       seq(
-        field("pattern", alias($.match_arm_pattern, $.source_text)),
+        field("pattern", alias($.match_arm_pattern, $.rust_text)),
         $.fat_arrow,
         field(
           "expr",
@@ -290,7 +290,7 @@ module.exports = grammar({
         ),
         $.match_arm_end,
       ),
-    match_text: ($) => field("text", alias($._match_inner_text, $.source_text)),
+    match_text: ($) => field("text", alias($._match_inner_text, $.html_text)),
     // endregion
 
     // region raw_block
@@ -298,7 +298,7 @@ module.exports = grammar({
       seq(
         $.raw_,
         $.open_brace,
-        field("content", alias(repeat($._raw_nested_content), $.source_text)),
+        field("content", alias(repeat($._raw_nested_content), $.html_text)),
         $.close_brace,
       ),
     _raw_nested_content: ($) =>
@@ -309,7 +309,7 @@ module.exports = grammar({
     rust_block: ($) =>
       seq(
         $.open_brace,
-        field("content", alias(repeat($._rust_block_content), $.source_text)),
+        field("content", alias(repeat($._rust_block_content), $.rust_text)),
         $.close_brace,
       ),
 
