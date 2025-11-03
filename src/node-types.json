@@ -177,7 +177,7 @@
           "named": true
         },
         {
-          "type": "html_inner_text",
+          "type": "html_text",
           "named": true
         },
         {
@@ -671,6 +671,11 @@
   },
   {
     "type": "html_inner_text",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "html_text",
     "named": true,
     "fields": {}
   },
@@ -1514,10 +1519,6 @@
           "named": true
         },
         {
-          "type": "html_inner_text",
-          "named": true
-        },
-        {
           "type": "html_text",
           "named": true
         },
@@ -1842,10 +1843,6 @@
   },
   {
     "type": "hash_symbol",
-    "named": true
-  },
-  {
-    "type": "html_text",
     "named": true
   },
   {

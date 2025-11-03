@@ -47,6 +47,20 @@
 <script type="text/javascript">
   let users = @json(&self.users);
   @json_let("users_let", &self.users);
+
+  @if self.x == 5 {
+    <div>heyy</div>
+  }
+
+  <p>merhaba</p>
+
+  <Card>
+  </Card>
+  
+  <Card hey="merhaba" />
+
+  let x = 45;
+  
 </script>
 
 @#self.title

@@ -40,7 +40,7 @@ module.exports = grammar({
     source_file: ($) =>
       seq(
         optional($.extends_directive),
-        repeat(choice($._block, alias($._text, $.html_text))),
+        repeat($._template),
       ),
 
     // region tokens
@@ -130,8 +130,9 @@ module.exports = grammar({
 
     // region top_definition
 
+    _template: ($) => choice($._block, alias(choice($._escaped, $._text), $.html_text)),
     _inner_template: ($) =>
-      seq($.open_brace, field("body", repeat($._block)), $.close_brace),
+      seq($.open_brace, field("body", repeat(choice($._block, alias(choice($._escaped, $._inner_text), $.html_inner_text)))), $.close_brace),
 
     extends_directive: ($) =>
       seq(
@@ -156,7 +157,6 @@ module.exports = grammar({
     _block: ($) =>
       choice(
         $.component_tag,
-        alias(choice($._escaped, $._inner_text), $.html_inner_text),
         seq(
           $.start_symbol,
           choice(
@@ -397,7 +397,7 @@ module.exports = grammar({
           $.tag_self_close,
           seq(
             $.tag_close,
-            field("body", repeat(alias($._block, $.component_tag_body))),
+            field("body", repeat(alias($._template, $.component_tag_body))),
             $.tag_end_open,
             field("name_close", $.component_tag_identifier),
             $.tag_close,
