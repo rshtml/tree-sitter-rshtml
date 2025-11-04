@@ -10,16 +10,41 @@
 ((comment_block) @injection.content
   (#set! injection.language "comment"))
 
-((if_stmt
-  head: (rust_text)
-  . (open_brace)
-  . (close_brace)
-  . (else_clause
-       head: (rust_text))) @injection.content
-  (#set! injection.language "rust")
-  (#set! injection.include-children)
-  ; (#set! injection.combined)
-  )
+(if_stmt ((rust_text) @injection.content .
+    (open_brace) @injection.content
+		(close_brace) @injection.content .
+    (else_clause (rust_text) @injection.content
+    ((open_brace) @injection.content
+    (close_brace) @injection.content)?)?)
+    (#set! injection.language "rust")
+    ; (#set! injection.include-children)
+    ; (#set! injection.combined)
+    )
+
+; (if_stmt [(rust_text)(open_brace)(close_brace)(else_clause (rust_text))] @injection.content
+; (#set! injection.language "rust"))
+
+; (if_stmt
+;   [
+;     (rust_text)
+;     (open_brace)
+;     (close_brace)
+;     (else_clause (rust_text))?
+;   ] @injection.content
+;   (#set! injection.language "rust")
+;   ; (#set! injection.include-children)
+;   (#set! injection.combined))
+
+; ((if_stmt
+;   head: (rust_text)
+;   . (open_brace)
+;   . (close_brace)
+;   . (else_clause
+;        head: (rust_text))) @injection.content
+;   (#set! injection.language "rust")
+;   (#set! injection.include-children)
+;   ; (#set! injection.combined)
+;   )
 
 ; ((source_file) @injection.content
 ;   ; (#not-match? @injection.content "comment_block")

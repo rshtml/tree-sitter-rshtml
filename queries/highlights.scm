@@ -107,5 +107,5 @@
 )
 
 ;this is for now extra
-; (else_clause
-;   head: (rust_text) @keyword.conditional)
+(else_clause
+  head: (rust_text) @keyword.conditional)
