@@ -4,7 +4,6 @@
   (#set! injection.combined))
 
 ((rust_text) @injection.content
-   (#set! injection.language "rust")
-   (#set! injection.include-children)
-   (#not-match? @injection.content "^else")
-)
+  (#set! injection.language "rust")
+  (#set! injection.include-children)
+  (#not-lua-match? @injection.content "^else"))
