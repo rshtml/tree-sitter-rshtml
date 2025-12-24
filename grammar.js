@@ -28,7 +28,7 @@ const EQUALS = "=";
 
 const STMT_HEAD_COND = /\s*[^@{}\s][^@{}]*/;
 const ASCII_DIGITS = /[0-9]+/;
-const COMPONENT_TAG_IDENTIFIER = /[A-Z][a-zA-Z0-9_]*(\.[A-Z][a-zA-Z0-9_]*)*/;
+const COMPONENT_TAG_IDENTIFIER = /[A-Z][a-zA-Z0-9]*/;
 // endregion
 
 module.exports = grammar({
@@ -36,10 +36,14 @@ module.exports = grammar({
 
   extras: ($) => [/\s+/, $.comment_block],
 
+  conflicts: $ => [
+    [$._params, $.rust_expr_paren],
+  ],
+
   rules: {
     source_file: ($) =>
       seq(
-        optional($.extends_directive),
+        optional(prec(1, $.template_params)),
         repeat($._template),
       ),
 
@@ -100,17 +104,12 @@ module.exports = grammar({
     continue_: (_) => token(prec(5, "continue")),
     break_: (_) => token(prec(5, "break")),
 
-    extends_: (_) => token(prec(5, "extends")),
     raw_: (_) => token(prec(5, "raw")),
     _raw_text: (_) => token(/[^{}]+/),
 
-    include_: (_) => token(prec(5, "include")),
-    render_: (_) => token(prec(0, "render")),
-    render_body_: (_) => token(prec(0, "render_body")),
     child_content_: (_) => token(prec(0, "child_content")),
     use_: (_) => token(prec(0, "use")),
     as_: (_) => token("as"),
-    section_: (_) => token("section"),
 
     tag_open: (_) => token(prec(-1, "<")),
     tag_self_close: (_) => token("/>"),
@@ -118,6 +117,8 @@ module.exports = grammar({
     tag_end_open: (_) => token(prec(-1, "</")),
 
     component_tag_identifier: (_) => token(COMPONENT_TAG_IDENTIFIER),
+
+    fn_: (_) => token("fn"),
 
     // region errors
     if_error: (_) => token(prec(5, seq("if", /\s*/, "{"))),
@@ -134,19 +135,26 @@ module.exports = grammar({
     _inner_template: ($) =>
       seq($.open_brace, field("body", repeat(choice($._block, alias(choice($._escaped, $._inner_text), $.html_text)))), $.close_brace),
 
-    extends_directive: ($) =>
-      seq(
-        $.start_symbol,
-        $.extends_,
-        choice(
-          seq(
-            $.open_paren,
-            optional(field("path", $.string_line)),
-            $.close_paren,
-          ),
-          /\s/,
-        ),
-      ),
+
+    template_params: ($) => seq($.start_symbol, $._params, optional($.semicolon)),
+    _params: ($) => seq(
+      $.open_paren,
+      alias(
+        optional(
+          seq($.param, repeat(seq($.comma, $.param)), optional($.comma))
+        ), $.rust_text),
+      $.close_paren),
+    param: ($) => seq(
+      alias($.rust_identifier, $.param_name),
+      optional(seq($.colon, $.param_type))
+    ),
+    param_type: ($) => repeat1(choice($._param_type_nested, /[^(\[{}<,)]/)),
+    _param_type_nested: $ => choice(
+      seq('(', repeat(choice($._param_type_nested, /[^)]/)), ')'),
+      seq('[', repeat(choice($._param_type_nested, /[^\]]/)), ']'),
+      seq('{', repeat(choice($._param_type_nested, /[^}]/)), '}'),
+      seq('<', repeat(choice($._param_type_nested, '->', '=>', /[^>]/)), '>')
+    ),
 
     comment_block: ($) =>
       seq($.open_comment, $.comment_content, $.close_comment),
@@ -161,15 +169,11 @@ module.exports = grammar({
           $.start_symbol,
           choice(
             $.raw_block,
-            $.render_body_directive,
-            $.render_directive,
             $.child_content_directive,
-            $.include_directive,
-            $.section_directive,
-            $.section_block,
             $.use_directive,
             $.rust_block,
             $._rust_stmt,
+            $.fn_directive,
             $.rust_expr_paren,
             $.continue_,
             $.break_,
@@ -349,26 +353,6 @@ module.exports = grammar({
 
     /// / ///
 
-    // region include_directive
-    include_directive: ($) =>
-      seq(
-        $.include_,
-        $.open_paren,
-        field("path", $.string_line),
-        $.close_paren,
-      ),
-    // endregion
-
-    // region render_directive
-    render_directive: ($) =>
-      seq($.render_, $.open_paren, field("path", $.string_line), $.close_paren),
-    // endregion
-
-    // region render_body_directive
-    render_body_directive: ($) =>
-      prec(1, seq($.render_body_, optional(seq($.open_paren, $.close_paren)))),
-    // endregion
-
     // region child_content_directive
     child_content_directive: ($) =>
       seq($.child_content_, optional(seq($.open_paren, $.close_paren))),
@@ -384,7 +368,7 @@ module.exports = grammar({
         optional($.semicolon),
       ),
     as_clause: ($) =>
-      seq($.as_, token(/[ \t]+/), field("alias", $.rust_identifier)),
+      seq($.as_, field("alias", $.component_tag_identifier)),
     // endregion
 
     // region component_tag
@@ -431,21 +415,14 @@ module.exports = grammar({
 
     // endregion
 
-    // region section_directive
-    section_directive: ($) =>
-      seq(
-        $.section_,
-        $.open_paren,
-        field("name", $.string_line),
-        $.comma,
-        field("value", choice($.string_line, $.rust_expr_simple)),
-        $.close_paren,
-      ),
-    // endregion
+    // region fn_directive
 
-    // region section_block
-    section_block: ($) =>
-      seq($.section_, field("name", $.rust_identifier), $._inner_template),
+    fn_directive: ($) => seq(
+      alias(seq($.fn_head, $._params), $.rust_text),
+      $._inner_template
+    ),
+    fn_head: ($) => seq($.fn_, token(/[ \t]+/), $.rust_identifier)
+
     // endregion
   },
 });

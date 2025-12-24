@@ -19,31 +19,13 @@
 (continue_) @keyword.conditional
 (break_) @keyword.conditional
 
-(
-  (start_symbol) @keyword.import
-  .
-  (extends_) @keyword.import
-)
-
 (raw_) @keyword
 
-(
-  (start_symbol) @keyword.import
-  .
-  (include_directive (include_) @keyword.import)
-)
-
-(render_) @keyword
-(render_body_) @keyword
 (child_content_) @keyword
-(section_) @keyword
-
-(section_block
-  name: (rust_identifier) @namespace)
 
 (as_) @keyword.operator
 (as_clause
-  alias: (rust_identifier) @type)
+  alias: (component_tag_identifier) @type)
 (
   (start_symbol) @keyword.import
   .
@@ -105,6 +87,8 @@
   .
   (match_stmt)
 )
+
+; (template_params (param (param_type) @type))
 
 ;this is for now extra
 (else_clause
