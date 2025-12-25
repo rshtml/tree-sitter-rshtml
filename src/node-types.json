@@ -1208,10 +1208,6 @@
           "named": true
         },
         {
-          "type": "colon",
-          "named": true
-        },
-        {
           "type": "comma",
           "named": true
         },
@@ -1228,19 +1224,7 @@
           "named": true
         },
         {
-          "type": "param_name",
-          "named": true
-        },
-        {
-          "type": "param_type",
-          "named": true
-        },
-        {
           "type": "rust_identifier",
-          "named": true
-        },
-        {
-          "type": "rust_text",
           "named": true
         }
       ]

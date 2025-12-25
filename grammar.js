@@ -37,7 +37,7 @@ module.exports = grammar({
   extras: ($) => [/\s+/, $.comment_block],
 
   conflicts: $ => [
-    [$._params, $.rust_expr_paren],
+    [$.template_params, $.rust_expr_paren],
   ],
 
   rules: {
@@ -136,14 +136,9 @@ module.exports = grammar({
       seq($.open_brace, field("body", repeat(choice($._block, alias(choice($._escaped, $._inner_text), $.html_text)))), $.close_brace),
 
 
-    template_params: ($) => seq($.start_symbol, $._params, optional($.semicolon)),
-    _params: ($) => seq(
-      $.open_paren,
-      alias(
-        optional(
-          seq($.param, repeat(seq($.comma, $.param)), optional($.comma))
-        ), $.rust_text),
-      $.close_paren),
+    template_params: ($) => seq($.start_symbol, $.open_paren, optional(alias($._params, $.rust_text)), $.close_paren, optional($.semicolon)),
+    _params: ($) =>
+      seq($.param, repeat(seq($.comma, $.param)), optional($.comma)),
     param: ($) => seq(
       alias($.rust_identifier, $.param_name),
       optional(seq($.colon, $.param_type))
@@ -418,10 +413,10 @@ module.exports = grammar({
     // region fn_directive
 
     fn_directive: ($) => seq(
-      alias(seq($.fn_head, $._params), $.rust_text),
+      alias($._fn_head, $.rust_text),
       $._inner_template
     ),
-    fn_head: ($) => seq($.fn_, token(/[ \t]+/), $.rust_identifier)
+    _fn_head: ($) => seq($.fn_, token(/[ \t]+/), $.rust_identifier, $.open_paren, $._params, $.close_paren)
 
     // endregion
   },
