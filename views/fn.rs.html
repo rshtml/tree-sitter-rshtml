@@ -1,0 +1,7 @@
+@(i: i32, y: String, x: Block<impl Render>)
+
+<div> this is fn directive </div>
+
+@fn my_fn(i: i32, y: String, x: Block<impl Render>) {
+  <p> @self.my_var <b>@i</b> @y</p>
+}
