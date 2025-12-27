@@ -650,13 +650,8 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "ALIAS",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_params"
-              },
-              "named": true,
-              "value": "rust_text"
+              "type": "SYMBOL",
+              "name": "_params"
             },
             {
               "type": "BLANK"
@@ -741,8 +736,13 @@
                   "name": "colon"
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "param_type"
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "param_type"
+                  },
+                  "named": true,
+                  "value": "rust_text"
                 }
               ]
             },

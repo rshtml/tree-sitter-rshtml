@@ -924,7 +924,7 @@
           "named": true
         },
         {
-          "type": "param_type",
+          "type": "rust_text",
           "named": true
         }
       ]
@@ -932,11 +932,6 @@
   },
   {
     "type": "param_name",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "param_type",
     "named": true,
     "fields": {}
   },
@@ -1072,21 +1067,7 @@
   {
     "type": "rust_text",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "comma",
-          "named": true
-        },
-        {
-          "type": "param",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "source_file",
@@ -1191,11 +1172,15 @@
           "named": true
         },
         {
+          "type": "comma",
+          "named": true
+        },
+        {
           "type": "open_paren",
           "named": true
         },
         {
-          "type": "rust_text",
+          "type": "param",
           "named": true
         },
         {
