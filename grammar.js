@@ -136,7 +136,7 @@ module.exports = grammar({
       seq($.open_brace, field("body", repeat(choice($._block, alias(choice($._escaped, $._inner_text), $.html_text)))), $.close_brace),
 
 
-    template_params: ($) => seq($.start_symbol, $.open_paren, optional(alias($._params, $.rust_text)), $.close_paren, optional($.semicolon)),
+    template_params: ($) => seq($.start_symbol, $.open_paren, optional($._params), $.close_paren, optional($.semicolon)),
     _params: ($) =>
       seq($.param, repeat(seq($.comma, $.param)), optional($.comma)),
     param: ($) => seq(

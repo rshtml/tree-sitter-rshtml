@@ -88,6 +88,11 @@
   (match_stmt)
 )
 
+(param_name) @variable.parameter
+(param_type) @type
+((param_type) @type.builtin
+ (#match? @type.builtin "^&*(i32|u32|i64|f64|str|bool|char)$"))
+
 ;this is for now extra
 (else_clause
   head: (rust_text) @keyword.control.conditional)
