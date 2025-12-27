@@ -173,10 +173,6 @@
           "named": true
         },
         {
-          "type": "fn_directive",
-          "named": true
-        },
-        {
           "type": "for_stmt",
           "named": true
         },
@@ -249,10 +245,6 @@
           },
           {
             "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "fn_directive",
             "named": true
           },
           {
@@ -384,10 +376,6 @@
             "named": true
           },
           {
-            "type": "fn_directive",
-            "named": true
-          },
-          {
             "type": "for_stmt",
             "named": true
           },
@@ -469,104 +457,6 @@
     "fields": {}
   },
   {
-    "type": "fn_directive",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "ERROR",
-            "named": true
-          },
-          {
-            "type": "break_",
-            "named": true
-          },
-          {
-            "type": "child_content_directive",
-            "named": true
-          },
-          {
-            "type": "component_tag",
-            "named": true
-          },
-          {
-            "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "fn_directive",
-            "named": true
-          },
-          {
-            "type": "for_stmt",
-            "named": true
-          },
-          {
-            "type": "html_text",
-            "named": true
-          },
-          {
-            "type": "if_stmt",
-            "named": true
-          },
-          {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "raw_block",
-            "named": true
-          },
-          {
-            "type": "rust_block",
-            "named": true
-          },
-          {
-            "type": "rust_expr_paren",
-            "named": true
-          },
-          {
-            "type": "rust_expr_simple",
-            "named": true
-          },
-          {
-            "type": "start_symbol",
-            "named": true
-          },
-          {
-            "type": "use_directive",
-            "named": true
-          },
-          {
-            "type": "while_stmt",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "close_brace",
-          "named": true
-        },
-        {
-          "type": "open_brace",
-          "named": true
-        },
-        {
-          "type": "rust_text",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "for_stmt",
     "named": true,
     "fields": {
@@ -592,10 +482,6 @@
           },
           {
             "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "fn_directive",
             "named": true
           },
           {
@@ -701,10 +587,6 @@
           },
           {
             "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "fn_directive",
             "named": true
           },
           {
@@ -846,10 +728,6 @@
             "named": true
           },
           {
-            "type": "fn_directive",
-            "named": true
-          },
-          {
             "type": "for_stmt",
             "named": true
           },
@@ -921,10 +799,6 @@
           },
           {
             "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "fn_directive",
             "named": true
           },
           {
@@ -1204,27 +1078,11 @@
       "required": false,
       "types": [
         {
-          "type": "close_paren",
-          "named": true
-        },
-        {
           "type": "comma",
           "named": true
         },
         {
-          "type": "fn_",
-          "named": true
-        },
-        {
-          "type": "open_paren",
-          "named": true
-        },
-        {
           "type": "param",
-          "named": true
-        },
-        {
-          "type": "rust_identifier",
           "named": true
         }
       ]
@@ -1257,10 +1115,6 @@
         },
         {
           "type": "continue_",
-          "named": true
-        },
-        {
-          "type": "fn_directive",
           "named": true
         },
         {
@@ -1415,10 +1269,6 @@
           },
           {
             "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "fn_directive",
             "named": true
           },
           {
@@ -1599,10 +1449,6 @@
   },
   {
     "type": "equals",
-    "named": true
-  },
-  {
-    "type": "fn_",
     "named": true
   },
   {

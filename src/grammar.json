@@ -961,10 +961,6 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "fn_directive"
-                },
-                {
-                  "type": "SYMBOL",
                   "name": "rust_expr_paren"
                 },
                 {
@@ -2170,56 +2166,6 @@
           }
         ]
       }
-    },
-    "fn_directive": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_fn_head"
-          },
-          "named": true,
-          "value": "rust_text"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_inner_template"
-        }
-      ]
-    },
-    "_fn_head": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "fn_"
-        },
-        {
-          "type": "TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "[ \\t]+"
-          }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "rust_identifier"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "open_paren"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_params"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "close_paren"
-        }
-      ]
     }
   },
   "extras": [

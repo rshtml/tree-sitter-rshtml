@@ -168,7 +168,6 @@ module.exports = grammar({
             $.use_directive,
             $.rust_block,
             $._rust_stmt,
-            $.fn_directive,
             $.rust_expr_paren,
             $.continue_,
             $.break_,
@@ -407,16 +406,6 @@ module.exports = grammar({
       token(
         seq(optional("-"), seq(ASCII_DIGITS, optional(seq(".", ASCII_DIGITS)))),
       ),
-
-    // endregion
-
-    // region fn_directive
-
-    fn_directive: ($) => seq(
-      alias($._fn_head, $.rust_text),
-      $._inner_template
-    ),
-    _fn_head: ($) => seq($.fn_, token(/[ \t]+/), $.rust_identifier, $.open_paren, $._params, $.close_paren)
 
     // endregion
   },
