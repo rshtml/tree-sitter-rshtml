@@ -1,27 +1,10 @@
 @time("2023-11-20T10:30:00Z").pretty()
 @if true {}
-@render_body
+
 @child_content
 @use "Card.rs.html" as Card
-@render("fad")
 
 <p>merhaba <b>this</b></p>
-
-@section('header', self.get_header("hello"))
-
-@section('title','Home Page')
-
-@section footer {
-  <p>Footer content goes here.</p>
-  what is going on dude @self.hey
-  <p>Footer content goes here.</p>
-
-  @if self.my_var == "my var" {
-    <p>MyVar is true</p>
-  } else {
-    <p>MyVar is false</p>
-  }
-}
 
 @use "Card.rs.html" as Card
 
@@ -94,8 +77,6 @@
   }
 
 </Card>
-
-@include("header.rs.html")
 
 @match self.card_count {
   0 => <div>i</div>,
