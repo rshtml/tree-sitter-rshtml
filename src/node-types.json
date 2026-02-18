@@ -59,30 +59,6 @@
     "fields": {}
   },
   {
-    "type": "comment_block",
-    "named": true,
-    "extra": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "close_comment",
-          "named": true
-        },
-        {
-          "type": "comment_content",
-          "named": true
-        },
-        {
-          "type": "open_comment",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "component_tag",
     "named": true,
     "fields": {
@@ -185,14 +161,6 @@
           "named": true
         },
         {
-          "type": "match_stmt",
-          "named": true
-        },
-        {
-          "type": "raw_block",
-          "named": true
-        },
-        {
           "type": "rust_block",
           "named": true
         },
@@ -257,14 +225,6 @@
           },
           {
             "type": "if_stmt",
-            "named": true
-          },
-          {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "raw_block",
             "named": true
           },
           {
@@ -388,14 +348,6 @@
             "named": true
           },
           {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "raw_block",
-            "named": true
-          },
-          {
             "type": "rust_block",
             "named": true
           },
@@ -452,11 +404,6 @@
     }
   },
   {
-    "type": "fat_arrow",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "for_stmt",
     "named": true,
     "fields": {
@@ -494,14 +441,6 @@
           },
           {
             "type": "if_stmt",
-            "named": true
-          },
-          {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "raw_block",
             "named": true
           },
           {
@@ -602,14 +541,6 @@
             "named": true
           },
           {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "raw_block",
-            "named": true
-          },
-          {
             "type": "rust_block",
             "named": true
           },
@@ -666,238 +597,6 @@
     }
   },
   {
-    "type": "match_stmt",
-    "named": true,
-    "fields": {
-      "head": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "rust_text",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "close_brace",
-          "named": true
-        },
-        {
-          "type": "match_stmt_arm",
-          "named": true
-        },
-        {
-          "type": "open_brace",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "match_stmt_arm",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "ERROR",
-            "named": true
-          },
-          {
-            "type": "break_",
-            "named": true
-          },
-          {
-            "type": "child_content_directive",
-            "named": true
-          },
-          {
-            "type": "component_tag",
-            "named": true
-          },
-          {
-            "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "for_stmt",
-            "named": true
-          },
-          {
-            "type": "html_text",
-            "named": true
-          },
-          {
-            "type": "if_stmt",
-            "named": true
-          },
-          {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "raw_block",
-            "named": true
-          },
-          {
-            "type": "rust_block",
-            "named": true
-          },
-          {
-            "type": "rust_expr_paren",
-            "named": true
-          },
-          {
-            "type": "rust_expr_simple",
-            "named": true
-          },
-          {
-            "type": "start_symbol",
-            "named": true
-          },
-          {
-            "type": "use_directive",
-            "named": true
-          },
-          {
-            "type": "while_stmt",
-            "named": true
-          }
-        ]
-      },
-      "expr": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "ERROR",
-            "named": true
-          },
-          {
-            "type": "break_",
-            "named": true
-          },
-          {
-            "type": "child_content_directive",
-            "named": true
-          },
-          {
-            "type": "close_brace",
-            "named": true
-          },
-          {
-            "type": "component_tag",
-            "named": true
-          },
-          {
-            "type": "continue_",
-            "named": true
-          },
-          {
-            "type": "for_stmt",
-            "named": true
-          },
-          {
-            "type": "html_text",
-            "named": true
-          },
-          {
-            "type": "if_stmt",
-            "named": true
-          },
-          {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "match_text",
-            "named": true
-          },
-          {
-            "type": "open_brace",
-            "named": true
-          },
-          {
-            "type": "raw_block",
-            "named": true
-          },
-          {
-            "type": "rust_block",
-            "named": true
-          },
-          {
-            "type": "rust_expr_paren",
-            "named": true
-          },
-          {
-            "type": "rust_expr_simple",
-            "named": true
-          },
-          {
-            "type": "start_symbol",
-            "named": true
-          },
-          {
-            "type": "use_directive",
-            "named": true
-          },
-          {
-            "type": "while_stmt",
-            "named": true
-          }
-        ]
-      },
-      "pattern": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "rust_text",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "fat_arrow",
-          "named": true
-        },
-        {
-          "type": "match_arm_end",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "match_text",
-    "named": true,
-    "fields": {
-      "text": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "html_text",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "open_brace",
     "named": true,
     "fields": {}
@@ -934,40 +633,6 @@
     "type": "param_name",
     "named": true,
     "fields": {}
-  },
-  {
-    "type": "raw_block",
-    "named": true,
-    "fields": {
-      "content": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "html_text",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "close_brace",
-          "named": true
-        },
-        {
-          "type": "open_brace",
-          "named": true
-        },
-        {
-          "type": "raw_",
-          "named": true
-        }
-      ]
-    }
   },
   {
     "type": "rust_block",
@@ -1108,14 +773,6 @@
         },
         {
           "type": "if_stmt",
-          "named": true
-        },
-        {
-          "type": "match_stmt",
-          "named": true
-        },
-        {
-          "type": "raw_block",
           "named": true
         },
         {
@@ -1269,14 +926,6 @@
             "named": true
           },
           {
-            "type": "match_stmt",
-            "named": true
-          },
-          {
-            "type": "raw_block",
-            "named": true
-          },
-          {
             "type": "rust_block",
             "named": true
           },
@@ -1409,19 +1058,11 @@
     "named": true
   },
   {
-    "type": "close_comment",
-    "named": true
-  },
-  {
     "type": "colon",
     "named": true
   },
   {
     "type": "comma",
-    "named": true
-  },
-  {
-    "type": "comment_content",
     "named": true
   },
   {
@@ -1441,19 +1082,7 @@
     "named": true
   },
   {
-    "type": "match_arm_end",
-    "named": true
-  },
-  {
     "type": "number",
-    "named": true
-  },
-  {
-    "type": "open_comment",
-    "named": true
-  },
-  {
-    "type": "raw_",
     "named": true
   },
   {

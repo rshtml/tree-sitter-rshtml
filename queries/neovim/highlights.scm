@@ -18,8 +18,6 @@
 
 (string_line) @string
 
-(comment_block) @comment
-
 (open_comment) @operator
 
 (close_comment) @operator
@@ -27,8 +25,6 @@
 (continue_) @keyword.conditional
 
 (break_) @keyword.conditional
-
-(raw_) @keyword
 
 (child_content_) @keyword
 
@@ -87,12 +83,8 @@
   .
   (while_stmt))
 
-((start_symbol) @keyword.conditional
-  .
-  (match_stmt))
-
 (param_name) @variable.parameter
- 
+
 ;this is for now extra
 (else_clause
   head: (rust_text) @keyword.conditional)

@@ -7,9 +7,6 @@
    (#set! injection.language "rust")
    (#set! injection.include-children))
 
-((comment_block) @injection.content
-  (#set! injection.language "comment"))
-
 (if_stmt ((rust_text) @injection.content .
     (open_brace) @injection.content
 		(close_brace) @injection.content .
@@ -56,12 +53,12 @@
 ;   (#set! injection.language "html")
 ;   (#set! injection.include-children)
 ;   (#set! injection.combined))
-  
+
 ; ((html_inner_text) @injection.content
 ;   (#set! injection.language "html")
 ;   (#set! injection.include-children)
 ;   (#set! injection.combined))
- 
+
 ; (rust_expr_simple
 ;   expr: (source_text) @injection.content
 ;   (#set! injection.language "rust")

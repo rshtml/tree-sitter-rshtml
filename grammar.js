@@ -34,18 +34,13 @@ const COMPONENT_TAG_IDENTIFIER = /[A-Z][a-zA-Z0-9]*/;
 module.exports = grammar({
   name: "rshtml",
 
-  extras: ($) => [/\s+/, $.comment_block],
+  extras: (_) => [/\s+/],
 
-  conflicts: $ => [
-    [$.template_params, $.rust_expr_paren],
-  ],
+  conflicts: ($) => [[$.template_params, $.rust_expr_paren]],
 
   rules: {
     source_file: ($) =>
-      seq(
-        optional(prec(1, $.template_params)),
-        repeat($._template),
-      ),
+      seq(optional(prec(1, $.template_params)), repeat($._template)),
 
     // region tokens
     rust_identifier: (_) => token(RUST_IDENTIFIER),
@@ -68,9 +63,6 @@ module.exports = grammar({
     colon: (_) => token(COLON),
     semicolon: (_) => token(SEMICOLON),
     equals: (_) => token(EQUALS),
-
-    open_comment: (_) => token("@*"),
-    close_comment: (_) => token("*@"),
 
     _escaped: (_) => token("@@"),
 
@@ -95,17 +87,9 @@ module.exports = grammar({
 
     while_: (_) => token(prec(5, seq("while", /\s+/, STMT_HEAD_COND))),
     for_: (_) => token(prec(5, seq("for", /\s+/, STMT_HEAD_COND))),
-    match_: (_) => token(prec(5, seq("match", /\s+/, STMT_HEAD_COND))),
-
-    match_arm_pattern: (_) => token(/[^=@}]([^=@]+|=([^>]))+/),
-    _match_inner_text: (_) => token(prec(-1, /([^\r\n@},]|(,[^\r\n@}])|@@)+/)),
-    match_arm_end: (_) => token(prec(-1, /( \t)*,?\s*/)),
 
     continue_: (_) => token(prec(5, "continue")),
     break_: (_) => token(prec(5, "break")),
-
-    raw_: (_) => token(prec(5, "raw")),
-    _raw_text: (_) => token(/[^{}]+/),
 
     child_content_: (_) => token(prec(0, "child_content")),
     use_: (_) => token(prec(0, "use")),
@@ -118,42 +102,56 @@ module.exports = grammar({
 
     component_tag_identifier: (_) => token(COMPONENT_TAG_IDENTIFIER),
 
-    fn_: (_) => token("fn"),
-
     // region errors
     if_error: (_) => token(prec(5, seq("if", /\s*/, "{"))),
     for_error: (_) => token(prec(5, seq("for", /\s*/, "{"))),
     while_error: (_) => token(prec(5, seq("while", /\s*/, "{"))),
-    match_error: (_) => token(prec(5, seq("match", /\s*/, "{"))),
     // endregion
 
     // endregion
 
     // region top_definition
 
-    _template: ($) => choice($._block, alias(choice($._escaped, $._text), $.html_text)),
+    _template: ($) =>
+      choice($._block, alias(choice($._escaped, $._text), $.html_text)),
     _inner_template: ($) =>
-      seq($.open_brace, field("body", repeat(choice($._block, alias(choice($._escaped, $._inner_text), $.html_text)))), $.close_brace),
+      seq(
+        $.open_brace,
+        field(
+          "body",
+          repeat(
+            choice(
+              $._block,
+              alias(choice($._escaped, $._inner_text), $.html_text),
+            ),
+          ),
+        ),
+        $.close_brace,
+      ),
 
-
-    template_params: ($) => seq($.start_symbol, $.open_paren, optional($._params), $.close_paren, optional($.semicolon)),
+    template_params: ($) =>
+      seq(
+        $.start_symbol,
+        $.open_paren,
+        optional($._params),
+        $.close_paren,
+        optional($.semicolon),
+      ),
     _params: ($) =>
       seq($.param, repeat(seq($.comma, $.param)), optional($.comma)),
-    param: ($) => seq(
-      alias($.rust_identifier, $.param_name),
-      optional(seq($.colon, alias($.param_type, $.rust_text)))
-    ),
+    param: ($) =>
+      seq(
+        alias($.rust_identifier, $.param_name),
+        optional(seq($.colon, alias($.param_type, $.rust_text))),
+      ),
     param_type: ($) => repeat1(choice($._param_type_nested, /[^(\[{}<,)]/)),
-    _param_type_nested: $ => choice(
-      seq('(', repeat(choice($._param_type_nested, /[^)]/)), ')'),
-      seq('[', repeat(choice($._param_type_nested, /[^\]]/)), ']'),
-      seq('{', repeat(choice($._param_type_nested, /[^}]/)), '}'),
-      seq('<', repeat(choice($._param_type_nested, '->', '=>', /[^>]/)), '>')
-    ),
-
-    comment_block: ($) =>
-      seq($.open_comment, $.comment_content, $.close_comment),
-    comment_content: (_) => token(/([^*]|\*+[^@])*/),
+    _param_type_nested: ($) =>
+      choice(
+        seq("(", repeat(choice($._param_type_nested, /[^)]/)), ")"),
+        seq("[", repeat(choice($._param_type_nested, /[^\]]/)), "]"),
+        seq("{", repeat(choice($._param_type_nested, /[^}]/)), "}"),
+        seq("<", repeat(choice($._param_type_nested, "->", "=>", /[^>]/)), ">"),
+      ),
 
     // endregion
 
@@ -163,7 +161,6 @@ module.exports = grammar({
         seq(
           $.start_symbol,
           choice(
-            $.raw_block,
             $.child_content_directive,
             $.use_directive,
             $.rust_block,
@@ -237,13 +234,11 @@ module.exports = grammar({
         $.if_stmt,
         $.for_stmt,
         $.while_stmt,
-        $.match_stmt,
 
         // errors
         alias($.if_error, $.ERROR),
         alias($.for_error, $.ERROR),
         alias($.while_error, $.ERROR),
-        alias($.match_error, $.ERROR),
       ),
 
     if_stmt: ($) =>
@@ -263,44 +258,6 @@ module.exports = grammar({
 
     while_stmt: ($) =>
       seq(field("head", alias($.while_, $.rust_text)), $._inner_template),
-
-    match_stmt: ($) =>
-      seq(
-        field("head", alias($.match_, $.rust_text)),
-        $.open_brace,
-        repeat1($.match_stmt_arm),
-        $.close_brace,
-      ),
-    match_stmt_arm: ($) =>
-      seq(
-        field("pattern", alias($.match_arm_pattern, $.rust_text)),
-        $.fat_arrow,
-        field(
-          "expr",
-          choice(
-            $._inner_template,
-            $.continue_,
-            $.break_,
-            $.rust_expr_paren,
-            $.rust_expr_simple,
-            $.match_text,
-          ),
-        ),
-        $.match_arm_end,
-      ),
-    match_text: ($) => field("text", alias($._match_inner_text, $.html_text)),
-    // endregion
-
-    // region raw_block
-    raw_block: ($) =>
-      seq(
-        $.raw_,
-        $.open_brace,
-        field("content", alias(repeat($._raw_nested_content), $.html_text)),
-        $.close_brace,
-      ),
-    _raw_nested_content: ($) =>
-      choice(seq("{", repeat($._raw_nested_content), "}"), $._raw_text),
     // endregion
 
     // region rust_block
@@ -361,8 +318,7 @@ module.exports = grammar({
         optional($.as_clause),
         optional($.semicolon),
       ),
-    as_clause: ($) =>
-      seq($.as_, field("alias", $.component_tag_identifier)),
+    as_clause: ($) => seq($.as_, field("alias", $.component_tag_identifier)),
     // endregion
 
     // region component_tag

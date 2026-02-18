@@ -52,17 +52,6 @@
 
 <Card title="okayy" footer=true/>
 
-@raw {
-  @if (x > 5) { print("hey"); }
-  <div>
-    <h2>{{ message }}</h2>
-    <p>Count value: {{ count }}</p>
-  </div>
-  {{-- Buttons and event listeners --}}
-  <button v-on:click="increment">Inc (+)</button>
-  <button @click="decrement">Dec (-)</button>
-}
-
 @if self.title == "Hello" {
   <p>myvar is true</p>
 } else {
@@ -78,30 +67,11 @@
 
 </Card>
 
-@match self.card_count {
-  0 => <div>i</div>,
-  1 => {
-    <div>hell @self.card_count looo</div>
-    <p>hello world</p>
-
-    @if self.card_count > 0 {
-      <p>Count is greater than 0</p>
-    } else {
-      <p>Count is not greater than 0</p>
-    }
-  },
-  2 => <p>hel,_..loo</p>,
-  3 => self.card_count,
-  _ => <p>aa=>,{..a</p>,
-}
-
 @for user in &self.users {
   <p>User @user.name</p>
   <p>User @user.age</p>
   <br/>
 }
-
-@* this is comment bro *@
 
 <div>
   <h1>Home Page @self.get()</h1>
