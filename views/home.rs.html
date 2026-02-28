@@ -73,6 +73,15 @@
   <br/>
 }
 
+@{
+    let mut count = 0;
+}
+
+@while count < 10 {
+    <p> Counter is: @count </p>
+    @(count += 1)
+}
+
 <div>
   <h1>Home Page @self.get()</h1>
   <p>Welcome to the home page.</p>
