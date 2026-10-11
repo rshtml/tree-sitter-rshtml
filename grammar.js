@@ -141,8 +141,7 @@ module.exports = grammar({
       seq($.param, repeat(seq($.comma, $.param)), optional($.comma)),
     param: ($) =>
       seq(
-        optional("self"),
-        alias($.rust_identifier, $.param_name),
+        alias(token(seq(/(self\s+)?/, RUST_IDENTIFIER)), $.param_name),
         optional(seq($.colon, alias($.param_type, $.rust_text))),
       ),
     param_type: ($) => repeat1(choice($._param_type_nested, /[^(\[{}<,)]/)),

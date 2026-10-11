@@ -630,11 +630,6 @@
     }
   },
   {
-    "type": "param_name",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "rust_block",
     "named": true,
     "fields": {
@@ -1086,8 +1081,8 @@
     "named": true
   },
   {
-    "type": "self",
-    "named": false
+    "type": "param_name",
+    "named": true
   },
   {
     "type": "semicolon",
