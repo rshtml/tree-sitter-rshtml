@@ -1086,6 +1086,10 @@
     "named": true
   },
   {
+    "type": "self",
+    "named": false
+  },
+  {
     "type": "semicolon",
     "named": true
   },
